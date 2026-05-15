@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "CHKServlet", value = "/chk-servlet")
 public class CHKServlet extends HttpServlet {
-    
+
 
     public void init() {
 
