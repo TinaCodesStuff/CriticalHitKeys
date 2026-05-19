@@ -15,6 +15,7 @@ public class ConPool {
             PoolProperties p = new PoolProperties();
             p.setUrl("jdbc:mysql://localhost:3306/CriticalHitKeys?serverTimezone=" + TimeZone.getDefault().getID());
             p.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            //PASSWORD COMUNE PER GLI AMMINISTRATORI
             p.setUsername("root");
             p.setPassword("root");
             p.setMaxActive(100);
