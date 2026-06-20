@@ -1,8 +1,7 @@
 body {
     background-color: #f6e8ea;
     margin: 0;
-    padding-top: 70px;
-    padding-bottom: 70px;
+    padding-bottom: 60px;
 }
 
 ul {
@@ -24,7 +23,6 @@ ul li>a {
     display: block;
     color: #F6E8EA;
     padding: 16px 20px;
-    /* margin : 0 auto; */
 }
 
 li.menu-center a{
@@ -34,6 +32,48 @@ li.menu-center a:last-child {
     border-right: none;
 }
 
+h1{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+#logo-img{
+    display: block;
+    margin-bottom: -100px;
+
+}
+.container-bottoneCerca form{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 50%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+input[type=search]{
+    flex: 4;
+    background-color: #BE0000;
+    margin: 0;
+    border: none;
+    height: 30px;
+    color: white;
+
+    border-radius: 15px 0 0 15px;
+    padding: 0 15px;
+}
+
+input[type=submit]{
+    flex: 1;
+    background-color: #F6E8EA;
+    height: 30px;
+    border-radius: 0 15px 15px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+}
 
 .menu-center {
     display: flex;
