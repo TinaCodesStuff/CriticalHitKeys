@@ -1,14 +1,39 @@
 body {
-    background-color: #f6e8ea;
     margin: 0;
     padding-bottom: 60px;
+}
+
+.background-sito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+    filter: blur(3px);
+    transform: scale(1.05);
+
+    z-index: -1;
+    pointer-events: none;
 }
 
 ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #8B0000;
+    background-color: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,6 +48,7 @@ ul li>a {
     display: block;
     color: #F6E8EA;
     padding: 16px 20px;
+    text-decoration: none;
 }
 
 li.menu-center a{
@@ -38,23 +64,33 @@ h1{
     margin-top: 100px;
 }
 
-#logo-img{
+#logo-img {
     display: block;
-    margin-bottom: -100px;
-
+    max-width: 65%;
+    height: auto;          
+    margin-top: 90px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+    filter: drop-shadow(0px 0px 8px black);
 }
+
 .container-bottoneCerca form{
     display: flex;
     align-items: center;
     flex-direction: row;
     width: 50%;
     margin: 0 auto;
+    margin-top: -195px;
     padding: 0;
 }
 
 input[type=search]{
     flex: 4;
-    background-color: #BE0000;
+    background-color: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(10px);
     margin: 0;
     border: none;
     height: 30px;
@@ -106,7 +142,8 @@ input[type=submit]{
     left: 0;
     width: 100%;
     text-align: center;
-    background-color: #8B0000;
+    background-color: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(10px);
     color: white;
 }
 
@@ -118,7 +155,8 @@ input[type=submit]{
 }
 
 .prodotto{
-    background-color: #BE0000;
+    background-color: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(10px);
     text-align: center;
     width: 350px;
     margin: 35px;
@@ -130,6 +168,10 @@ input[type=submit]{
 .prodotto img {
     width: 350px;
     height: 175px;
+}
+
+img sfondoBackground.jpg {
+    filter: blur(8px);
 }
 /*ul li.logo-first{
     margin-right: auto;
