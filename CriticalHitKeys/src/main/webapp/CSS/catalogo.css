@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+    padding-bottom: 60px;
+}
+
+.background-sito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+    filter: blur(3px);
+    transform: scale(1.05);
+
+    z-index: -1;
+    pointer-events: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: /*rgba(15, 15, 15, 0.85)*/  rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul li>a {
+    display: block;
+    color: #F6E8EA;
+    padding: 16px 20px;
+    text-decoration: none;
+}
+
+li.menu-center a{
+    /*border-right: 1px solid #F6E8EA*/;
+}
+li.menu-center a:last-child {
+    border-right: none;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
