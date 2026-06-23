@@ -3,14 +3,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
-import java.sql.SQLException;
 
 public class UtenteDAO {
     public void doSave(String username, String email, String password){
         try(Connection con = ConPool.getConnection()){
-            PreparedStatement ps = con.prepareStatement("INSERT INTO Utente VALUES(?,?,?)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES(?,?,?)");
             ps.setString(1, username);
             ps.setString(2, email);
             ps.setString(3, password);
@@ -25,20 +23,41 @@ public class UtenteDAO {
 
     public Utente doRetrieveUser(String emailUsername){
         try(Connection con = ConPool.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM Utente WHERE Email_Ut = ? OR Username_Ut = ?");
+            PreparedStatement ps = con.prepareStatement("SELECT Username_Ut, Email_Ut, Password_Ut FROM Utente WHERE Email_Ut = ? OR Username_Ut = ? LIMIT 1");
             ps.setString(1, emailUsername);
             ps.setString(2, emailUsername);
 
             ResultSet r = ps.executeQuery();
 
-            Utente u = new Utente();
-            while(r.next()){
+            if(r.next()){
+                Utente u = new Utente();
 
                 u.setEmail_Ut(r.getString("Email_Ut"));
                 u.setUsername_Ut(r.getString("Username_Ut"));
                 u.setPassword_Ut(r.getString("Password_Ut"));
+                return u;
             }
-            return u;
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean existsByUsername(String username) {
+        return existsByQuery("SELECT 1 FROM Utente WHERE Username_Ut = ? LIMIT 1", username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return existsByQuery("SELECT 1 FROM Utente WHERE Email_Ut = ? LIMIT 1", email);
+    }
+
+    private boolean existsByQuery(String query, String value) {
+        try(Connection con = ConPool.getConnection()){
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, value);
+
+            ResultSet r = ps.executeQuery();
+            return r.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -46,7 +65,7 @@ public class UtenteDAO {
 
     public List<Utente> doRetrieveAll(){
         try(Connection con = ConPool.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELCT (Username_Ut, Email_Ut) FROM Utente");
+            PreparedStatement ps = con.prepareStatement("SELECT Username_Ut, Email_Ut FROM Utente");
 
             ResultSet r = ps.executeQuery();
 

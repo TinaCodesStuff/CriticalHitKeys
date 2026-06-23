@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS Amministratore (
 );
 
 CREATE TABLE IF NOT EXISTS Utente (
-    Username_Ut VARCHAR(20) NOT NULL,
-    Email_Ut VARCHAR(30) NOT NULL,
-    Password_Ut VARCHAR(40),
+    Username_Ut VARCHAR(20) NOT NULL UNIQUE,
+    Email_Ut VARCHAR(30) NOT NULL UNIQUE,
+    Password_Ut VARCHAR(40) NOT NULL,
     PRIMARY KEY(Username_Ut, Email_Ut)
 );
 
@@ -91,4 +91,3 @@ CREATE TABLE IF NOT EXISTS Account (
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
-

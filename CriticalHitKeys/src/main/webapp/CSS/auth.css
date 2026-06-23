@@ -1,0 +1,322 @@
+html {
+    background-color: #210722;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: #FFFFFF;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.background-sito{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(3px);
+    transform: scale(1.05);
+    z-index: -1;
+    pointer-events: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul li > a {
+    display: block;
+    color: #F6E8EA;
+    padding: 16px 20px;
+    text-decoration: none;
+}
+
+.menu-center {
+    display: flex;
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 2px;
+    text-decoration-color: white;
+}
+
+.menu-right {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.menu-right img,
+.menu-left img {
+    display: block;
+}
+
+.menu-left {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    margin-top: 10px;
+}
+
+.auth-main {
+    width: min(92%, 560px);
+    margin: 112px auto 32px;
+}
+
+.auth-card,
+.logged-panel {
+    background-color: rgba(26, 12, 40, 0.88);
+    border: 1px solid rgba(255, 240, 196, 0.22);
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+}
+
+.logged-panel {
+    display: none;
+    padding: 34px;
+    text-align: center;
+}
+
+.is-logged .logged-panel {
+    display: block;
+}
+
+.is-logged .auth-card {
+    display: none;
+}
+
+.auth-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+}
+
+.switch-button {
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 12px;
+}
+
+.switch-login,
+.show-register .switch-register {
+    background: #F10000;
+}
+
+.show-register .switch-login {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.form-message {
+    min-height: 20px;
+    margin: 0 24px 4px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.form-message--info {
+    color: #FFF0C4;
+}
+
+.form-message--error,
+.inline-message {
+    color: #FFB3B3;
+}
+
+.flip-stage {
+    perspective: 1200px;
+}
+
+.flip-card {
+    position: relative;
+    min-height: 430px;
+    transform-style: preserve-3d;
+    transition: transform 0.65s ease;
+}
+
+.show-register .flip-card {
+    transform: rotateY(180deg);
+}
+
+.auth-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 18px 30px 24px;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.auth-face-front {
+    transform: rotateY(0deg);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.auth-face-back {
+    transform: rotateY(180deg);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.show-register .auth-face-front {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.show-register .auth-face-back {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.auth-face h1,
+.logged-panel h1 {
+    margin: 0 0 12px;
+    color: #FFF0C4;
+    text-align: center;
+}
+
+label {
+    font-weight: 700;
+}
+
+input {
+    height: 38px;
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.35);
+    color: #FFFFFF;
+    padding: 0 12px;
+}
+
+input:focus {
+    outline: 3px solid rgba(255, 240, 196, 0.42);
+    border-color: #FFF0C4;
+}
+
+button[type="submit"] {
+    min-height: 42px;
+    margin-top: 10px;
+    border: 0;
+    border-radius: 10px;
+    background: #BE0000;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-weight: 800;
+}
+
+button[type="submit"]:hover,
+.switch-button:hover {
+    filter: brightness(1.10);
+}
+
+.inline-message {
+    min-height: 18px;
+    margin: 0;
+    font-size: 0.92rem;
+}
+
+.footer {
+    position: static;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+@media (max-width: 720px) {
+    ul {
+        min-height: 108px;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 8px 0;
+    }
+
+    .menu-center {
+        gap: 14px;
+        font-size: 0.76rem;
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    ul li > a {
+        padding: 8px 4px;
+    }
+
+    .menu-left {
+        top: 6px;
+        left: 8px;
+        margin-top: 0;
+    }
+
+    .menu-left img {
+        width: 68px;
+        height: auto;
+    }
+
+    .menu-right {
+        top: 12px;
+        right: 10px;
+        gap: 4px;
+    }
+
+    .menu-right img {
+        width: 34px;
+        height: 34px;
+    }
+
+    .auth-main {
+        margin-top: 132px;
+        width: min(94%, 420px);
+    }
+
+    .flip-card {
+        min-height: 490px;
+    }
+
+    .auth-face {
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .flip-card {
+        transition: none;
+    }
+}

@@ -2,18 +2,18 @@ USE CriticalHitKeys;
 
 -- 1. Popolamento Amministratore (3 record)
 INSERT INTO Amministratore (Email_Amm, Username_Amm, Password_Amm) VALUES
-('admin1@chk.it', 'BossLevel', 'e99a18c428cb38d5f260853678922e03'),
-('admin2@chk.it', 'GamerDev', '5f4dcc3b5aa765d61d8327deb882cf99'),
-('staff@chk.it', 'ModMaster', '7c4a8d09ca3762af61e59520943dc264');
+('admin1@chk.it', 'BossLevel', 'f865b53623b121fd34ee5426c792e5c33af8c227'),
+('admin2@chk.it', 'GamerDev', 'cf2e875d70c402e4aaf32ceb64b1fa6f7396af59'),
+('staff@chk.it', 'ModMaster', '5d43e3169f06cf2a04a0ee870b5ac2aff3c558ff');
 
 -- 2. Popolamento Utente (5 record)
--- Nota: La PK è composta da (Username_Ut, Password_Ut)
+-- Password salvate come hash SHA-1 senza salt.
 INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES
-('Geralt90', 'geralt@email.it', 'pass123'),
-('DragonBorn', 'dovah@skyrim.com', 'shout01'),
-('Ciri_05', 'ciri@kaermorhen.org', 'sw0rd99'),
-('VaultDweller', 'fallout@vault.com', 'nuka111'),
-('Arthur_M', 'morgan@reddead.it', 'outlaw22');
+('Geralt90', 'geralt@email.it', 'aafdc23870ecbcd3d557b6423a8982134e17927e'), -- password: pass123
+('DragonBorn', 'dovah@skyrim.com', '96be154ca64a3080b17768a41ecc005ecbe49885'), -- password: shout01
+('Ciri_05', 'ciri@kaermorhen.org', 'e8a9ca85f21c2c8cb82298d975dc70adaa521058'), -- password: sw0rd99
+('VaultDweller', 'fallout@vault.com', '007e41a7c21873bff6ae8de2710922262c86ec1d'), -- password: nuka111
+('Arthur_M', 'morgan@reddead.it', '0b125fe2d4b39f076975d00a80bbf491a99a01e2'); -- password: outlaw22
 
 -- 3. Popolamento Prodotto (5 record)
 -- Collegati agli Amministratori

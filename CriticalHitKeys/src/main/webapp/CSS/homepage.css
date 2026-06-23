@@ -191,6 +191,17 @@ input[type=submit]{
     border-radius: 10px;
 }
 
+html.products-animate .prodotto {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+html.products-animate .prodotto.product-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 .suggested {
     font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
@@ -201,3 +212,10 @@ input[type=submit]{
 
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html.products-animate .prodotto {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

@@ -140,6 +140,17 @@ h1{
     border-radius: 10px;
 }
 
+html.products-animate .prodotto {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+html.products-animate .prodotto.product-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .nome-prezzi-Box{
     display: flex;
     justify-content: space-between;
@@ -167,3 +178,10 @@ h1{
 
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html.products-animate .prodotto {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
