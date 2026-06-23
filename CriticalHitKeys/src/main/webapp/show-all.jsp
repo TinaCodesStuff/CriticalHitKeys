@@ -13,7 +13,7 @@
 
     <li class="menu-center">
         <a href="">ASSISTENZA</a>
-        <a href="">ABOUT US</a>
+        <a href="aboutus.html">ABOUT US</a>
         <a href="mostraProd">CATALOGO</a>
     </li>
 
@@ -26,7 +26,7 @@
 List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 
 %>
-
+<h1 class="catalogo">- Catalogo dei prodotti -</h1>
 <div class="container-prodotti">
         <%for(Prodotto p : lista){%>
     <div class="prodotto"><img src="img/placeholder.jpg"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>

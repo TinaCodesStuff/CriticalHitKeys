@@ -108,7 +108,7 @@ h1{
 }
 
 .container-prodotti{
-    margin-top: 80px;
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -154,5 +154,14 @@ h1{
     color: white;
     font-weight: 700;
     padding: 6px 12px;
+}
+
+.catalogo {
+    font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
+    font-style: italic;
+    font-weight: bold;
+    color: #ED000A;
+    filter: drop-shadow(0px 0px 8px black);
+
 }
 
