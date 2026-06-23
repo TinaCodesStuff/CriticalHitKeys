@@ -7,8 +7,9 @@
     <title>LISTA PRODOTTI</title>
 </head>
 <body>
+<div class="background-sito"></div>
 <ul>
-    <li class="menu-left"><a href=""><img src="img/logoProv.png" width="40px" height="40px" alt="Logo piccolo di Critical Hit Keys"></a></li>
+    <li class="menu-left"><a href="index.html"><img src="img/logoProv.png" width="40px" height="40px" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
     <li class="menu-center">
         <a href="">ASSISTENZA</a>
@@ -26,10 +27,14 @@ List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 
 %>
 
-<ul>
-    <%for(Prodotto p : lista){%>
-    <li><%=p.getNome() %> <%=p.getDescrizione()%>  <%=p.getID_Prodotto()%>  <%=p.getPrezzo_OG()%>   <%=p.getPrezzo_scontato()%>  <%= p.getSconto()%></li>
-    <%}%>
-</ul>
+<div class="container-prodotti">
+        <%for(Prodotto p : lista){%>
+    <div class="prodotto"><img src="img/placeholder.jpg"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
+        <%}%>
+</div>
+
+<div class = "footer">
+    <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
+</div>
 </body>
 </html>

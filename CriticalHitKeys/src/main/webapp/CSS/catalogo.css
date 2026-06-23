@@ -3,7 +3,7 @@ body {
     padding-bottom: 60px;
 }
 
-.background-sito {
+.background-sito{
     position: fixed;
     top: 0;
     left: 0;
@@ -26,6 +26,7 @@ body {
 
     z-index: -1;
     pointer-events: none;
+
 }
 
 ul {
@@ -51,9 +52,6 @@ ul li>a {
     text-decoration: none;
 }
 
-li.menu-center a{
-    /*border-right: 1px solid #F6E8EA*/;
-}
 li.menu-center a:last-child {
     border-right: none;
 }
@@ -63,3 +61,98 @@ h1{
     justify-content: center;
     margin-top: 100px;
 }
+
+.menu-center {
+    display: flex;
+    font-family: "Roboto", sans-serif;
+    text-decoration: underline;
+
+    text-underline-offset: 6px;
+
+    text-decoration-thickness: 2px;
+    text-decoration-color: white;
+
+}
+
+.menu-right {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.menu-right img {
+    display: block;
+}
+
+.menu-left {
+    position: absolute;
+    left: 20px;
+    display: flex;
+
+}
+.menu-left img {
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    background-color: /*rgba(15, 15, 15, 0.85)*/ rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.container-prodotti{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 35px;
+}
+
+.prodotto{
+    flex: 1 1 300px; /* per allargare, restringere partendo dalla base 300px*/
+    min-width: 250px;
+    max-width: 400px;
+
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    filter: drop-shadow(0px 0px 8px black);
+    text-align: center;
+    margin: 35px;
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+}
+
+.prodotto img {
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.nome-prezzi-Box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prezzi-Box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+.sconto-Box{
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 6px 12px;
+}
+
