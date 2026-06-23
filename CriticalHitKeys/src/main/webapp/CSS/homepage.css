@@ -28,6 +28,7 @@ body {
     pointer-events: none;
 }
 
+/* Impostazioni Navigation Bar */
 ul {
     list-style-type: none;
     margin: 0;
@@ -51,9 +52,6 @@ ul li>a {
     text-decoration: none;
 }
 
-li.menu-center a{
-    /*border-right: 1px solid #F6E8EA*/;
-}
 li.menu-center a:last-child {
     border-right: none;
 }
@@ -68,13 +66,13 @@ h1{
     display: block;
     max-width: 65%;
     height: auto;
-    /* impostiamo il margine di sopra pari a 160 px e quello di bottom pari a 20 px*/
     margin: 160px auto 20px;
     position: relative;
     z-index: 10;
     filter: drop-shadow(0px 0px 8px black);
 }
 
+/* Barra di ricerca */
 .container-bottoneCerca form{
     display: flex;
     align-items: center;
@@ -113,6 +111,8 @@ input[type=submit]{
     margin: 0;
 }
 
+/* DISPOSIZIONE DEGLI ELEMENTI NELLA NAVIGATION BAR */
+/* Link per assistenza, about us, catalogo, ecc... */
 .menu-center {
     display: flex;
     font-family: "Roboto", sans-serif;
@@ -125,6 +125,7 @@ input[type=submit]{
 
 }
 
+/* Carrello, spazio utente */
 .menu-right {
     position: absolute;
     right: 20px;
@@ -136,10 +137,12 @@ input[type=submit]{
     display: block;
 }
 
+/* Logo piccolo, link per ritorno alla homepage */
 .menu-left {
     position: absolute;
     left: 20px;
     display: flex;
+    margin-top: 10px;
 
 }
 .menu-left img {
@@ -193,7 +196,7 @@ input[type=submit]{
     font-family: "Times New Roman", Times, Baskerville, Georgia, serif;
     font-style: italic;
     font-weight: bold;
-    color: #ED000A;
+    color: white;
     filter: drop-shadow(0px 0px 8px black);
 
 }
