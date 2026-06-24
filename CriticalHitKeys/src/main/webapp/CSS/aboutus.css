@@ -131,3 +131,70 @@ h2 {
     color: white;
     font-family: "Roboto", sans-serif;
 }
+
+.github-header {
+    text-align: center !important;
+    margin-bottom: 10px !important;
+    width: 100% !important;
+}
+
+
+.github-header img {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 22px !important;
+    height: auto !important;
+    margin-right: 8px !important;
+}
+
+
+.github-header h3 {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.github a {
+    color: white;
+    text-decoration: none;
+}
+
+.discord-header img {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 22px !important;
+    height: auto !important;
+    margin-right: 8px !important;
+}
+
+
+.discord-header h3 {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.discord a {
+    margin-top: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+.immagini {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+
+.immagini img {
+    width: auto !important;
+    height: 350px !important;
+    margin: 0 !important;
+    object-fit: contain;
+}
