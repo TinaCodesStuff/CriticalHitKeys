@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Prodotto;
 import model.ProdottoDAO;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -23,10 +22,20 @@ public class PaginaProdottoServlet extends HttpServlet {
         response.setContentType("text/html");
 
         ProdottoDAO service = new ProdottoDAO();
-        String idParam = request.getParameter("id");
+        String id = request.getParameter("id");
 
-        RequestDispatcher p = request.getRequestDispatcher("paginaProdotto.jsp");
-        p.forward(request, response);
+        if (id != null && !id.isEmpty()) {
+            int idProdotto = Integer.parseInt(id);
+            Prodotto prodotto = service.doRetrieveById(idProdotto);
+
+            if (prodotto != null) {
+                request.setAttribute("prodotto", prodotto);
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("paginaProdotto.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
+
     }
 
     public void destroy() {

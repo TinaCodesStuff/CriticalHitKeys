@@ -30,8 +30,10 @@ List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 <h1 class="catalogo">- Catalogo dei prodotti -</h1>
 <div class="container-prodotti">
         <%for(Prodotto p : lista){%>
+    <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
     <div class="prodotto"><img src="img/placeholder.jpg"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
-        <%}%>
+    </a>
+            <%}%>
 </div>
 
 <div class = "footer">

@@ -1,0 +1,242 @@
+body {
+    margin: 0;
+    padding-bottom: 60px;
+}
+
+.background-sito{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+    filter: blur(3px);
+    transform: scale(1.05);
+
+    z-index: -1;
+    pointer-events: none;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: /*rgba(15, 15, 15, 0.85)*/  rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul li>a {
+    display: block;
+    color: #F6E8EA;
+    padding: 16px 20px;
+    text-decoration: none;
+}
+
+li.menu-center a:last-child {
+    border-right: none;
+}
+
+.menu-center {
+    display: flex;
+    font-family: "Roboto", sans-serif;
+    text-decoration: underline;
+
+    text-underline-offset: 6px;
+
+    text-decoration-thickness: 2px;
+    text-decoration-color: white;
+
+}
+
+.menu-right {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.menu-right img {
+    display: block;
+}
+
+.menu-left {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    margin-top: 10px;
+}
+.menu-left img {
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    background-color: /*rgba(15, 15, 15, 0.85)*/ rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.box-prodotto {
+    display: flex;
+    flex-direction: row;        /* Affianca sinistra e destra */
+    justify-content: space-between;
+    align-items: flex-start;    /* Allinea gli elementi in alto */
+    gap: 50px;                  /* Spazio divisorio tra le due colonne */
+
+    max-width: 1100px;
+    margin: 120px auto 40px auto; /*previene la sovrapposizione con la navbar fissa */
+    padding: 40px;
+
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    color: white;
+    filter: drop-shadow(0px 0px 8px black);
+    font-family: "Roboto", sans-serif;
+}
+
+.box-sconto {
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 6px 12px;
+}
+
+.aggiuntaCarrello {
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 6px 12px;
+}
+
+.product-left {
+    flex: 1.2;                  /* Prende leggermente più spazio rispetto alla destra */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.product-left img {
+    width: 100% !important;     /* Occupa tutta la larghezza della colonna sinistra */
+    height: auto !important;
+    max-height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.descrizione-prodotto {
+    text-align: left;
+    line-height: 1.6;
+    font-size: 1.1rem;
+    color: #e2e2e2;
+}
+
+
+.product-right {
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;    /* Allinea tutti i testi a sinistra dentro la colonna */
+    text-align: left;
+    gap: 20px;
+}
+
+.product-right h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.casa-sviluppatrice {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #7c3aed;
+}
+
+.modalita-gioco {
+    font-size: 1rem;
+    color: #b9ecee;
+}
+
+.prezzi-dettaglio-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.prezzo-scontato {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: white;
+}
+
+.prezzo-originale {
+    font-size: 1.3rem;
+    color: #888;
+    text-decoration: line-through;
+}
+
+.sconto-tag {
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+
+.btn-carrello {
+    width: 100%;                /* Prende tutta la larghezza della colonna destra */
+    padding: 16px;
+    margin-top: 15px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-carrello:hover {
+    background: #6d28d9;
+}
+
+.btn-carrello:active {
+    transform: scale(0.98);
+}
+
+.errore-prodotto {
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+}
