@@ -25,7 +25,7 @@ public class MostraProd extends HttpServlet {
         List<Prodotto> listaProdotti = service.doRetrieveAll();
         request.setAttribute("listaProdotti", listaProdotti);
 
-        RequestDispatcher p = request.getRequestDispatcher("show-all.jsp");
+        RequestDispatcher p = request.getRequestDispatcher("JSP/show-all.jsp");
         p.forward(request, response);
     }
 

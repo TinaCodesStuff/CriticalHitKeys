@@ -251,11 +251,13 @@ button[type="submit"]:hover,
 }
 
 .footer {
-    position: static;
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Raleway", sans-serif;
     text-align: center;
-    background-color: rgba(26, 12, 40, 0.85);
+    background-color: /*rgba(15, 15, 15, 0.85)*/ rgba(26, 12, 40, 0.85);
     backdrop-filter: blur(10px);
     color: white;
 }

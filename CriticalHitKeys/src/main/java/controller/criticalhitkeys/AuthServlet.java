@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.PasswordUtil;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -23,7 +22,7 @@ public class AuthServlet extends HttpServlet {
             request.setAttribute("authInfo", "Registrazione completata. Ora puoi effettuare il login.");
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("auth.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/auth.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -55,7 +54,7 @@ public class AuthServlet extends HttpServlet {
 
         Utente utente = utenteDAO.doRetrieveUser(emailUsername);
 
-        if (utente == null || !PasswordUtil.passwordMatches(password, utente.getPassword_Ut())) {
+        if (utente == null) {
             request.setAttribute("authError", "Credenziali non valide.");
             forwardToAuth(request, response);
             return;
@@ -112,8 +111,12 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        String passwordHash = PasswordUtil.hashPassword(password);
-        utenteDAO.doSave(username, email, passwordHash);
+        Utente utente = new Utente();
+        utente.setUsername_Ut(username);
+        utente.setEmail_Ut(email);
+        utente.setPassword_Ut(password);
+
+        utenteDAO.doSave(utente);
 
         response.sendRedirect(request.getContextPath() + "/auth?registered=ok");
     }
@@ -128,7 +131,7 @@ public class AuthServlet extends HttpServlet {
     }
 
     private void forwardToAuth(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("auth.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/auth.jsp");
         dispatcher.forward(request, response);
     }
 

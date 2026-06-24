@@ -6,12 +6,12 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class UtenteDAO {
-    public void doSave(String username, String email, String password){
+    public void doSave(Utente utente){
         try(Connection con = ConPool.getConnection()){
             PreparedStatement ps = con.prepareStatement("INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES(?,?,?)");
-            ps.setString(1, username);
-            ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(1, utente.getUsername_Ut());
+            ps.setString(2, utente.getEmail_Ut());
+            ps.setString(3, utente.getPassword_Ut());
 
             if(ps.executeUpdate() != 1){
                 System.out.println("INSERT Error in Utente");
@@ -23,7 +23,7 @@ public class UtenteDAO {
 
     public Utente doRetrieveUser(String emailUsername){
         try(Connection con = ConPool.getConnection()){
-            PreparedStatement ps = con.prepareStatement("SELECT Username_Ut, Email_Ut, Password_Ut FROM Utente WHERE Email_Ut = ? OR Username_Ut = ? LIMIT 1");
+            PreparedStatement ps = con.prepareStatement("SELECT Username_Ut, Email_Ut, Password_Ut FROM Utente WHERE Email_Ut = ? OR Username_Ut = ?LIMIT 1");
             ps.setString(1, emailUsername);
             ps.setString(2, emailUsername);
 
