@@ -91,3 +91,12 @@ CREATE TABLE IF NOT EXISTS Account (
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE TABLE MediaProdotto (
+    ID_Media VARCHAR(10) PRIMARY KEY,
+    ID_Prodotto INT,
+    Tipo VARCHAR(10),
+    URL_Media VARCHAR(255),
+    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
+    ON DELETE CASCADE
+);

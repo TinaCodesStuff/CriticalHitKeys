@@ -6,10 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Prodotto;
-import model.ProdottoDAO;
-import model.Recensione;
-import model.RecensioneDAO;
+import model.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,10 +30,12 @@ public class PaginaProdottoServlet extends HttpServlet {
             int idProdotto = Integer.parseInt(id);
             Prodotto prodotto = service.doRetrieveById(idProdotto);
             List<Recensione> lista = recensioneDAO.doRetrieveAll();
+            List<Media> listaMedia = service.doRetrieveMediaByProdotto(idProdotto);
 
             if (prodotto != null) {
                 request.setAttribute("prodotto", prodotto);
                 request.setAttribute("listaRecensione", lista);
+                request.setAttribute("listaMedia", listaMedia);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/paginaProdotto.jsp");
                 dispatcher.forward(request, response);
             }

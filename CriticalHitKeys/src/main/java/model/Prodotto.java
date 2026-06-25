@@ -10,6 +10,7 @@ public class Prodotto {
     private String casa_sviluppatrice;
     private int Sconto;
     private String eMailAmm;
+    private String urlCopertina;
 
 
     public int getID_Prodotto() {
@@ -83,4 +84,6 @@ public class Prodotto {
     public void seteMailAmm(String eMailAmm) {
         this.eMailAmm = eMailAmm;
     }
+
+
 }

@@ -1,6 +1,7 @@
 <%@ page import="model.Prodotto" %>
 <%@ page import="model.Recensione" %>
 <%@ page import="java.util.*" %>
+<%@ page import="model.Media" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,11 +33,35 @@
     <% if (prod != null) { %>
 
     <div class="product-left">
-    <div class="immagini">
-        <img src="${pageContext.request.contextPath}/img/placeholder.jpg" style="height: 300px; width: auto;">
-    </div>
+            <%
+    List<Media> listaMedia = (List<Media>) request.getAttribute("listaMedia");
+%>
+
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <%
+                    if (listaMedia != null && !listaMedia.isEmpty()) {
+                        for (Media m : listaMedia) {
+                %>
+                <div class="carousel-item">
+                    <% if ("video".equals(m.getTipo())) { %>
+                    <video src="<%= m.getUrlMedia() %>" controls preload="metadata"></video>
+                    <% } else { %>
+                    <img src="<%= m.getUrlMedia() %>" alt="Screenshot Gioco">
+                    <% } %>
+                </div>
+                <%
+                    }
+                } else {
+                %>
+                <div class="carousel-item">
+                    <img src="img/placeholder.jpg" alt="Placeholder">
+                </div>
+                <% } %>
+            </div>
     <h2> Riguardo al prodotto: </h2>
     <p> <%=prod.getDescrizione() != null ? prod.getDescrizione() : "Nessuna descrizione disponibile per questo titolo."%> </p>
+    </div>
     </div>
 
 <div class="product-right">

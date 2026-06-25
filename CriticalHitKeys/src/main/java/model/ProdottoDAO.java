@@ -60,4 +60,27 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Media> doRetrieveMediaByProdotto (int idProdotto) {
+        List<Media> listaMedia = new ArrayList<>();
+
+        try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM MediaProdotto WHERE ID_Prodotto = ?");
+            s.setInt(1, idProdotto);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Media media = new Media();
+
+                media.setTipo(rs.getString("Tipo"));
+                media.setUrlMedia(rs.getString("URL_Media"));
+                listaMedia.add(media);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaMedia;
+    }
+
 }

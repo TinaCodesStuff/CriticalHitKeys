@@ -274,3 +274,48 @@ li.menu-center a:last-child {
     text-align: center;
     padding: 40px;
 }
+
+/* PARTE PER IL CAROSELLO DELLE IMMAGINI */
+.carousel-container {
+    width: 100%;
+    position: relative;
+}
+
+/* Il binario scorrevole */
+.carousel-track {
+    display: flex;
+    overflow-x: auto;          /* Abilita lo scorrimento orizzontale manuale */
+    scroll-snap-type: x mandatory; /* Forza il blocco dell'immagine al centro dopo lo swipe */
+    scroll-behavior: smooth;
+    gap: 10px;
+    border-radius: 10px;
+
+    /* Nasconde la barra di scorrimento brutta su tutti i browser */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;             /* Chrome, Safari, Opera */
+}
+
+/* Il singolo elemento del carosello (Foto o Video) */
+.carousel-item {
+    flex: 0 0 100%;            /* Ogni elemento occupa esattamente il 100% della larghezza */
+    scroll-snap-align: start;  /* Allinea l'elemento all'inizio del contenitore quando ci si ferma */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Regole per foto e video interni affinché abbiano tutti la stessa dimensione */
+.carousel-item img,
+.carousel-item video {
+    width: 100%;
+    height: 350px;             /* Altezza fissa del carosello */
+    object-fit: cover;         /* Ritaglia e adatta senza distorcere */
+}
+

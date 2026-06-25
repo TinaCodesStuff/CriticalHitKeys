@@ -123,3 +123,11 @@ INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES
 INSERT INTO Account (ID_Prodotto, Credenziali) VALUES
 (103, 'mc_user:block_pass_2024'),
 (105, 'ea_sports_fan:goal_2023_psn');
+
+INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media) VALUES
+('M1', 101, 'image', 'img/giochi/eldenring/eldenRingCopertina.jpeg'),
+('M2', 101, 'image', 'img/giochi/eldenring/eldenringLimgrave.jpg'),
+('M3', 101, 'video', 'img/giochi/eldenring/eldenringTrailer.mp4'),
+('M4', 102, 'image', 'img/giochi/cyberpunk/cyberpunkCopertina.jpg'),
+('M5', 102, 'image', 'img/giochi/cyberpunk/cyberpunkNightCity.png'),
+('M6', 102, 'video', 'img/giochi/cyberpunk/cyberpunkTrailer.mp4');
