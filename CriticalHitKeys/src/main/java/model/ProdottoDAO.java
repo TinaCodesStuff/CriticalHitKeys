@@ -35,6 +35,7 @@ public class ProdottoDAO {
         }
     }
 
+    // Prende un prodotto in base all'Id dato tramite ricerca
     public Prodotto doRetrieveById (int id) {
         try (Connection conn = ConPool.getConnection()) {
             Prodotto p = new Prodotto();
@@ -61,6 +62,7 @@ public class ProdottoDAO {
         }
     }
 
+    // Matcha l'ID prodotto del media con quello dell'effettivo prodotto a cui è assegnato
     public List<Media> doRetrieveMediaByProdotto (int idProdotto) {
         List<Media> listaMedia = new ArrayList<>();
 

@@ -101,12 +101,13 @@ li.menu-center a:last-child {
     color: white;
 }
 
+/* CONTAINER PRINCIPALE */
 .box-prodotto {
     display: flex;
     flex-direction: row;        /* Affianca sinistra e destra */
     justify-content: space-between;
     align-items: flex-start;    /* Allinea gli elementi in alto */
-    gap: 50px;                  /* Spazio divisorio tra le due colonne */
+    gap: 50px;                  /* Spazio tra le due colonne */
 
     max-width: 1100px;
     margin: 120px auto 40px auto; /*previene la sovrapposizione con la navbar fissa */
@@ -120,11 +121,13 @@ li.menu-center a:last-child {
     font-family: "Roboto", sans-serif;
 }
 
+/* PARTE DI TUTTE LE CARATTERISTICHE DEL PRODOTTO E IL PULSANTE DELL'AGGIUNTA AL CARRELLO */
 .box-sconto {
     background: #7c3aed;
     color: white;
     font-weight: 700;
     padding: 6px 12px;
+    border-radius: 8px;
 }
 
 .aggiuntaCarrello {
@@ -134,6 +137,7 @@ li.menu-center a:last-child {
     padding: 6px 12px;
 }
 
+/* LA DIVISIONE TRA PRODOTTO DESTRA E SINISTRA VIENE FATTA PER FAR SI CHE CI SIANO DEGLI ELEMENTI VISUALIZZATI A DESTRA E ALCUNI A SINISTRA */
 .product-left {
     flex: 1.2;                  /* Prende leggermente più spazio rispetto alla destra */
     display: flex;
@@ -248,7 +252,7 @@ li.menu-center a:last-child {
 
 
 .btn-carrello {
-    width: 100%;                /* Prende tutta la larghezza della colonna destra */
+    width: 100%;                /*Il bottone per l'aggiunta al carrello prende tutta la larghezza della colonna destra */
     padding: 16px;
     margin-top: 15px;
     background: #7c3aed;
@@ -276,46 +280,127 @@ li.menu-center a:last-child {
 }
 
 /* PARTE PER IL CAROSELLO DELLE IMMAGINI */
+/* Contenitore principale del carosello */
 .carousel-container {
-    width: 100%;
     position: relative;
+    height: 100%;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden; /* Nasconde le immagini non attive */
+    border-radius: 8px;
 }
 
-/* Il binario scorrevole */
+/* Binario orizzontale che contiene tutti i media affiancati */
 .carousel-track {
     display: flex;
-    overflow-x: auto;          /* Abilita lo scorrimento orizzontale manuale */
-    scroll-snap-type: x mandatory; /* Forza il blocco dell'immagine al centro dopo lo swipe */
-    scroll-behavior: smooth;
-    gap: 10px;
-    border-radius: 10px;
+    height: 100%;
+    transition: transform 0.4s ease-in-out; /* Effetto dello scorrimento */
 
-    /* Nasconde la barra di scorrimento brutta su tutti i browser */
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;     /* Firefox */
 }
 
-.carousel-track::-webkit-scrollbar {
-    display: none;             /* Chrome, Safari, Opera */
-}
-
-/* Il singolo elemento del carosello (Foto o Video) */
+/* Ogni singolo elemento occupa il 100% dello spazio */
 .carousel-item {
-    flex: 0 0 100%;            /* Ogni elemento occupa esattamente il 100% della larghezza */
-    scroll-snap-align: start;  /* Allinea l'elemento all'inizio del contenitore quando ci si ferma */
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #000;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
-/* Regole per foto e video interni affinché abbiano tutti la stessa dimensione */
-.carousel-item img,
-.carousel-item video {
+.carosello-media {
     width: 100%;
-    height: 350px;             /* Altezza fissa del carosello */
-    object-fit: cover;         /* Ritaglia e adatta senza distorcere */
+    height: 450px;
+    object-fit: cover; /* Mantiene le proporzioni ritagliando se necessario */
+    display: block;
 }
 
+/* Pulsanti che servono per andare avanti e dietro nel carosello */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+    border-radius: 50%;
+}
+
+/* MODIFICA STILE DEI VARI COMPONENTI DI UNA RECENSIONE */
+.reviews-list {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spazio tra una recensione e l'altra */
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* La "schedina" della singola recensione */
+.recensione-card {
+    background-color: #1a1a22;
+    border: 1px solid #2d2d3a;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Effetto illuminazione quando l'utente passa il mouse sopra */
+.recensione-card:hover {
+    border-color: #6f42c1;
+    transform: translateY(-2px);
+}
+
+/* Allinea l'username a sinistra e il voto a destra */
+.recensione-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2d2d3a;
+}
+
+.username-utente {
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.05rem;
+    letter-spacing: 0.5px;
+}
+
+.voto-recensione {
+    background-color: #ffb703;
+    color: #0d0d13;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 5px rgba(255, 183, 3, 0.2);
+}
+
+
+.descrizione-recensione {
+    color: #c9c9d4;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    word-wrap: break-word;
+}
+
+.bottone-recensione {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.prev-btn { left: 15px; }
+.next-btn { right: 15px; }
+.carousel-btn:hover { background: rgba(255, 255, 255, 0.8); color: black; } /* Effetto quando si passa il puntatore sul simbolo */

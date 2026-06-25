@@ -30,14 +30,15 @@
 </ul>
 
 <div class="box-prodotto">
-    <% if (prod != null) { %>
 
+    <!-- CAROSELLO DELLE IMMAGINI INERENTI AL VIDEOGIOCO -->
     <div class="product-left">
-            <%
-    List<Media> listaMedia = (List<Media>) request.getAttribute("listaMedia");
-%>
-
+        <% if (prod != null) { %>
+        <%
+            List<Media> listaMedia = (List<Media>) request.getAttribute("listaMedia");
+        %>
         <div class="carousel-container">
+
             <div class="carousel-track">
                 <%
                     if (listaMedia != null && !listaMedia.isEmpty()) {
@@ -45,25 +46,32 @@
                 %>
                 <div class="carousel-item">
                     <% if ("video".equals(m.getTipo())) { %>
-                    <video src="<%= m.getUrlMedia() %>" controls preload="metadata"></video>
+                    <video src="<%= m.getUrlMedia() %>" controls preload="metadata" class="carosello-media"></video>
                     <% } else { %>
-                    <img src="<%= m.getUrlMedia() %>" alt="Screenshot Gioco">
+                    <img src="<%= m.getUrlMedia() %>" alt="Screenshot Gioco" class="carosello-media">
                     <% } %>
                 </div>
                 <%
                     }
-                } else {
+                } else { //Se non viene trovato un media adatto, viene sostituito con un placeholder
                 %>
                 <div class="carousel-item">
                     <img src="img/placeholder.jpg" alt="Placeholder">
                 </div>
                 <% } %>
-            </div>
-    <h2> Riguardo al prodotto: </h2>
-    <p> <%=prod.getDescrizione() != null ? prod.getDescrizione() : "Nessuna descrizione disponibile per questo titolo."%> </p>
-    </div>
+                <!-- I bottoni per scorrere il carosello -->
+            </div> <button class="carousel-btn prev-btn">&#10094;</button>
+            <button class="carousel-btn next-btn">&#10095;</button>
+
+        </div> <div class="descrizione-gioco-box">
+        <h2>Riguardo al prodotto:</h2>
+        <p class="descrizione-prodotto">
+            <%= prod.getDescrizione() != null ? prod.getDescrizione() : "Nessuna descrizione disponibile per questo titolo." %>
+        </p>
     </div>
 
+    </div>
+<!-- Tutte le informazioni sul gioco si trovano a destra -->
 <div class="product-right">
     <h1><%= prod.getNome() %></h1>
     <span class="casa-sviluppatrice"><%= prod.getCasa_sviluppatrice() %></span>
@@ -81,21 +89,34 @@
 
 
     <div class="product-center">
-        <button type="button" onclick="mostraTextArea()">Inserisci una recensione! </button><br>
+        <button type="button" class="bottone-recensione" onclick="mostraTextArea()">Inserisci una recensione! </button><br>
         <form method="get">
             <div id = "boxTextarea" style="display: none">
             <textarea name="testoRecensione">Questo gioco è stato molto toccante per me...</textarea>
-                <input type = "submit" value = "Invia recensione!">
+                <input type = "submit" value = "Invia recensione!" class="submit-recensione">
             </div>
         </form>
 
-        <% List<Recensione> lista = (List<Recensione>) request.getAttribute("listaRecensione"); %>
-
-        <% for(Recensione r : lista){%>
-        <p><%=r.getUsername_Ut()%></p>
-        <p><%=r.getVoto()%></p>
-        <p><%=r.getDescrizione_Rec()%></p>
-        <%}%>
+        <div class="reviews-list">
+            <%
+                List<Recensione> lista = (List<Recensione>) request.getAttribute("listaRecensione");
+                if (lista != null && !lista.isEmpty()) {
+                    for(Recensione r : lista) {
+            %>
+            <div class="recensione-card">
+                <div class="recensione-header">
+                    <span class="username-utente"><%= r.getUsername_Ut() %></span>
+                    <span class="voto-recensione">★ <%= r.getVoto() %>/5</span>
+                </div>
+                <p class="descrizione-recensione"><%= r.getDescrizione_Rec() %></p>
+            </div>
+            <%
+                }
+            } else {
+            %>
+            <p style="color: #aaa; font-style: italic;">Nessuna recensione per questo gioco. Sii il primo a inserirne una!</p>
+            <% } %>
+        </div>
     </div>
 </div>
 
@@ -120,5 +141,6 @@
         }
     }
 </script>
+<script src="${pageContext.request.contextPath}/caroselloImmagini.js"></script>
 </body>
 </html>
