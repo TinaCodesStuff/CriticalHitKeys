@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS Utente (
 );
 
 CREATE TABLE IF NOT EXISTS Ticket (
-    ID_Ticket INT PRIMARY KEY,
+    ID_Ticket INT AUTO_INCREMENT PRIMARY KEY ,
     Campo VARCHAR(20),
     Descrizione_Ticket TEXT,
     Email_Amm VARCHAR(30),
@@ -28,27 +28,8 @@ CREATE TABLE IF NOT EXISTS Ticket (
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Recensione (
-    ID_Recensione INT PRIMARY KEY,
-    Voto INT CHECK (Voto >= 1 AND Voto <= 5),
-    Descrizione_Rec TEXT,
-    Username_Ut VARCHAR(20),
-    Email_Ut VARCHAR(30),
-    FOREIGN KEY (Username_Ut, Email_Ut) REFERENCES Utente (Username_Ut, Email_Ut)
-    ON UPDATE CASCADE ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS Ordine (
-    ID_Ordine INT PRIMARY KEY,
-    Quantita INT,
-    Username_Ut VARCHAR(20),
-    Email_Ut VARCHAR(30),
-    FOREIGN KEY (Username_Ut, Email_Ut) REFERENCES Utente (Username_Ut, Email_Ut)
-    ON UPDATE CASCADE ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS Prodotto (
-    ID_Prodotto INT PRIMARY KEY,
+    ID_Prodotto INT AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(30),
     Descrizione_Prod TEXT,
     Prezzo_OG FLOAT,
@@ -61,32 +42,64 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Aggiunge (
-    ID_Ordine INT NOT NULL,
+CREATE TABLE IF NOT EXISTS Recensione (
+    ID_Recensione INT AUTO_INCREMENT PRIMARY KEY,
     ID_Prodotto INT NOT NULL,
-    PRIMARY KEY (ID_Ordine, ID_Prodotto),
-    FOREIGN KEY (ID_Ordine) REFERENCES Ordine(ID_Ordine)
+    Voto INT CHECK (Voto >= 1 AND Voto <= 5),
+    Descrizione_Rec TEXT,
+    Username_Ut VARCHAR(20),
+    Email_Ut VARCHAR(30),
+    FOREIGN KEY (Username_Ut, Email_Ut) REFERENCES Utente (Username_Ut, Email_Ut)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
+	FOREIGN KEY(ID_Prodotto) REFERENCES Prodotto(ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS Carrello (
+    ID_Carrello INT AUTO_INCREMENT PRIMARY KEY,
+    Username_Ut VARCHAR(20) NOT NULL,
+    Email_Ut VARCHAR(30) NOT NULL,
+    FOREIGN KEY (Username_Ut, Email_Ut) REFERENCES Utente (Username_Ut, Email_Ut)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Contiene (
+    ID_Carrello INT NOT NULL,
+    ID_Prodotto INT NOT NULL,
+    Quantita INT NOT NULL DEFAULT 1,
+    PRIMARY KEY (ID_Carrello, ID_Prodotto),
+    FOREIGN KEY (ID_Carrello) REFERENCES Carrello(ID_Carrello)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto)
+        ON UPDATE CASCADE ON DELETE CASCADE,
+    CHECK (Quantita > 0)
+);
+
+CREATE TABLE IF NOT EXISTS Ordine (
+    ID_Ordine INT AUTO_INCREMENT PRIMARY KEY,
+    Importo_tot FLOAT,
+    DataUltimaModifica DATETIME,
+    ID_Carrello INT NOT NULL UNIQUE,
+    FOREIGN KEY (ID_Carrello) REFERENCES Carrello(ID_Carrello)
+        ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS Genere (
-    ID_Genere INT PRIMARY KEY,
+    ID_Genere INT AUTO_INCREMENT PRIMARY KEY,
     ID_Prodotto INT,
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ChiaveDigitale (
-    ID_Prodotto INT PRIMARY KEY,
+    ID_Prodotto INT  PRIMARY KEY,
     Chiave VARCHAR(15),
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Account (
-    ID_Prodotto INT PRIMARY KEY,
+    ID_Prodotto INT  PRIMARY KEY,
     Credenziali VARCHAR(40),
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE

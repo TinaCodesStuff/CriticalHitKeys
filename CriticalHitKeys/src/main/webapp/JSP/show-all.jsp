@@ -1,5 +1,7 @@
 <%@ page import="model.Prodotto" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.ProdottoDAO" %>
+<%@ page import="model.Media" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -25,13 +27,14 @@
 </ul>
 <%
 List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
-
+ProdottoDAO service = new ProdottoDAO();
 %>
 <h1 class="catalogo">- Catalogo dei prodotti -</h1>
 <div class="container-prodotti">
-        <%for(Prodotto p : lista){%>
+        <%
+            for(Prodotto p : lista){%>
     <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
-    <div class="prodotto"><img src="${pageContext.request.contextPath}/img/placeholder.jpg"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
+    <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%>><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
     </a>
             <%}%>
 </div>

@@ -7,6 +7,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import model.Media;
 import model.Prodotto;
 import model.ProdottoDAO;
 
@@ -23,6 +24,12 @@ public class MostraProd extends HttpServlet {
 
         ProdottoDAO service = new ProdottoDAO();
         List<Prodotto> listaProdotti = service.doRetrieveAll();
+        for (Prodotto prodotto : listaProdotti) {
+            List<Media> listaMedia = service.doRetrieveMediaByProdotto(prodotto.getID_Prodotto());
+            if(!listaMedia.isEmpty()){
+                request.setAttribute("mediaP-" + prodotto.getID_Prodotto(), listaMedia.getFirst().getUrlMedia());
+            }
+        }
         request.setAttribute("listaProdotti", listaProdotti);
 
         RequestDispatcher p = request.getRequestDispatcher("JSP/show-all.jsp");

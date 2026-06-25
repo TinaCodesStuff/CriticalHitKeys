@@ -18,7 +18,7 @@ INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES
 -- 3. Popolamento Prodotto (5 record)
 -- Collegati agli Amministratori
 INSERT INTO Prodotto (ID_Prodotto, Nome, Descrizione_Prod, Prezzo_OG, Prezzo_Scontato, Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm) VALUES
-(101, 'Elden Ring', 'UN NUOVO ACTION RPG FANTASY.
+(1, 'Elden Ring', 'UN NUOVO ACTION RPG FANTASY.
 Alzati, Senzaluce, e fatti guidare dalla grazia per brandire il potere dell''Anello ancestrale.
 • Un mondo mozzafiato ricco di emozioni e mistero
 L''Interregno fa parte di un vasto continente in cui magnifici spazi aperti ed enormi segrete con un complesso design 3D sono perfettamente integrati. Durante l''esplorazione, sarai accolto dalla gioia di scoprire travolgenti minacce sconosciute.
@@ -38,7 +38,7 @@ La mitologia alla base di Elden Ring è stata creata da George R. R. Martin e ad
 La community dei Senzaluce è numerosa e attiva. I tuoi amici potrebbero già farvi parte. Puoi giocare con un massimo di altri due Senzaluce come compagni di squadra in modalità cooperativa, invitandoli con la condivisione di una password o evocandoli dal gruppo di membri della community nelle vicinanze.
 Ci sono anche ampie opportunità di affrontare altri giocatori, tramite invasioni in cooperativa, duelli su invito o le numerose opzioni di battaglia tra giocatori disponibili nelle tre arene.
 ', 59.99, 44.99, 'Single/Multi', 'FromSoftware', 25, 'admin1@chk.it'),
-(102, 'Cyberpunk 2077', 'ENTRA NEL FUTURO DISTOPICO
+(2, 'Cyberpunk 2077', 'ENTRA NEL FUTURO DISTOPICO
 Diventa il mercenario cyber-potenziato V e lotta per sopravvivere cercando gloria nell''acclamato GdR di azione e avventura a mondo aperto, Cyberpunk 2077.
 
 CREA IL CYBERPUNK SUPREMO
@@ -52,9 +52,9 @@ Relazionati con un ricco cast di personaggi con storie, sogni e tragedie persona
 
 TANTI AGGIORNAMENTI E PERFEZIONAMENTI
 Scopri missioni e automobili aggiuntive e tante migliorie qualitative con i costanti aggiornamenti che impreziosiscono le tue partite.', 49.99, 24.99, 'Single Player', 'CD Projekt Red', 50, 'admin1@chk.it'),
-(103, 'Minecraft', 'Sandbox building game.', 29.99, 29.99, 'Multiplayer', 'Mojang', 0, 'admin2@chk.it'),
-(104, 'Stray', 'Adventure game featuring a cat.', 26.99, 18.89, 'Single Player', 'BlueTwelve Studio', 30, 'staff@chk.it'),
-(105, 'FIFA 26', 'ESPERIENZA DI GIOCO RIVOLUZIONATA
+(3, 'Minecraft', 'Sandbox building game.', 29.99, 29.99, 'Multiplayer', 'Mojang', 0, 'admin2@chk.it'),
+(4, 'Stray', 'Adventure game featuring a cat.', 26.99, 18.89, 'Single Player', 'BlueTwelve Studio', 30, 'staff@chk.it'),
+(5, 'FIFA 26', 'ESPERIENZA DI GIOCO RIVOLUZIONATA
 La nuova sessione di gioco realistica offre l''esperienza più realistica mai provata nella Carriera, mentre quella per il gameplay competitivo, basata su fondamentali affinati, sulla coerenza e sulla reattività migliorata.
 
 CREA LA SQUADRA DEI TUOI SOGNI
@@ -82,52 +82,66 @@ INSERT INTO Ticket (ID_Ticket, Campo, Descrizione_Ticket, Email_Amm, Username_Ut
 (5, 'Info', 'Quando torna disponibile God of War?', 'staff@chk.it', 'Arthur_M', 'morgan@reddead.it');
 
 -- 5. Popolamento Recensione (5 record)
-INSERT INTO Recensione (ID_Recensione, Voto, Descrizione_Rec, Username_Ut, Email_Ut) VALUES
-(1, 5, 'Consegna istantanea, ottimo prezzo!', 'Geralt90', 'geralt@email.it'),
-(2, 4, 'Tutto ok, ma il supporto è lento.', 'DragonBorn', 'dovah@skyrim.com'),
-(3, 5, 'Elden Ring a metà prezzo, incredibile.', 'Ciri_05', 'ciri@kaermorhen.org'),
-(4, 1, 'Chiave non funzionante, attendo risposta.', 'VaultDweller', 'fallout@vault.com'),
-(5, 5, 'Sito affidabile, consigliato.', 'Arthur_M', 'morgan@reddead.it');
+INSERT INTO Recensione
+(ID_Recensione, ID_Prodotto, Voto, Descrizione_Rec, Username_Ut, Email_Ut)
+VALUES
+(1, 1, 5, 'Consegna istantanea, ottimo prezzo!', 'Geralt90', 'geralt@email.it'),
+(2, 2, 4, 'Tutto ok, ma il supporto è lento.', 'DragonBorn', 'dovah@skyrim.com'),
+(3, 1, 5, 'Elden Ring a metà prezzo, incredibile.', 'Ciri_05', 'ciri@kaermorhen.org'),
+(4, 5, 1, 'Chiave non funzionante, attendo risposta.', 'VaultDweller', 'fallout@vault.com'),
+(5, 3, 5, 'Sito affidabile, consigliato.', 'Arthur_M', 'morgan@reddead.it');
 
--- 6. Popolamento Ordine (5 record)
-INSERT INTO Ordine (ID_Ordine, Quantita, Username_Ut, Email_Ut) VALUES
-(501, 1, 'Geralt90', 'geralt@email.it'),
-(502, 2, 'DragonBorn', 'dovah@skyrim.com'),
-(503, 1, 'Ciri_05', 'ciri@kaermorhen.org'),
-(504, 1, 'VaultDweller', 'fallout@vault.com'),
-(505, 3, 'Arthur_M', 'morgan@reddead.it');
+-- 6. Popolamento Carrello (1 carrello per ogni utente)
+INSERT INTO Carrello (ID_Carrello, Username_Ut, Email_Ut) VALUES
+(1, 'Geralt90', 'geralt@email.it'),
+(2, 'DragonBorn', 'dovah@skyrim.com'),
+(3, 'Ciri_05', 'ciri@kaermorhen.org'),
+(4, 'VaultDweller', 'fallout@vault.com'),
+(5, 'Arthur_M', 'morgan@reddead.it');
 
--- 7. Popolamento Aggiunge (Relazione Ordine-Prodotto)
-INSERT INTO Aggiunge (ID_Ordine, ID_Prodotto) VALUES
-(501, 101),
-(502, 102),
-(502, 103),
-(503, 104),
-(504, 105);
+-- 7. Popolamento Contiene (relazione Carrello-Prodotto con Quantita)
+INSERT INTO Contiene (ID_Carrello, ID_Prodotto, Quantita) VALUES
+(1, 1, 1), -- Geralt90 ha Elden Ring
+(2, 2, 1), -- DragonBorn ha Cyberpunk 2077
+(2, 3, 1), -- DragonBorn ha anche Minecraft
+(3, 4, 1), -- Ciri_05 ha Stray
+(4, 5, 1), -- VaultDweller ha FIFA 26
+(5, 1, 1),
+(5, 3, 1),
+(5, 5, 1); -- Arthur_M ha 3 prodotti nel carrello
 
--- 8. Popolamento Genere (5 record)
+-- 8. Popolamento Ordine (collegato al carrello)
+INSERT INTO Ordine (ID_Ordine, Importo_tot, DataUltimaModifica, ID_Carrello) VALUES
+(1, 44.99, '2026-06-20 10:15:00', 1),
+(2, 54.98, '2026-06-21 12:30:00', 2),
+(3, 18.89, '2026-06-22 16:45:00', 3),
+(4, 34.99, '2026-06-23 09:10:00', 4),
+(5, 109.97, '2026-06-24 20:05:00', 5);
+
+-- 9. Popolamento Genere (5 record)
 INSERT INTO Genere (ID_Genere, ID_Prodotto) VALUES
-(1, 101), -- Action RPG
-(2, 102), -- RPG / Sci-fi
-(3, 103), -- Sandbox
-(4, 104), -- Adventure
-(5, 105); -- Sport
+(1, 1), -- Action RPG
+(2, 2), -- RPG / Sci-fi
+(3, 3), -- Sandbox
+(4, 4), -- Adventure
+(5, 5); -- Sport
 
--- 9. Popolamento ChiaveDigitale (Esempi di chiavi finte)
+-- 10. Popolamento ChiaveDigitale (Esempi di chiavi finte)
 INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES
-(101, 'ELDN-RING-44-X1'),
-(102, 'CYBR-PNK-20-77'),
-(104, 'STRY-CAT-99-PUR');
+(1, 'ELDN-RING-44-X1'),
+(2, 'CYBR-PNK-20-77'),
+(4, 'STRY-CAT-99-PUR');
 
--- 10. Popolamento Account (Esempi di credenziali finte)
+-- 11. Popolamento Account (Esempi di credenziali finte)
 INSERT INTO Account (ID_Prodotto, Credenziali) VALUES
-(103, 'mc_user:block_pass_2024'),
-(105, 'ea_sports_fan:goal_2023_psn');
+(3, 'mc_user:block_pass_2024'),
+(5, 'ea_sports_fan:goal_2023_psn');
 
+-- 12. Popolamento dei media per i prodotti
 INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media) VALUES
-('M1', 101, 'image', 'img/giochi/eldenring/eldenRingCopertina.jpeg'),
-('M2', 101, 'image', 'img/giochi/eldenring/eldenringLimgrave.jpg'),
-('M3', 101, 'video', 'img/giochi/eldenring/eldenringTrailer.mp4'),
-('M4', 102, 'image', 'img/giochi/cyberpunk/cyberpunkCopertina.jpg'),
-('M5', 102, 'image', 'img/giochi/cyberpunk/cyberpunkNightCity.png'),
-('M6', 102, 'video', 'img/giochi/cyberpunk/cyberpunkTrailer.mp4');
+('M1', 1, 'image', 'img/giochi/eldenring/eldenRingCopertina.jpeg'),
+('M2', 1, 'image', 'img/giochi/eldenring/eldenringLimgrave.jpg'),
+('M3', 1, 'video', 'img/giochi/eldenring/eldenringTrailer.mp4'),
+('M4', 2, 'image', 'img/giochi/cyberpunk/cyberpunkCopertina.jpg'),
+('M5', 2, 'image', 'img/giochi/cyberpunk/cyberpunkNightCity.png'),
+('M6', 2, 'video', 'img/giochi/cyberpunk/cyberpunkTrailer.mp4');

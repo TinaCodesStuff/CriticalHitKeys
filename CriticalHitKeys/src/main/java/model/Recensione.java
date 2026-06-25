@@ -10,6 +10,7 @@ public class Recensione {
      */
 
     private int ID_Recensione;
+    private int ID_Prodotto;
     private int Voto;
     private String Descrizione_Rec;
     private String Username_Ut;
@@ -21,6 +22,14 @@ public class Recensione {
 
     public void setID_Recensione(int ID_Recensione) {
         this.ID_Recensione = ID_Recensione;
+    }
+
+    public int getID_Prodotto() {
+        return ID_Prodotto;
+    }
+
+    public void setID_Prodotto(int ID_Prodotto) {
+        this.ID_Prodotto = ID_Prodotto;
     }
 
     public int getVoto() {

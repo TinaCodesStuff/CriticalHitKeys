@@ -46,6 +46,7 @@ public class ProdottoDAO {
             while(rs.next()) {
 
                 p.setNome(rs.getString("Nome"));
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
                 p.setDescrizione(rs.getString("Descrizione_Prod"));
                 p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
                 p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));

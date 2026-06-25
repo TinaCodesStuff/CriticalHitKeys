@@ -2,6 +2,7 @@
 <%@ page import="model.Recensione" %>
 <%@ page import="java.util.*" %>
 <%@ page import="model.Media" %>
+<%@ page import="model.Utente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/paginaProdotto.css"/> <%
 
     Prodotto prod = (Prodotto) request.getAttribute("prodotto");
+    Utente u = (Utente) session.getAttribute("utenteLoggato");
 %>
     <title><%= prod != null ? prod.getNome() : "Dettaglio Prodotto" %></title>
 </head>
@@ -90,9 +92,21 @@
 
     <div class="product-center">
         <button type="button" class="bottone-recensione" onclick="mostraTextArea()">Inserisci una recensione! </button><br>
-        <form method="get">
+        <form method="post" action="recensione-servlet">
             <div id = "boxTextarea" style="display: none">
             <textarea name="testoRecensione">Questo gioco è stato molto toccante per me...</textarea>
+                <label>Voto complessivo:</label>
+                <input name="voto" type="number" min="1" max="5" step="1" value="1" >
+                <% if(u != null) { %>
+                <input  name ="id_ut" type="hidden" value = <%=u.getEmail_Ut()%>>
+                <input  name ="username_ut" type="hidden" value = <%=u.getUsername_Ut()%>>
+                <% } %>
+                <input name ="prodotto" type="hidden" value = <%=request.getAttribute("prodotto")%>>
+                <%
+                    HttpSession sess = request.getSession();
+                    sess.setAttribute("prodotto-afterRecensione", prod);
+                    sess.setAttribute("media-afterRecensione", request.getAttribute("listaMedia"));
+                %>
                 <input type = "submit" value = "Invia recensione!" class="submit-recensione">
             </div>
         </form>
