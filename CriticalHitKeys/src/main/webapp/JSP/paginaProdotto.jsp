@@ -20,7 +20,7 @@
     <li class="menu-left"><a href="${pageContext.request.contextPath}/index.html"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
     <li class="menu-center">
-        <a href="">ASSISTENZA</a>
+        <a href="ticket-servlet">ASSISTENZA</a>
         <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
         <a href="mostraProd">CATALOGO</a>
     </li>
@@ -104,6 +104,7 @@
                 <input name ="prodotto" type="hidden" value = <%=request.getAttribute("prodotto")%>>
                 <%
                     HttpSession sess = request.getSession();
+                    //Creo la sessione per salvarmi il contesto della pagina quindi il prodotto stesso e i media per ricaricarli dopo aver aggiunto la recensione
                     sess.setAttribute("prodotto-afterRecensione", prod);
                     sess.setAttribute("media-afterRecensione", request.getAttribute("listaMedia"));
                 %>

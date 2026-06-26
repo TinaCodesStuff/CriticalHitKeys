@@ -47,7 +47,6 @@ public class TicketServlet extends HttpServlet {
 
         if (username != null && email != null) {
             TicketDAO ticketDAO = new TicketDAO();
-            HttpSession session = request.getSession();
 
             Ticket ticket = new Ticket();
             ticket.setUsernameUtente(username);
