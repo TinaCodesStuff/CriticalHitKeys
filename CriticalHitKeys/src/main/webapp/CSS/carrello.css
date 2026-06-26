@@ -1,0 +1,220 @@
+body {
+    margin: 0;
+    padding-bottom: 60px;
+}
+
+.background-sito{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+    filter: blur(3px);
+    transform: scale(1.05);
+
+    z-index: -1;
+    pointer-events: none;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: /*rgba(15, 15, 15, 0.85)*/  rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul li>a {
+    display: block;
+    color: #F6E8EA;
+    padding: 16px 20px;
+    text-decoration: none;
+}
+
+li.menu-center a:last-child {
+    border-right: none;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+
+.menu-center {
+    display: flex;
+    font-family: "Roboto", sans-serif;
+    text-decoration: underline;
+
+    text-underline-offset: 6px;
+
+    text-decoration-thickness: 2px;
+    text-decoration-color: white;
+
+}
+
+.menu-right {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.menu-right img {
+    display: block;
+}
+
+.menu-left {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    margin-top: 10px;
+
+}
+.menu-left img {
+    display: block;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    background-color: /*rgba(15, 15, 15, 0.85)*/ rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.carrello-container{
+    display: flex;
+    flex-direction: column;
+
+    margin: 80px;
+    margin-top: 120px; /* spazio dalla navbar */
+
+    padding: 20px;
+    border-radius: 15px;
+
+    color: white;
+    font-family: "Roboto", sans-serif;
+
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+
+    filter: drop-shadow(0px 0px 8px black);
+}
+
+.carrello-container h2{
+    text-align: center;
+    color: white;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.container-prodotti ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container-prodotti li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 12px;
+    padding: 15px 20px;
+
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+
+    color: #F6E8EA;
+}
+
+.nome-prodotto{
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.prezzi{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.prezzo-originale{
+    color: #b0b0b0;
+    text-decoration: line-through;
+    font-size: 15px;
+}
+
+.prezzo-scontato{
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sconto{
+    background-color: #7c3aed;
+    color: white;
+
+    padding: 4px 8px;
+    border-radius: 15px;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.container-prodotti li:last-child{
+    margin-bottom: 0;
+}
+
+.container-prodotti li:hover{
+    background-color: rgba(255,255,255,0.08);
+    border-color: #7c3aed;
+    transform: translateY(-2px);
+}
+
+.carrello-vuoto{
+    width: 100%;
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: #F6E8EA;
+    font-size: 22px;
+    font-style: italic;
+}
+.carrello-vuoto{
+    text-align: center;
+    padding: 50px 20px;
+
+    color: white;
+    font-size: 22px;
+    font-style: italic;
+}

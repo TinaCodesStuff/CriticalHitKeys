@@ -7,6 +7,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -55,6 +59,14 @@ public class AuthServlet extends HttpServlet {
         Utente utente = utenteDAO.doRetrieveUser(emailUsername);
 
         if (utente == null) {
+            request.setAttribute("authError", "Credenziali non valide.");
+            forwardToAuth(request, response);
+            return;
+        }
+
+        String hashedInput = hashPassword(password);
+
+        if (!utente.getPassword_Ut().equals(hashedInput)) {
             request.setAttribute("authError", "Credenziali non valide.");
             forwardToAuth(request, response);
             return;
@@ -114,7 +126,7 @@ public class AuthServlet extends HttpServlet {
         Utente utente = new Utente();
         utente.setUsername_Ut(username);
         utente.setEmail_Ut(email);
-        utente.setPassword_Ut(password);
+        utente.setPassword_Ut(hashPassword(password));
 
         utenteDAO.doSave(utente);
 
@@ -166,5 +178,19 @@ public class AuthServlet extends HttpServlet {
         int at = email.indexOf('@');
         int dot = email.lastIndexOf('.');
         return at > 0 && dot > at + 1 && dot < email.length() - 1;
+    }
+
+    public String hashPassword(String password) {
+        try {
+            MessageDigest digest =
+                    MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(password.getBytes(StandardCharsets.UTF_8));
+            String passwordHash = String.format("%040x", new
+                    BigInteger(1, digest.digest()));
+            return passwordHash;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
