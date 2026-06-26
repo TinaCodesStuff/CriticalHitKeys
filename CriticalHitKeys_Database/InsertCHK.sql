@@ -20,21 +20,21 @@ INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES
 INSERT INTO Prodotto (ID_Prodotto, Nome, Descrizione_Prod, Prezzo_OG, Prezzo_Scontato, Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm) VALUES
 (1, 'Elden Ring', 'UN NUOVO ACTION RPG FANTASY.
 Alzati, Senzaluce, e fatti guidare dalla grazia per brandire il potere dell''Anello ancestrale.
-• Un mondo mozzafiato ricco di emozioni e mistero
+* Un mondo mozzafiato ricco di emozioni e mistero
 L''Interregno fa parte di un vasto continente in cui magnifici spazi aperti ed enormi segrete con un complesso design 3D sono perfettamente integrati. Durante l''esplorazione, sarai accolto dalla gioia di scoprire travolgenti minacce sconosciute.
 La conoscenza del terreno e dei suoi segreti ti aiuterà a superare i nemici e a sconfiggere boss formidabili... o a condurre i giocatori invasori dritti in trappola.
 
-• Sconfiggi avversari impegnativi in intensi combattimenti
+* Sconfiggi avversari impegnativi in intensi combattimenti
 Il combattimento in ELDEN RING è semplice da imparare, ma offre livelli di competenza non facili da raggiungere. Per diventare Lord ancestrale, dovrai trovare il giusto equilibrio tra attaccare ed evitare danni, usare un''ampia varietà di armi, incantesimi ed evocazioni, e perfezionare il tuo tempismo per sfruttare le debolezze degli avversari.
 
-• Crea e sviluppa il tuo personaggio
+* Crea e sviluppa il tuo personaggio
 Oltre a personalizzare l''aspetto del personaggio, ci sono tantissimi modi per combinare armi, corazze, oggetti utilizzabili e magie da equipaggiare. Potrai sviluppare il personaggio in base al tuo stile di gioco.
 Non importa se prediligi audaci scontri fisici, incantesimi tattici o la discreta arte della furtività, troverai sempre l''equipaggiamento adatto alle tue scelte.
 
-• Una storia epica nata dalla penna di George R. R. Martin
+* Una storia epica nata dalla penna di George R. R. Martin
 La mitologia alla base di Elden Ring è stata creata da George R. R. Martin e adattata in una ricca storia a più livelli. L''incrocio di obiettivi e desideri dei personaggi porta a una trama intensa che si ripercuote in tutto l''Interregno. Gli eventi di gioco possono svilupparsi in modi diversi, a seconda dei tuoi interventi.
 
-• Gioca insieme a una vasta comunità globale
+* Gioca insieme a una vasta comunità globale
 La community dei Senzaluce è numerosa e attiva. I tuoi amici potrebbero già farvi parte. Puoi giocare con un massimo di altri due Senzaluce come compagni di squadra in modalità cooperativa, invitandoli con la condivisione di una password o evocandoli dal gruppo di membri della community nelle vicinanze.
 Ci sono anche ampie opportunità di affrontare altri giocatori, tramite invasioni in cooperativa, duelli su invito o le numerose opzioni di battaglia tra giocatori disponibili nelle tre arene.
 ', 59.99, 44.99, 'Single/Multi', 'FromSoftware', 25, 'admin1@chk.it'),
