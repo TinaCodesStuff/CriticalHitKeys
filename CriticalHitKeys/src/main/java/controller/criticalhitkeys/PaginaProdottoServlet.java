@@ -25,7 +25,6 @@ public class PaginaProdottoServlet extends HttpServlet {
         ProdottoDAO service = new ProdottoDAO();
         RecensioneDAO recensioneDAO = new RecensioneDAO();
         String id = request.getParameter("id");
-        System.out.println("id: " + id);
 
         if (id != null && !id.isEmpty()) {
             int idProdotto = Integer.parseInt(id);

@@ -20,7 +20,7 @@
 
     <li class="menu-right">
         <a href="auth" aria-current="page"><img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40" height="40" alt="Accesso per utenti/admin"></a>
-        <a href=""><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello in cui sono salvati i prodotti"></a>
+        <a href="carrello-servlet"><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello in cui sono salvati i prodotti"></a>
     </li>
 </ul>
 

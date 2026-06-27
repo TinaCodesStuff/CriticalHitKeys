@@ -218,3 +218,49 @@ h1{
     font-size: 22px;
     font-style: italic;
 }
+
+.totale-carrello{
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 18px 22px;
+
+    background: rgba(124, 58, 237, 0.25);
+    border: 2px solid #7c3aed;
+    border-radius: 16px;
+
+    backdrop-filter: blur(10px);
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.totale-testo{
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+.btn-acquisto{
+    background-color: #7c3aed;
+    border: none;
+    padding: 10px 18px;
+
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+
+    border-radius: 10px;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-acquisto:hover{
+    background-color: #6d28d9;
+    transform: scale(1.05);
+}
