@@ -11,6 +11,8 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import model.CarrelloDAO;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -129,6 +131,9 @@ public class AuthServlet extends HttpServlet {
         utente.setPassword_Ut(hashPassword(password));
 
         utenteDAO.doSave(utente);
+
+        CarrelloDAO carrelloDAO = new CarrelloDAO();
+        carrelloDAO.doSave(utente);
 
         response.sendRedirect(request.getContextPath() + "/auth?registered=ok");
     }

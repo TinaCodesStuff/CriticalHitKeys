@@ -14,6 +14,8 @@ public class CarrelloDAO {
             ps.setString(1, u.getUsername_Ut());
             ps.setString(2, u.getEmail_Ut());
 
+
+
             if(ps.executeUpdate() != 1){
                 System.out.println("Errore nell'INSERT del Carrello");
             }

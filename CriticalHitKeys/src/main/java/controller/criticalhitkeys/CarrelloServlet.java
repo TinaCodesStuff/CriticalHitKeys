@@ -28,9 +28,6 @@ public class CarrelloServlet extends HttpServlet{
 
         HttpSession session = request.getSession();
 
-
-        System.out.println("id: "+ id);
-
         List<Prodotto> listaProdotti = new ArrayList<>();   //listaProdotti in caso si stia usando gli utenti del DB, oppure nel caso non avvengano modifiche
         Map<Integer, Integer> quantita = new HashMap<>();   //inzializziamo la quanità che è rappresentata come una HashMap con la coppia (ID_Prodotto -> quantita)
 
@@ -43,15 +40,11 @@ public class CarrelloServlet extends HttpServlet{
             listaProdotti = carrelloDAO.doRetrieveAllByUtente(u);
             quantita = contieneDAO.doRetrieveQuantitaById_Carrello(id_Carrello);
 
-            System.out.println("lista utente - CarrelloServlet: " + listaProdotti);
-            System.out.println("quantita - CarrelloServlet: " + quantita);
-            if(!listaProdotti.isEmpty()){
-                if( id > 0){
+            if(!listaProdotti.isEmpty() && id > 0){
                     ProdottoDAO prodottoDAO = new ProdottoDAO();
                     boolean presente = false;
                     for (Prodotto p : listaProdotti) {
                         if (p.getID_Prodotto() == id) {
-                            System.out.println("id_prod: " +p.getID_Prodotto());
                             presente = true;
                             quantita.merge(id, 1, Integer::sum); //qui usiamo la HashTable, e incrementiamo di 1 il valore della quanità
 
@@ -71,13 +64,20 @@ public class CarrelloServlet extends HttpServlet{
 
 
 
-                }
                 request.setAttribute("listaProdotti", listaProdotti);
                 request.setAttribute("quantita", quantita);
             }
-            else{   //caso in cui non ci sono prodotti, restituisco la lista vuota
-                request.setAttribute("listaProdotti", listaProdotti);   //qui vi è solo ArrayList inizializzato senza alcun prodotto
-                request.setAttribute("quantita", quantita); //in questo caso essendo solo inizializzata, non ci sarà nulla dentro
+            else{   //caso in cui non ci sono prodotti
+                if(id > 0){ //verifico  se ci sta un prodotto da aggiungere
+                    ProdottoDAO prodottoDAO = new ProdottoDAO();
+                    listaProdotti.add(prodottoDAO.doRetrieveById(id));  //aggiungo il prodotto nella lista
+                    quantita.merge(id, 1, Integer::sum);
+                    contieneDAO.doSave(new Contiene(id, id_Carrello, quantita.get(id)));    //memorizziamo il nuovo prodotto nel carrello con la quantità usando la tabella associativa Contiene
+
+                }
+                request.setAttribute("listaProdotti", listaProdotti);   //qui vi è solo ArrayList inizializzato senza alcun prodotto, altrimenti mi restituisce la lista con il prodotto aggiunto
+                request.setAttribute("quantita", quantita); //in questo caso essendo solo inizializzata, non ci sarà nulla dentro. Se ho aggiunto un prodotto al carrello, allora viene restiuita la lista con il nuovo prodotto
+
             }
         }
         else if(id != 0){ //controlliamo il caso in cui l'utente non è registrato/loggato, ma aggiunge qualcosa al carrello
