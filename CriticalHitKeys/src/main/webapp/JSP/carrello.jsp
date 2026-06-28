@@ -39,16 +39,16 @@
 <div class="carrello-container">
   <h2>Il tuo carrello</h2>
 
-  <%  //qui calcoliamo il totale dei prodotti, nel caso di carrello vuoto mostrerà 0
+  <%  //qui calcoliamo il totale del prezzo dei prodotti
     double totale = 0;
 
-    if(lista != null && quantita != null){
+    if(!lista.isEmpty() && !quantita.isEmpty()){
       for(Prodotto p : lista){
         int q = quantita.get(p.getID_Prodotto()) != null
                 ? quantita.get(p.getID_Prodotto())
                 : 1; //qui prende la quantità di ogni prodotto e se non è definità metterà di default 1
-
         totale += p.getPrezzo_scontato() * q; //qui calcola l'effettivo prezzo totale di ogni prodotto moltiplicandolo per la quanittà richiesta
+
       }
     }
 
@@ -71,7 +71,7 @@
           <span class="prezzo-originale">€ <%= p.getPrezzo_OG() %></span>
           <span class="prezzo-scontato">€ <%= p.getPrezzo_scontato() %></span>
           <span class="sconto">-<%= p.getSconto() %>%</span>
-          <select name="quantita">
+          <select name="quantita" class="quantita-AJAX" data-id="<%= p.getID_Prodotto() %>">
             <% for(int i = 1; i <= 10; i++){ //qui creiamo il select per le quantità dei prodotti, inoltre vediamo se i == q allora è lo imposta a "select", altrimenti no. Inoltre le quantità di stesso prodotto sono massimo 10%>
             <option value="<%= i %>" <%= (i == q) ? "selected" : "" %>>
               <%= i %>
@@ -92,7 +92,7 @@
     </div>
     <% } %>
     <div class="totale-carrello">
-      <div class="totale-testo">
+      <div id = "totale-provv" class="totale-testo">
         Totale: € <%= String.format("%.2f", totale) %>
       </div>
 
@@ -106,5 +106,11 @@
 <div class="footer">
   <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
 </div>
+<script>
+  const contextPath = "<%= request.getContextPath() %>";
+</script>
+
+<script src="${pageContext.request.contextPath}/carrelloAggiornamentoAJAX.js">
+</script>
 </body>
 </html>

@@ -8,6 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarrelloDAO {
+    public void doSave(Utente u) {
+        try(Connection conn = ConPool.getConnection()){
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO Carrello (Username_Ut, Email_Ut) VALUES (?, ?)");
+            ps.setString(1, u.getUsername_Ut());
+            ps.setString(2, u.getEmail_Ut());
+
+            if(ps.executeUpdate() != 1){
+                System.out.println("Errore nell'INSERT del Carrello");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public List<Prodotto> doRetrieveAllByUtente(Utente utente) {
         try(Connection conn = ConPool.getConnection()){
             List<Prodotto> lista = new ArrayList<>();
@@ -33,6 +48,25 @@ public class CarrelloDAO {
             }
 
             return lista;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int doRetrieveID_Carrello(Utente utente) {
+        try(Connection conn = ConPool.getConnection()){
+            PreparedStatement s = conn.prepareStatement("SELECT ID_Carrello FROM Carrello WHERE Username_Ut = ? AND Email_Ut = ?");
+            s.setString(1, utente.getUsername_Ut());
+            s.setString(2, utente.getEmail_Ut());
+
+            ResultSet rs = s.executeQuery();
+
+            if(rs.next()){
+                return rs.getInt("ID_Carrello");
+            } else{
+                return 0;
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
