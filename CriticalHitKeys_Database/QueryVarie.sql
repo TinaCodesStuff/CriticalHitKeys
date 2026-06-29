@@ -7,4 +7,7 @@ SELECT *
 FROM Recensione;
 
 SELECT *
+FROM Utente;
+
+SELECT *
 FROM Ticket;

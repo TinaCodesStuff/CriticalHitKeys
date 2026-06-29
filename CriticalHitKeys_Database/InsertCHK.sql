@@ -151,18 +151,80 @@ INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media) VALUES
 ('M1', 1, 'image', 'img/giochi/eldenring/eldenRingCopertina.jpeg'),
 ('M2', 1, 'image', 'img/giochi/eldenring/eldenringLimgrave.jpg'),
 ('M3', 1, 'video', 'img/giochi/eldenring/eldenringTrailer.mp4'),
+
 ('M4', 2, 'image', 'img/giochi/cyberpunk/cyberpunkCopertina.jpg'),
 ('M5', 2, 'image', 'img/giochi/cyberpunk/cyberpunkNightCity.png'),
 ('M6', 2, 'video', 'img/giochi/cyberpunk/cyberpunkTrailer.mp4'),
+
 ('M7', 3, 'image', 'img/giochi/minecraft/minecraftCopertina.jpg'),
-('M8', 4, 'image', 'img/giochi/stray/strayCopertina.png'),
-('M9', 5, 'image', 'img/giochi/fifa26/fifa26Copertina.jpg'),
-('M10', 6, 'image', 'img/giochi/thewolfamongus/thewolfamongusCopertina.jpg'),
-('M11', 7, 'image', 'img/giochi/baldursgate3/baldursgate3Copertina.jpg'),
-('M12', 8, 'image', 'img/giochi/lifeisstrange/lifeisstrangeCopertina.jpg'),
-('M13', 9, 'image', 'img/giochi/devilmaycry5/devilmaycry5Copertina.jpg'),
-('M14', 10, 'image', 'img/giochi/thewitcher3/thewitcher3Copertina.jpg'),
-('M15', 10, 'image', 'img/giochi/reddeadredemption2/reddeadredemption2.jpg'),
-('M16', 11, 'image', 'img/giochi/hollowknight/hollowknightCopertina.jpg'),
-('M17', 12, 'image', 'img/giochi/hades/hadesCopertina.png'),
-('M18', 13, 'image', 'img/giochi/godofwar/godofwarCopertina.jpg');
+('M8', 3, 'image', 'img/giochi/minecraft/minecraftScreenshot1.png'),
+
+('M9', 4, 'image', 'img/giochi/stray/strayCopertina.png'),
+('M10', 4, 'image', 'img/giochi/stray/strayScreenshot1.png'),
+
+('M11', 5, 'image', 'img/giochi/fifa26/fifa26Copertina.jpg'),
+('M12', 5, 'image', 'img/giochi/fifa26/fifa26Screenshot1.jpg'),
+
+('M13', 6, 'image', 'img/giochi/thewolfamongus/thewolfamongusCopertina.jpg'),
+('M14', 6, 'image', 'img/giochi/thewolfamongus/thewolfamongusScreenshot1.jpg'),
+
+('M15', 7, 'image', 'img/giochi/baldursgate3/baldursgate3Copertina.jpg'),
+('M16', 7, 'image', 'img/giochi/baldursgate3/baldursgate3Screenshot1.jpg'),
+
+('M17', 8, 'image', 'img/giochi/lifeisstrange/lifeisstrangeCopertina.jpg'),
+('M18', 8, 'image', 'img/giochi/lifeisstrange/lifeisstrangeScreenshot1.jpg'),
+
+('M19', 9, 'image', 'img/giochi/devilmaycry5/devilmaycry5Copertina.jpg'),
+('M20', 9, 'image', 'img/giochi/devilmaycry5/devilmaycry5Screenshot1.jpg'),
+
+('M21', 10, 'image', 'img/giochi/thewitcher3/thewitcher3Copertina.jpg'),
+('M22', 10, 'image', 'img/giochi/thewitcher3/thewitcher3Screenshot1.jpg'),
+
+('M23', 11, 'image', 'img/giochi/reddeadredemption2/reddeadredemption2Copertina.jpg'),
+('M24', 11, 'image', 'img/giochi/reddeadredemption2/reddeadredemption2Screenshot1.png'),
+
+('M25', 12, 'image', 'img/giochi/hollowknight/hollowknightCopertina.jpg'),
+('M26', 12, 'image', 'img/giochi/hollowknight/hollowknightScreenshot1.png'),
+
+('M27', 13, 'image', 'img/giochi/hades/hadesCopertina.png'),
+('M28', 13, 'image', 'img/giochi/hades/hadesScreenshot1.jpg'),
+
+('M29', 14, 'image', 'img/giochi/godofwar/godofwarCopertina.jpg'),
+('M30', 14, 'image', 'img/giochi/godofwar/godofwarScreenshot1.jpg'),
+
+('M31', 15, 'image', 'img/giochi/residentevil4/residentevil4Copertina.jpeg'),
+('M32', 15, 'image', 'img/giochi/residentevil4/residentevil4Screenshot1.jpg'),
+
+('M33', 16, 'image', 'img/giochi/detroitbecomehuman/detroitbecomehumanCopertina.jpg'),
+('M34', 16, 'image', 'img/giochi/detroitbecomehuman/detroitbecomehumanScreenshot1.png'),
+
+('M35', 17, 'image', 'img/giochi/nierautomata/nierautomataCopertina.jpg'),
+('M36', 17, 'image', 'img/giochi/nierautomata/nierautomataScreenshot1.jpg'),
+
+('M37', 18, 'image','img/giochi/sekiro/sekiroCopertina.jpg'),
+('M38', 18, 'image', 'img/giochi/sekiro/sekiroScreenshot1.jpg'),
+
+('M39', 19, 'image', 'img/giochi/outerwilds/outerwildsCopertina.jpeg'),
+('M40', 19, 'image', 'img/giochi/outerwilds/outerwildsScreenshot1.jpg'),
+
+('M41', 20, 'image', 'img/giochi/discoelysium/discoelysiumCopertina.png'),
+('M42', 20, 'image', 'img/giochi/discoelysium/discoelysiumScreenshot1.jpg'),
+
+('M43', 21, 'image', 'img/giochi/armoredcoreVI/armoredcoreVICopertina.png'),
+('M44', 21, 'image', 'img/giochi/armoredcoreVI/armoredcoreVIScreenshot1.jpeg'),
+
+('M45', 22, 'image', 'img/giochi/europauniversalisV/europauniversalisVCopertina.jpg'),
+('M46', 22, 'image', 'img/giochi/europauniversalisV/europauniversalisVScreenshot1.jpg'),
+
+('M47', 23, 'image', 'img/giochi/thelastofuspart2/thelastofuspart2Copertina.jpg'),
+('M48', 23, 'image', 'img/giochi/thelastofuspart2/thelastofuspart2Screenshot1.jpeg'),
+
+('M49', 24, 'image', 'img/giochi/watchdogs2/watchdogs2Copertina.jpg'),
+('M50', 25, 'image', 'img/giochi/pragmata/pragmataCopertina.jpg'),
+('M51', 26, 'image', 'img/giochi/monsterhunterworld/monsterhunterworldCopertina.jpg'),
+('M52', 27, 'image', 'img/giochi/doometernal/doometernalCopertina.jpg'),
+('M53', 28, 'image', 'img/giochi/alanwake2/alanwake2Copertina.jpg'),
+('M54', 29, 'image', 'img/giochi/starwarsjedi/starwarsjediCopertina.jpg'),
+('M55', 30, 'image', 'img/giochi/persona5royal/persona5royalCopertina.png'),
+('M56', 31, 'image', 'img/giochi/masseffect/masseffectCopertina.jpg'),
+('M57', 32, 'image', 'img/giochi/deathstranding/deathstrandingCopertina.jpg');

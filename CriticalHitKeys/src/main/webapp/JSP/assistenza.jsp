@@ -17,7 +17,7 @@
 <!-- NAVBAR -->
 <div class="background-sito"></div>
 <ul>
-    <li class="menu-left"><a href="${pageContext.request.contextPath}/index.html"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
+    <li class="menu-left"><a href="${pageContext.request.contextPath}/homepage.jsp"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
     <li class="menu-center">
         <a href="ticket-servlet">ASSISTENZA</a>
