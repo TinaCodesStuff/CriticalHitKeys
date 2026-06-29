@@ -1,3 +1,9 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="model.Prodotto" %>
+<%@ page import="java.util.List" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,41 +41,23 @@
             <input type="submit" value="Cerca">
         </form>
     </div>
-
+    <% List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaSuggested");%>
     <h1 class="suggested">- CONSIGLIATI -</h1>
     <div class="container-prodotti">
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
+    <% for(Prodotto p : lista){%>
+        <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
+            <div class="prodotto"><img
 
-        </div>
+                    <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%>
+                    src="${pageContext.request.contextPath}/img/placeholder.jpg"
+                    <% } else { %>
+                    src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%>
+                    <%}%>>
 
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
+                <div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
 
-        </div>
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
-
-        </div>
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
-
-        </div>
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
-
-        </div>
-        <div class="prodotto">
-            <img src="img/placeholder.jpg">
-            Sono un prodotto!
-
-        </div>
-    </div>
+        </a>
+    <%}%>
     <div class = "footer">
         <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
     </div>

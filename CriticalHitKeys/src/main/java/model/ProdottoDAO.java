@@ -86,4 +86,33 @@ public class ProdottoDAO {
         return listaMedia;
     }
 
+    public List<Prodotto> doRetrieveSuggestProduct () {
+        try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto LIMIT 7");
+
+            ResultSet rs = s.executeQuery();
+
+            List<Prodotto> listaProdotto = new ArrayList<>();   //qui memorizzo tutti i Prodotti consigliati
+
+            while(rs.next()) {  //qui per ogni prodotto creo un istanza della classe Prodotto, poi la memorizzo nella lista
+                Prodotto p = new Prodotto();
+                p.setNome(rs.getString("Nome"));
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+                p.setSconto(rs.getInt("Sconto"));
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaProdotto.add(p);
+            }
+            return listaProdotto;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

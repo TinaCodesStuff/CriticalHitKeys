@@ -10,7 +10,7 @@
 <body>
 <div class="background-sito"></div>
 <ul>
-    <li class="menu-left"><a href="${pageContext.request.contextPath}/homepage.jsp"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo piccolo di Critical Hit Keys"></a></li>
+    <li class="menu-left"><a href="init-servlet"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
     <li class="menu-center">
         <a href="ticket-servlet">ASSISTENZA</a>

@@ -162,6 +162,7 @@ input[type=submit]{
 }
 
 .container-prodotti{
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -172,7 +173,7 @@ input[type=submit]{
 .prodotto{
     flex: 1 1 300px; /* per allargare, restringere partendo dalla base 300px*/
     min-width: 250px;
-    max-width: 400px;
+    max-width: 250px;
 
     background-color: rgba(26, 12, 40, 0.85);
     backdrop-filter: blur(10px);
@@ -200,6 +201,24 @@ html.products-animate .prodotto {
 html.products-animate .prodotto.product-visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+.nome-prezzi-Box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.prezzi-Box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+.sconto-Box{
+    background: #7c3aed;
+    color: white;
+    font-weight: 700;
+    padding: 6px 12px;
 }
 
 
