@@ -28,7 +28,15 @@
 <%
 List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 %>
-<h1 class="catalogo">- Catalogo dei prodotti -</h1>
+<h1 class="catalogo">CATALOGO DEI PRODOTTI</h1>
+
+<div class="container-bottoneCerca">
+    <form>
+        <input type="search" name="search" placeholder="Cerca un prodotto!">
+        <input type="submit" value="Cerca">
+    </form>
+</div>
+
 <div class="container-prodotti">
         <%
             for(Prodotto p : lista){%>

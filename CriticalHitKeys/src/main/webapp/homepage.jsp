@@ -42,7 +42,7 @@
         </form>
     </div>
     <% List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaSuggested");%>
-    <h1 class="suggested">- CONSIGLIATI -</h1>
+    <h1 class="suggested">PRODOTTI CONSIGLIATI</h1>
     <div class="container-prodotti">
     <% for(Prodotto p : lista){%>
         <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->

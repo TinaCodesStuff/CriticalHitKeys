@@ -122,4 +122,282 @@ public class ProdottoDAO {
         }
     }
 
+    public List<Prodotto> doRetrieveProdottoByNome (String nome) {
+
+        List<Prodotto> listaByNome = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p" +
+
+                    "WHERE p.Nome LIKE ?");
+
+            s.setString(1, nome);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaByNome.add(p);
+
+            }
+
+            return listaByNome;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+
+
+    public List<Prodotto> doRetrieveProdottoByGenere (String tipo) {
+
+        List<Prodotto> listaProdotti = new ArrayList<>();
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT p.ID_Prodotto" +
+
+                    "FROM Prodotto p" +
+
+                    "JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto" +
+
+                    "WHERE g.Tipo = ?");
+
+            s.setString(1, tipo);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaProdotti.add(p);
+
+            }
+
+            return listaProdotti;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+
+
+    public List<Prodotto> doRetrieveProdottoByCasaSviluppatrice (String casaSviluppatrice) {
+
+        List<Prodotto> lista = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Casa_Sviluppatrice = ?");
+
+            s.setString(1, casaSviluppatrice);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                lista.add(p);
+
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+
+
+    public List<Prodotto> doRetrieveProdottoByModalitaGioco (String modalitaGioco) {
+
+        List<Prodotto> lista = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p " +
+
+                    "WHERE p.Modalita_Gioco LIKE ? ");
+
+            s.setString(1, modalitaGioco);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                lista.add(p);
+
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+    public List<Prodotto> doRetrieveProdottoByPrezzo (float prezzoMin, float prezzoMax) {
+
+        List<Prodotto> listaByPrezzo = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Podotto " +
+
+                    " WHERE Prezzo_Scontato BETWEEN ? AND ?");
+
+            s.setFloat(1, prezzoMin);
+
+            s.setFloat(2, prezzoMax);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaByPrezzo.add(p);
+
+            }
+
+            return listaByPrezzo;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
 }

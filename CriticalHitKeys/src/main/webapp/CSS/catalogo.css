@@ -178,6 +178,43 @@ html.products-animate .prodotto.product-visible {
 
 }
 
+.container-bottoneCerca form{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 50%;
+
+    margin: 30px auto 0 auto;
+    padding: 0;
+    position: relative;
+    z-index: 20;
+}
+
+input[type=search]{
+    flex: 4;
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(20px);
+    margin: 0;
+    border-width: 2px;
+    border-color: black;
+    height: 30px;
+    color: white;
+
+    border-radius: 15px 0 0 15px;
+    padding: 0 15px;
+}
+
+input[type=submit]{
+    flex: 1;
+    background-color: #F6E8EA;
+    height: 30px;
+    border-radius: 0 15px 15px 0;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html.products-animate .prodotto {
         opacity: 1;
