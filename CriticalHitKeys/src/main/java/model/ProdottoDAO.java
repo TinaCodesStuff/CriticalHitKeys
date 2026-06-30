@@ -86,9 +86,16 @@ public class ProdottoDAO {
         return listaMedia;
     }
 
-    public List<Prodotto> doRetrieveSuggestProduct () {
+    public List<Prodotto> doRetrieveSuggestProduct (String[] suggested) {
         try (Connection conn = ConPool.getConnection()) {
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto LIMIT 7");
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome IN (?, ?, ?, ?, ?, ?)");
+
+            s.setString(1, suggested[0]);
+            s.setString(2, suggested[1]);
+            s.setString(3, suggested[2]);
+            s.setString(4, suggested[3]);
+            s.setString(5, suggested[4]);
+            s.setString(6, suggested[5]);
 
             ResultSet rs = s.executeQuery();
 

@@ -19,10 +19,10 @@ public class InitServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
+        String[] suggested = {"The Wolf Among Us", "Cyberpunk 2077", "Life is Strange", "Watch Dogs 2", "Baldur's Gate 3", "Devil May Cry 5"};   //nomi dei prodotti consigliati
         ProdottoDAO prodottoDAO = new ProdottoDAO();
 
-        List<Prodotto> listaSuggested = prodottoDAO.doRetrieveSuggestProduct();    //chiamo la funzione che mi restituirà i Prodotti che sono consigliati
+        List<Prodotto> listaSuggested = prodottoDAO.doRetrieveSuggestProduct(suggested);    //chiamo la funzione che mi restituirà i Prodotti che sono consigliati
 
         for (Prodotto prodotto : listaSuggested) {
             List<Media> listaMedia = prodottoDAO.doRetrieveMediaByProdotto(prodotto.getID_Prodotto());
