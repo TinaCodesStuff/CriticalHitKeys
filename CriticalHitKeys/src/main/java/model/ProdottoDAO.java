@@ -130,11 +130,9 @@ public class ProdottoDAO {
 
         try (Connection conn = ConPool.getConnection()) {
 
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p" +
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p WHERE p.Nome LIKE ?");
 
-                    "WHERE p.Nome LIKE ?");
-
-            s.setString(1, nome);
+            s.setString(1, nome + "%");
 
             ResultSet rs = s.executeQuery();
 
@@ -184,13 +182,7 @@ public class ProdottoDAO {
 
         try (Connection conn = ConPool.getConnection()) {
 
-            PreparedStatement s = conn.prepareStatement("SELECT p.ID_Prodotto" +
-
-                    "FROM Prodotto p" +
-
-                    "JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto" +
-
-                    "WHERE g.Tipo = ?");
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto WHERE g.Genere = ?");
 
             s.setString(1, tipo);
 
@@ -244,7 +236,7 @@ public class ProdottoDAO {
 
         try (Connection conn = ConPool.getConnection()) {
 
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Casa_Sviluppatrice = ?");
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Casa_Sviluppatrice LIKE ?");
 
             s.setString(1, casaSviluppatrice);
 
@@ -298,9 +290,7 @@ public class ProdottoDAO {
 
         try (Connection conn = ConPool.getConnection()) {
 
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p " +
-
-                    "WHERE p.Modalita_Gioco LIKE ? ");
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p WHERE p.Modalita_Gioco LIKE ? ");
 
             s.setString(1, modalitaGioco);
 
@@ -352,9 +342,7 @@ public class ProdottoDAO {
 
         try (Connection conn = ConPool.getConnection()) {
 
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Podotto " +
-
-                    " WHERE Prezzo_Scontato BETWEEN ? AND ?");
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Prezzo_Scontato BETWEEN ? AND ?");
 
             s.setFloat(1, prezzoMin);
 
@@ -398,6 +386,31 @@ public class ProdottoDAO {
 
         }
 
+    }
+
+    public List<Prodotto> filtraProdotti(String genere, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
+
+        ProdottoDAO dao = new ProdottoDAO();
+
+        List<Prodotto> result = dao.doRetrieveAll();
+
+        if (genere != null && !genere.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByGenere(genere));
+        }
+
+        if (casa != null && !casa.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByCasaSviluppatrice(casa));
+        }
+
+        if (mod_gioco != null && !mod_gioco.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByModalitaGioco(mod_gioco));
+        }
+
+        if (min != null && max != null) {
+            result.retainAll(dao.doRetrieveProdottoByPrezzo(min, max));
+        }
+
+        return result;
     }
 
 }

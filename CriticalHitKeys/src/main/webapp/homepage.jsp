@@ -5,7 +5,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,8 +36,8 @@
     <img id="logo-img" src="img/logoExtended5.png" alt="Logo esteso di Critical Hit Keys">
     <div class="container-bottoneCerca">
 
-        <form>
-            <input type="search" name="search" placeholder="Cerca un prodotto!">
+        <form method="GET" action="ricerca-servlet">
+            <input type="search" name="searchText" placeholder="Cerca un prodotto!">
             <input type="submit" value="Cerca">
         </form>
     </div>

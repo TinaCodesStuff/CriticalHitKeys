@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Prodotto {
     private int ID_Prodotto;
     private String nome;
@@ -83,6 +85,20 @@ public class Prodotto {
 
     public void seteMailAmm(String eMailAmm) {
         this.eMailAmm = eMailAmm;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Prodotto p = (Prodotto) o;
+        return ID_Prodotto == p.ID_Prodotto;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID_Prodotto);
     }
 
 
