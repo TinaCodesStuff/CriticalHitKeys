@@ -31,15 +31,18 @@
 %>
 <div class="carrello-container">
   <h2>Il tuo carrello</h2>
+  <% if(request.getAttribute("cartError") != null) { %><p class="cart-error"><%=request.getAttribute("cartError")%></p><% } %>
 
   <%  //qui calcoliamo il totale del prezzo dei prodotti
     double totale = 0;
 
+    boolean contieneNonDisponibili = false;
     if(!lista.isEmpty() && !quantita.isEmpty()){
       for(Prodotto p : lista){
         int q = quantita.get(p.getID_Prodotto()) != null
                 ? quantita.get(p.getID_Prodotto())
                 : 1; //qui prende la quantità di ogni prodotto e se non è definità metterà di default 1
+        if(!p.isDisponibile()) contieneNonDisponibili = true;
         totale += p.getPrezzo_scontato() * q; //qui calcola l'effettivo prezzo totale di ogni prodotto moltiplicandolo per la quanittà richiesta
 
       }
@@ -59,13 +62,15 @@
 
       <li>
         <span class="nome-prodotto"><%= p.getNome() %></span>
+        <% if(!p.isDisponibile()) { %><span class="cart-unavailable">Non disponibile</span><% } %>
 
         <div class="prezzi">
           <span class="prezzo-originale">€ <%= p.getPrezzo_OG() %></span>
           <span class="prezzo-scontato">€ <%= p.getPrezzo_scontato() %></span>
           <span class="sconto">-<%= p.getSconto() %>%</span>
           <select name="quantita" class="quantita-AJAX" data-id="<%= p.getID_Prodotto() %>">
-            <% for(int i = 1; i <= 10; i++){ //qui creiamo il select per le quantità dei prodotti, inoltre vediamo se i == q allora è lo imposta a "select", altrimenti no. Inoltre le quantità di stesso prodotto sono massimo 10%>
+            <option value="0">Rimuovi</option>
+            <% for(int i = 1; i <= (p.isDisponibile() ? 10 : q); i++){ //un prodotto non disponibile non può essere aumentato%>
             <option value="<%= i %>" <%= (i == q) ? "selected" : "" %>>
               <%= i %>
             </option>
@@ -89,8 +94,8 @@
         Totale: € <%= String.format("%.2f", totale) %>
       </div>
 
-      <button class="btn-acquisto">
-        Procedi con l'acquisto
+      <button class="btn-acquisto" <%=contieneNonDisponibili ? "disabled" : ""%>>
+        <%=contieneNonDisponibili ? "Rimuovi i prodotti non disponibili" : "Procedi con l'acquisto"%>
       </button>
     </div>
   </div>

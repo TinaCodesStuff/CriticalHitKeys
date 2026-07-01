@@ -34,9 +34,10 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     Descrizione_Prod TEXT,
     Prezzo_OG FLOAT,
     Prezzo_Scontato FLOAT,
-    Modalita_Gioco VARCHAR(20),
+    Modalita_Gioco VARCHAR(50),
     Casa_Sviluppatrice VARCHAR(30),
     Sconto INT,
+    Disponibile BOOLEAN NOT NULL DEFAULT TRUE,
     Email_Amm VARCHAR(30),
     FOREIGN KEY (Email_Amm) REFERENCES Amministratore(Email_Amm)
     ON UPDATE CASCADE ON DELETE CASCADE
@@ -85,10 +86,17 @@ CREATE TABLE IF NOT EXISTS Ordine (
 );
 
 CREATE TABLE IF NOT EXISTS Genere (
-    Genere VARCHAR(15) PRIMARY KEY,
-    ID_Prodotto INT,
-    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    Genere VARCHAR(30) NOT NULL,
+    ID_Prodotto INT NOT NULL,
+    PRIMARY KEY (Genere, ID_Prodotto),
+    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Piattaforma (
+    Piattaforma VARCHAR(30) NOT NULL,
+    ID_Prodotto INT NOT NULL,
+    PRIMARY KEY (Piattaforma, ID_Prodotto),
+    FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto(ID_Prodotto) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ChiaveDigitale (
@@ -106,10 +114,11 @@ CREATE TABLE IF NOT EXISTS Account (
 );
 
 CREATE TABLE MediaProdotto (
-    ID_Media VARCHAR(10) PRIMARY KEY,
+    ID_Media VARCHAR(36) PRIMARY KEY,
     ID_Prodotto INT,
     Tipo VARCHAR(10),
     URL_Media VARCHAR(255),
+    Ordine_Visualizzazione INT NOT NULL DEFAULT 0,
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON DELETE CASCADE
 );

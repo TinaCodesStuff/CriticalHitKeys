@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Prodotto {
     private int ID_Prodotto;
@@ -13,6 +15,10 @@ public class Prodotto {
     private int Sconto;
     private String eMailAmm;
     private String urlCopertina;
+    private boolean disponibile = true;
+    private List<String> generi = new ArrayList<>();
+    private List<String> piattaforme = new ArrayList<>();
+    private List<String> modalita = new ArrayList<>();
 
 
     public int getID_Prodotto() {
@@ -86,6 +92,15 @@ public class Prodotto {
     public void seteMailAmm(String eMailAmm) {
         this.eMailAmm = eMailAmm;
     }
+
+    public boolean isDisponibile() { return disponibile; }
+    public void setDisponibile(boolean disponibile) { this.disponibile = disponibile; }
+    public List<String> getGeneri() { return generi; }
+    public void setGeneri(List<String> generi) { this.generi = generi; }
+    public List<String> getPiattaforme() { return piattaforme; }
+    public void setPiattaforme(List<String> piattaforme) { this.piattaforme = piattaforme; }
+    public List<String> getModalita() { return modalita; }
+    public void setModalita(List<String> modalita) { this.modalita = modalita; }
 
     @Override
     public boolean equals(Object o) {

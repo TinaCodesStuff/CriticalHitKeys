@@ -39,6 +39,18 @@ public class ContieneDAO {
         }
     }
 
+    public void doDelete(int cartId, int productId) {
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "DELETE FROM Contiene WHERE ID_Carrello=? AND ID_Prodotto=?")) {
+            statement.setInt(1, cartId);
+            statement.setInt(2, productId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Contiene findByID_Carrello(int id_carrello) {
         try(Connection conn = ConPool.getConnection()){
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM Contiene WHERE ID_Carrello = ?");

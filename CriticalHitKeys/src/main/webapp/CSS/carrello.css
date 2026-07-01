@@ -264,3 +264,6 @@ h1{
     background-color: #6d28d9;
     transform: scale(1.05);
 }
+.cart-error, .cart-unavailable { color: #fff; background: #8b0000; border-radius: 7px; padding: 7px 10px; font-weight: 700; }
+.cart-unavailable { margin-left: 10px; font-size: .75rem; }
+.btn-acquisto:disabled { opacity: .55; cursor: not-allowed; }

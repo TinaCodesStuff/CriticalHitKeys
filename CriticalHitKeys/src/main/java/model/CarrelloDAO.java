@@ -46,6 +46,7 @@ public class CarrelloDAO {
                 p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
                 p.setSconto(rs.getInt("Sconto"));
                 p.seteMailAmm(rs.getString("Email_Amm"));
+                p.setDisponibile(rs.getBoolean("Disponibile"));
                 lista.add(p);
             }
 

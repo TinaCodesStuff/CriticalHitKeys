@@ -21,6 +21,10 @@ document.querySelectorAll(".quantita-AJAX").forEach(select => {
             })
             .then(data => {
                 console.log("RISPOSTA:", data);
+                if (data.removed) {
+                    window.location.reload();
+                    return;
+                }
                 document.getElementById("totale-provv").innerText =
                     "Totale: € " + data.totale;
             })

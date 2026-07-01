@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Prodotto;
+import model.ProdottoDAO;
 import model.Recensione;
 import model.RecensioneDAO;
 
@@ -34,6 +35,10 @@ public class RecensioneServlet extends HttpServlet {
             Recensione recensione = new Recensione();
             Prodotto prodotto = new Prodotto();
             prodotto = (Prodotto) session.getAttribute("prodotto-afterRecensione");
+            if (prodotto == null || new ProdottoDAO().doRetrieveAvailableById(prodotto.getID_Prodotto()) == null) {
+                response.sendError(HttpServletResponse.SC_CONFLICT, "Il prodotto non è disponibile");
+                return;
+            }
 
             System.out.println(prodotto.getID_Prodotto());
             recensione.setDescrizione_Rec(commento);

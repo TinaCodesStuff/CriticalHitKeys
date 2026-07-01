@@ -5,6 +5,7 @@ public class Media {
     private int idProdotto;
     private String tipo;
     private String urlMedia;
+    private int ordineVisualizzazione;
 
     public int getIdMedia() {
         return idMedia;
@@ -33,4 +34,8 @@ public class Media {
     public void setUrlMedia(String urlMedia) {
         this.urlMedia = urlMedia;
     }
+
+    public void setIdProdotto(int idProdotto) { this.idProdotto = idProdotto; }
+    public int getOrdineVisualizzazione() { return ordineVisualizzazione; }
+    public void setOrdineVisualizzazione(int ordineVisualizzazione) { this.ordineVisualizzazione = ordineVisualizzazione; }
 }
