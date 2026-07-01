@@ -77,7 +77,11 @@
 <div class="product-right">
     <h1><%= prod.getNome() %></h1>
     <span class="casa-sviluppatrice"><%= prod.getCasa_sviluppatrice() %></span>
-    <span class="modalita-gioco">Modalità: <%= prod.getModalita_Gioco() %></span>
+    <span class="modalita-gioco">Modalità: <% for (String x : prod.getModalita()){out.print(x + ", ");} %></span>
+    <span class="piattaforma-gioco">Piattaforma: <% for (String x : prod.getPiattaforme()){
+        out.print(x + ", ");
+    }
+    %></span>
     <% if (!prod.isDisponibile()) { %><p class="prodotto-esaurito" role="status">PRODOTTO NON DISPONIBILE</p><% } %>
 
     <div class="box-sconto">
