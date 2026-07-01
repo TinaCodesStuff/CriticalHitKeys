@@ -129,11 +129,11 @@ INSERT INTO Ordine (ID_Ordine, Importo_tot, DataUltimaModifica, ID_Carrello) VAL
 
 -- 9. Popolamento Genere (5 record)
 INSERT INTO Genere (Genere, ID_Prodotto) VALUES
-("Action RPG", 1), -- Action RPG
-("RPG-Sci-fi", 2), -- RPG / Sci-fi
-("Sandbox", 3), -- Sandbox
-("Adventure", 4), -- Adventure
-("Sport", 5); -- Sport
+('Action RPG', 1), -- Action RPG
+('RPG-Sci-fi', 2), -- RPG / Sci-fi
+('Sandbox', 3), -- Sandbox
+('Adventure', 4), -- Adventure
+('Sport', 5); -- Sport
 
 -- 9b. Piattaforme supportate (relazione molti-a-molti)
 INSERT INTO Piattaforma (Piattaforma, ID_Prodotto)
@@ -147,10 +147,10 @@ INSERT INTO Piattaforma (Piattaforma, ID_Prodotto) VALUES
 ('PlayStation', 5), ('Xbox', 5), ('Nintendo Switch', 5);
 
 -- 10. Popolamento ChiaveDigitale (Esempi di chiavi finte)
-INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES
-(1, 'ELDN-RING-44-X1'),
-(2, 'CYBR-PNK-20-77'),
-(4, 'STRY-CAT-99-PUR');
+INSERT INTO ChiaveDigitale (ID_Prodotto) VALUES
+(1),
+(2),
+(4);
 
 -- 11. Popolamento Account (Esempi di credenziali finte)
 INSERT INTO Account (ID_Prodotto, Credenziali) VALUES
