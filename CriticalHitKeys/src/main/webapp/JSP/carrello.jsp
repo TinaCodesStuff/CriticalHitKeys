@@ -89,9 +89,12 @@
         Totale: € <%= String.format("%.2f", totale) %>
       </div>
 
+        <form action="pagamento-servlet" method="POST" >
       <button class="btn-acquisto">
         Procedi con l'acquisto
       </button>
+        </form>
+
     </div>
   </div>
 </div>

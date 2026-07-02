@@ -129,11 +129,11 @@ INSERT INTO Ordine (ID_Ordine, Importo_tot, DataUltimaModifica, ID_Carrello) VAL
 
 -- 9. Popolamento Genere (5 record)
 INSERT INTO Genere (Genere, ID_Prodotto) VALUES
-("Action RPG", 1), -- Action RPG
-("RPG-Sci-fi", 2), -- RPG / Sci-fi
-("Sandbox", 3), -- Sandbox
-("Adventure", 4), -- Adventure
-("Sport", 5); -- Sport
+('Action RPG', 1), -- Action RPG
+('RPG-Sci-fi', 2), -- RPG / Sci-fi
+('Sandbox', 3), -- Sandbox
+('Adventure', 4), -- Adventure
+('Sport', 5); -- Sport
 
 -- 10. Popolamento ChiaveDigitale (Esempi di chiavi finte)
 INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES

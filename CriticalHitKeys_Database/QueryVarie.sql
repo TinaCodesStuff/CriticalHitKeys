@@ -11,3 +11,8 @@ FROM Utente;
 
 SELECT *
 FROM Ticket;
+
+SELECT *
+FROM ChiaveDigitale;
+
+DELETE FROM ChiaveDigitale;

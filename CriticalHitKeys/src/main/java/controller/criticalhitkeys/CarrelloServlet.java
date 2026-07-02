@@ -37,6 +37,7 @@ public class CarrelloServlet extends HttpServlet{
             ContieneDAO contieneDAO = new ContieneDAO();    //istanziamo il DAO del contiene, ci serve per la quantità dei prodotti nel carrello
             int id_Carrello = carrelloDAO.doRetrieveID_Carrello(u); //con il metodo doRetrieveID_Carrello possiamo individuare l'id del carrello dell'utente, questo torna utile per determinare la quantità dei Prodotti
 
+
             listaProdotti = carrelloDAO.doRetrieveAllByUtente(u);
             quantita = contieneDAO.doRetrieveQuantitaById_Carrello(id_Carrello);
 
@@ -63,7 +64,7 @@ public class CarrelloServlet extends HttpServlet{
                     }
 
 
-
+                session.setAttribute("listaProdotti", listaProdotti);
                 request.setAttribute("listaProdotti", listaProdotti);
                 request.setAttribute("quantita", quantita);
             }
@@ -75,6 +76,7 @@ public class CarrelloServlet extends HttpServlet{
                     contieneDAO.doSave(new Contiene(id, id_Carrello, quantita.get(id)));    //memorizziamo il nuovo prodotto nel carrello con la quantità usando la tabella associativa Contiene
 
                 }
+                session.setAttribute("listaProdotti", listaProdotti);
                 request.setAttribute("listaProdotti", listaProdotti);   //qui vi è solo ArrayList inizializzato senza alcun prodotto, altrimenti mi restituisce la lista con il prodotto aggiunto
                 request.setAttribute("quantita", quantita); //in questo caso essendo solo inizializzata, non ci sarà nulla dentro. Se ho aggiunto un prodotto al carrello, allora viene restiuita la lista con il nuovo prodotto
 
@@ -138,6 +140,9 @@ public class CarrelloServlet extends HttpServlet{
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/carrello.jsp");
         dispatcher.forward(request, response);
+        System.out.println("[CarrelloServlet.java] Utente loggato: " + session.getAttribute("utenteLoggato"));
+        System.out.println("[CarrelloServlet.java] Lista prodotti da sessione: " + session.getAttribute("listaProdotti"));
+
 
     }
 

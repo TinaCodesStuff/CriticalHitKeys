@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS Genere (
 
 CREATE TABLE IF NOT EXISTS ChiaveDigitale (
     ID_Prodotto INT  PRIMARY KEY,
-    Chiave VARCHAR(15),
+    Chiave VARCHAR(17),
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
