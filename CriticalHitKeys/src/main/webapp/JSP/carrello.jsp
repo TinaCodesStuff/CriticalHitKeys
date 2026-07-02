@@ -94,12 +94,9 @@
         Totale: € <%= String.format("%.2f", totale) %>
       </div>
 
-        <form action="pagamento-servlet" method="POST" >
       <button class="btn-acquisto" <%=contieneNonDisponibili ? "disabled" : ""%>>
         <%=contieneNonDisponibili ? "Rimuovi i prodotti non disponibili" : "Procedi con l'acquisto"%>
       </button>
-        </form>
-
     </div>
   </div>
 </div>

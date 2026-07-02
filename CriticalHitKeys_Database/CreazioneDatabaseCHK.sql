@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Piattaforma (
 
 CREATE TABLE IF NOT EXISTS ChiaveDigitale (
     ID_Prodotto INT  PRIMARY KEY,
-    Chiave VARCHAR(17),
+    Chiave VARCHAR(15),
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
