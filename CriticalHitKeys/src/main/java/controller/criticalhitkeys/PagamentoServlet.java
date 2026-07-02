@@ -7,12 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.ChiaveDigitale;
-import model.ChiaveDigitaleDAO;
-import model.Prodotto;
+import model.*;
 
 import javax.sound.midi.SysexMessage;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +27,7 @@ public class PagamentoServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String username = (String) session.getAttribute("usernameUtente");
+        Utente u = (Utente) session.getAttribute("utenteLoggato");
 
 
         if (username != null) {
@@ -44,7 +44,7 @@ public class PagamentoServlet extends HttpServlet {
                 listaProdotti = (List<Prodotto>) request.getAttribute("listaProdotti");
             }*/
 
-            List<ChiaveDigitale> chiaviGenerate = new ArrayList<>();
+            List<ChiaveDigitale> listaChiavi = new ArrayList<>();
             if (listaProdotti.isEmpty())
             {
                System.out.println("Lista prodotti vuotaa :(((");
@@ -57,14 +57,25 @@ public class PagamentoServlet extends HttpServlet {
                 for (Prodotto prod: listaProdotti) {
                     ChiaveDigitale nuovaChiave = new ChiaveDigitale();
 
-                    nuovaChiave.setID_Prodotto(prod.getID_Prodotto());
-                    nuovaChiave.setChiave(chiaveDAO.generaCodiceRandomico());
+                    try {
+                        System.out.println(chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto()).getChiave());
+                        if(chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto()).getChiave() != null){  //verifico se il prodotto ha già una chiave nel DB
+                            ChiaveDigitale chiaveActual = new ChiaveDigitale();
+                            chiaveActual = chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto());
+                            listaChiavi.add(chiaveActual);
+                        }
+                        else{   //se la chiave non è già presente nel DB, allora procede a generarla e poi ad aggiungerla al DB
+                            nuovaChiave.setID_Prodotto(prod.getID_Prodotto());
+                            nuovaChiave.setChiave(chiaveDAO.generaCodiceRandomico());
 
-                    chiaveDAO.doSave(nuovaChiave);
+                            chiaveDAO.doSave(nuovaChiave);
 
-                    request.setAttribute("nome_" + nuovaChiave.getChiave(), prod.getNome());
 
-                    chiaviGenerate.add(nuovaChiave);
+                            listaChiavi.add(nuovaChiave);
+                        }
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     //DEBUG
                    if (Objects.equals(nuovaChiave.getChiave(), ""))
@@ -76,10 +87,15 @@ public class PagamentoServlet extends HttpServlet {
                        System.out.println(nuovaChiave.toString());
                    }
                 }
-                //Per svuotare il carrello dopo il pagamento
-             //   listaProdotti.clear();
+                ContieneDAO contieneDAO = new ContieneDAO();
+                CarrelloDAO carrelloDAO = new CarrelloDAO();
+                try {
+                    contieneDAO.removeProdottiByID_Carrello(carrelloDAO.doRetrieveID_Carrello(u));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            request.setAttribute("chiaviAcquistate", chiaviGenerate);
+            request.setAttribute("chiaviAcquistate", listaChiavi);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/pagamento.jsp");
             dispatcher.forward(request, response);

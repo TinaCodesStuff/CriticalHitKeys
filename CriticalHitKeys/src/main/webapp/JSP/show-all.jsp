@@ -32,6 +32,7 @@ List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 
 <div class="container-bottoneCerca">
     <form method="get" action="ricerca-servlet">
+        <input type="button" name="buttonFiltri" value="Filtri" onclick="window.location.href='ricerca-servlet'">   <!--Riporta alla ricerca con i filtri, quindi salta la ricerca-->
         <input type="search" name="searchText" placeholder="Cerca un prodotto!">
         <input type="submit" value="Cerca">
     </form>

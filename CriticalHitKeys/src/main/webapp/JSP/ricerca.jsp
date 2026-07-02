@@ -71,13 +71,15 @@
 </div>
 
 <div class="container-prodotti">
-    <%  if(lista != null){
+    <%  if(lista != null && lista.size()>0){
         for(Prodotto p : lista){%>
     <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
         <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%>><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
     </a>
-    <%}} else {%>
-    <p>Non hai ancora effettuato una ricerca...</p>
+    <%}} else{%>
+    <h2 style="margin-top:150px; color:white; text-align:center; font-size:40px;">
+        Nessun prodotto trovato
+    </h2>
     <%}%>
 </div>
 

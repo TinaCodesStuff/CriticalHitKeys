@@ -176,53 +176,47 @@ public class ProdottoDAO {
 
 
 
-    public List<Prodotto> doRetrieveProdottoByGenere (String tipo) {
+    public List<Prodotto> doRetrieveProdottoByGenere (List<String> generi) {
 
         List<Prodotto> listaProdotti = new ArrayList<>();
 
-        try (Connection conn = ConPool.getConnection()) {
+        String placeholders = String.join(",", Collections.nCopies(generi.size(), "?"));
 
-            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto WHERE g.Genere = ?");
+        String sql = "SELECT DISTINCT p.* " +   //creiamo una query che ci permetta di filtrare su più generi
+                "FROM Prodotto p " +
+                "JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto " +
+                "WHERE g.Genere IN (" + placeholders + ")";
 
-            s.setString(1, tipo);
+        try(Connection conn = ConPool.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(sql);
 
-            ResultSet rs = s.executeQuery();
+            for(int i = 0; i < generi.size(); i++) {    //qui inseriamo i generi nella query così vediamo quale prodotto ne fa parte
+                ps.setString(i + 1, generi.get(i));
+            }
 
+            ResultSet rs = ps.executeQuery();   //eseguo la query
 
-
-            while (rs.next()) {
-
+            while(rs.next()) {
                 Prodotto p = new Prodotto();
-
                 p.setNome(rs.getString("Nome"));
-
                 p.setID_Prodotto(rs.getInt("ID_Prodotto"));
-
                 p.setDescrizione(rs.getString("Descrizione_Prod"));
-
                 p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
-
                 p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
-
                 p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
-
-                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
-
                 p.setSconto(rs.getInt("Sconto"));
-
                 p.seteMailAmm(rs.getString("Email_Amm"));
 
                 listaProdotti.add(p);
-
             }
-
-            return listaProdotti;
 
         } catch (SQLException e) {
 
             throw new RuntimeException(e);
 
         }
+
+        return listaProdotti;
 
     }
 
@@ -388,14 +382,14 @@ public class ProdottoDAO {
 
     }
 
-    public List<Prodotto> filtraProdotti(String genere, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
+    public List<Prodotto> filtraProdotti(List<String> generi, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
 
         ProdottoDAO dao = new ProdottoDAO();
 
         List<Prodotto> result = dao.doRetrieveAll();
 
-        if (genere != null && !genere.isEmpty()) {
-            result.retainAll(dao.doRetrieveProdottoByGenere(genere));
+        if (generi != null && !generi.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByGenere(generi));
         }
 
         if (casa != null && !casa.isEmpty()) {

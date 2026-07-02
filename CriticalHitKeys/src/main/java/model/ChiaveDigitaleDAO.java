@@ -30,6 +30,23 @@ public class ChiaveDigitaleDAO {
             ChiaveDigitale chiave = new ChiaveDigitale();
             while (rs.next()) {
                 chiave.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                chiave.setChiave(rs.getString("Chiave"));
+            }
+            return chiave;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ChiaveDigitale doRetrieveChiaveByID_Prodotto (int ID_Prodotto) throws SQLException {
+        try(Connection conn = ConPool.getConnection()){
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM ChiaveDigitale WHERE ID_Prodotto = ?");
+            s.setInt(1, ID_Prodotto);
+            ResultSet rs = s.executeQuery();
+            ChiaveDigitale chiave = new ChiaveDigitale();
+            while (rs.next()) {
+                chiave.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                chiave.setChiave(rs.getString("Chiave"));
             }
             return chiave;
         } catch (SQLException e) {

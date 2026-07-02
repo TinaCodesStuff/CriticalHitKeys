@@ -36,9 +36,11 @@
     <img id="logo-img" src="img/logoExtended5.png" alt="Logo esteso di Critical Hit Keys">
     <div class="container-bottoneCerca">
 
-        <form method="GET" action="ricerca-servlet">
+
+        <form method="GET" id ="searchForm">
+            <input type="button" name="buttonFiltri" value="Filtri" onclick="window.location.href='ricerca-servlet'">   <!--Riporta alla ricerca con i filtri, quindi salta la ricerca-->
             <input type="search" name="searchText" placeholder="Cerca un prodotto!">
-            <input type="submit" value="Cerca">
+            <input type="submit" value="Cerca" formaction="ricerca-servlet">
         </form>
     </div>
     <% List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaSuggested");%>

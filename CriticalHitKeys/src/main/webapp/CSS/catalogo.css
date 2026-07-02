@@ -215,6 +215,20 @@ input[type=submit]{
     margin: 0;
 }
 
+input[type=button]{
+    flex: 1;
+    background-color: #7c3aed;
+    color: white;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+
 @media (prefers-reduced-motion: reduce) {
     html.products-animate .prodotto {
         opacity: 1;

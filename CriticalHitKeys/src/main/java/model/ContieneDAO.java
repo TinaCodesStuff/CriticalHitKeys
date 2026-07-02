@@ -80,4 +80,17 @@ public class ContieneDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void removeProdottiByID_Carrello(int ID_Carrello) throws SQLException {
+        try(Connection conn = ConPool.getConnection()){
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM Contiene WHERE ID_Carrello = ?");
+            ps.setInt(1, ID_Carrello);
+
+            if(ps.executeUpdate()  != 1){
+                System.out.println("Errore nell'DELETE del Contiene");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
