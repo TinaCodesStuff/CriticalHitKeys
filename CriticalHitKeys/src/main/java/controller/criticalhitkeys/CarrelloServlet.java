@@ -24,11 +24,6 @@ public class CarrelloServlet extends HttpServlet{
         int id = 0;
         if(val != null){
             id = Integer.parseInt(val);
-            Prodotto requested = new ProdottoDAO().doRetrieveAvailableById(id);
-            if (requested == null) {
-                id = 0;
-                request.setAttribute("cartError", "Il prodotto non è disponibile e non può essere aggiunto al carrello.");
-            }
         }
 
         HttpSession session = request.getSession();

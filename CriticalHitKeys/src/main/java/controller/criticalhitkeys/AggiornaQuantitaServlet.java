@@ -24,11 +24,6 @@ public class AggiornaQuantitaServlet extends HttpServlet {
         String qStr = request.getParameter("quantita");
         int id_prod = Integer.parseInt(idStr);
         int quantita = Integer.parseInt(qStr);
-        Prodotto product = new ProdottoDAO().doRetrieveById(id_prod);
-        if (product == null) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
 
 
         double totale = 0;
@@ -46,20 +41,9 @@ public class AggiornaQuantitaServlet extends HttpServlet {
             lista = carrelloDAO.doRetrieveAllByUtente(u);   //recupero la lista dell'utente richiesto
             int id_carrello = carrelloDAO.doRetrieveID_Carrello(u); //recupero l'ID_Carrello associato all'utente
 
+            contieneDAO.doUpdate(new Contiene(id_prod, id_carrello, quantita)); //aggiorno la quanità con quella data, per il prodotto dato
+
             quantitaMap = (HashMap<Integer, Integer>) contieneDAO.doRetrieveQuantitaById_Carrello(id_carrello); //alla fine ottengo la quanittà
-            int current = quantitaMap.getOrDefault(id_prod, 0);
-            if (!product.isDisponibile() && quantita > current) {
-                response.sendError(HttpServletResponse.SC_CONFLICT, "Prodotto non disponibile");
-                return;
-            }
-            if (quantita == 0) {
-                contieneDAO.doDelete(id_carrello, id_prod);
-                quantitaMap.remove(id_prod);
-                lista.removeIf(p -> p.getID_Prodotto() == id_prod);
-            } else {
-                contieneDAO.doUpdate(new Contiene(id_prod, id_carrello, quantita));
-                quantitaMap.put(id_prod, quantita);
-            }
 
         } else {    //ramificazione in caso l'utente NON sia loggato, aggiorno e prendo le info dalla sessione
             lista = (List<Prodotto>) session.getAttribute("listaProdotti"); //prendo dalla sessione sia la lista dei prodotti che la quantità
@@ -70,17 +54,7 @@ public class AggiornaQuantitaServlet extends HttpServlet {
                 session.setAttribute("quantita", quantitaMap);
             }
 
-            int current = quantitaMap.getOrDefault(id_prod, 0);
-            if (!product.isDisponibile() && quantita > current) {
-                response.sendError(HttpServletResponse.SC_CONFLICT, "Prodotto non disponibile");
-                return;
-            }
-            if (quantita == 0) {
-                quantitaMap.remove(id_prod);
-                if (lista != null) lista.removeIf(p -> p.getID_Prodotto() == id_prod);
-            } else {
-                quantitaMap.put(id_prod, quantita);
-            }
+            quantitaMap.put(id_prod, quantita); //aggiorno la quantita per il prodotto dato
         }
 
         if (lista != null) {    //qui avviene il vero calcolo
@@ -102,7 +76,7 @@ public class AggiornaQuantitaServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(
-                "{\"ok\":true, \"removed\":" + (quantita == 0) + ", \"totale\":" + totale + "}"
+                "{\"ok\":true, \"totale\":" + totale + "}"  //qui inviamo i dati del totale calcolato, che poi verrà visualizzato nella servlet
         );
     }
 

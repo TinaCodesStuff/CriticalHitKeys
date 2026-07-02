@@ -2,7 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.ProdottoDAO" %>
 <%@ page import="model.Media" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -46,18 +45,19 @@
         <p><strong><span id="actualMin">0</span>€ - <span id="actualMax">100</span>€</strong></p>
 
         <h3>Modalità Gioco</h3>
-        <c:forEach items="${modalitaDisponibili}" var="modo"><label><input type="checkbox" name="mod_gioco" value="${modo}" ${modalitaSelezionate.contains(modo) ? 'checked' : ''}> ${modo}</label></c:forEach>
+        <label><input type="radio" name="mod_gioco" value="Single Player"> Single Player</label>
+        <label><input type="radio" name="mod_gioco" value="Multiplayer"> Multi Player</label>
+        <label><input type="radio" name="mod_gioco" value="Single/Multi"> Single / Multi Player</label>
 
         <h3>Casa Sviluppatrice</h3>
         <label>Casa Sviluppatrice - Esempio: FromSoftware <br><input type="text" name="casa_svilupp"></label>
 
         <h3>Genere</h3>
-        <c:forEach items="${generiDisponibili}" var="genere"><label><input type="checkbox" value="${genere}" name="genere" ${generiSelezionati.contains(genere) ? 'checked' : ''}> ${genere}</label></c:forEach>
-
-        <h3>Piattaforma</h3>
-        <c:forEach items="${piattaformeDisponibili}" var="piattaforma"><label><input type="checkbox" value="${piattaforma}" name="piattaforma" ${piattaformeSelezionate.contains(piattaforma) ? 'checked' : ''}> ${piattaforma}</label></c:forEach>
-
-        <label class="include-unavailable"><input type="checkbox" name="includeUnavailable" value="true" ${includeUnavailable ? 'checked' : ''}> Mostra anche non disponibili</label>
+        <label><input type="checkbox" value = "Action RPG" name="genere"> Action RPG</label>
+        <label><input type="checkbox" value = "RPG-Sci-fi" name="genere"> RPG / Sci-Fi</label>
+        <label><input type="checkbox" value = "Sandbox" name="genere">Sandbox</label>
+        <label><input type="checkbox" value="Adventure" name="genere"> Avventura</label>
+        <label><input type="checkbox" value="Sport" name="genere"> Sport</label>
 
         <input type="submit" value="Applica filtri" class="btn-filtri">
 
@@ -74,7 +74,7 @@
     <%  if(lista != null){
         for(Prodotto p : lista){%>
     <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
-        <div class="prodotto <%=p.isDisponibile() ? "" : "prodotto-non-disponibile"%>"><% if(!p.isDisponibile()) {%><span class="badge-non-disponibile">NON DISPONIBILE</span><%}%><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = "<%=request.getAttribute("mediaP-"+p.getID_Prodotto())%>" <%}%> alt="Copertina di <%=p.getNome()%>"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
+        <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%>><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
     </a>
     <%}} else {%>
     <p>Non hai ancora effettuato una ricerca...</p>

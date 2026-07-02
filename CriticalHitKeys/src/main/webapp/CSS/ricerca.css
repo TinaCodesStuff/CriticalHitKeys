@@ -291,7 +291,3 @@ p{
 
     cursor: pointer;
 }
-
-.include-unavailable { margin-top: 22px !important; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.2); }
-.prodotto-non-disponibile { position: relative; opacity: .72; filter: grayscale(.45) drop-shadow(0 0 8px black); }
-.badge-non-disponibile { position: absolute; z-index: 2; top: 28px; left: 28px; padding: 7px 10px; border-radius: 7px; background: #8b0000; color: white; font: 700 11px Arial, sans-serif; letter-spacing: .05em; }

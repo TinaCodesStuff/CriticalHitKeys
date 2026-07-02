@@ -135,17 +135,6 @@ INSERT INTO Genere (Genere, ID_Prodotto) VALUES
 ("Adventure", 4), -- Adventure
 ("Sport", 5); -- Sport
 
--- 9b. Piattaforme supportate (relazione molti-a-molti)
-INSERT INTO Piattaforma (Piattaforma, ID_Prodotto)
-SELECT 'Windows', ID_Prodotto FROM Prodotto;
-
-INSERT INTO Piattaforma (Piattaforma, ID_Prodotto) VALUES
-('PlayStation', 1), ('Xbox', 1),
-('PlayStation', 2), ('Xbox', 2),
-('macOS', 3), ('Linux', 3), ('Nintendo Switch', 3),
-('PlayStation', 4), ('Xbox', 4),
-('PlayStation', 5), ('Xbox', 5), ('Nintendo Switch', 5);
-
 -- 10. Popolamento ChiaveDigitale (Esempi di chiavi finte)
 INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES
 (1, 'ELDN-RING-44-X1'),

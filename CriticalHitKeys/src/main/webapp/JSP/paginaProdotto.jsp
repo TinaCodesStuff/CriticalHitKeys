@@ -78,7 +78,6 @@
     <h1><%= prod.getNome() %></h1>
     <span class="casa-sviluppatrice"><%= prod.getCasa_sviluppatrice() %></span>
     <span class="modalita-gioco">Modalità: <%= prod.getModalita_Gioco() %></span>
-    <% if (!prod.isDisponibile()) { %><p class="prodotto-esaurito" role="status">PRODOTTO NON DISPONIBILE</p><% } %>
 
     <div class="box-sconto">
         <span class="prezzo-scontato"><%= prod.getPrezzo_scontato() %>€</span>
@@ -88,14 +87,14 @@
 
     <form action="carrello-servlet" method="GET">
         <input type="hidden" name="id_prod" value="<%= prod.getID_Prodotto() %>">
-        <button type="submit" class="aggiuntaCarrello" <%=prod.isDisponibile() ? "" : "disabled"%>>
-            <%=prod.isDisponibile() ? "AGGIUNGI AL CARRELLO" : "NON DISPONIBILE"%>
+        <button type="submit" class="aggiuntaCarrello">
+            AGGIUNGI AL CARRELLO
         </button>
     </form>
 
 
     <div class="product-center">
-        <button type="button" class="bottone-recensione" onclick="mostraTextArea()" <%=prod.isDisponibile() ? "" : "disabled"%>>Inserisci una recensione! </button><br>
+        <button type="button" class="bottone-recensione" onclick="mostraTextArea()">Inserisci una recensione! </button><br>
         <form method="post" action="recensione-servlet">
             <div id = "boxTextarea" style="display: none">
             <textarea name="testoRecensione">Questo gioco è stato molto toccante per me...</textarea>

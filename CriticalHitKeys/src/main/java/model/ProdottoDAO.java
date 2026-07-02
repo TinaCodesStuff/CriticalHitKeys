@@ -1,349 +1,416 @@
 package model;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.sql.SQLException;
 
 public class ProdottoDAO {
-    public record RemovalResult(String outcome, List<String> mediaUrls) {}
+    public List<Prodotto> doRetrieveAll(){
+        try(Connection conn = ConPool.getConnection()){
+            List<Prodotto> lista = new ArrayList<>();
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto");
+            ResultSet rs = s.executeQuery();
 
-    public List<Prodotto> doRetrieveAll() {
-        return retrieveProducts("SELECT * FROM Prodotto WHERE Disponibile = TRUE ORDER BY Nome", List.of());
-    }
+            while(rs.next()){
+                Prodotto p = new Prodotto();
 
-    public List<Prodotto> doRetrieveAllForAdmin() {
-        return retrieveProducts("SELECT * FROM Prodotto ORDER BY Disponibile DESC, Nome", List.of());
-    }
-
-    public Prodotto doRetrieveById(int id) {
-        List<Prodotto> products = retrieveProducts("SELECT * FROM Prodotto WHERE ID_Prodotto = ?", List.of(id));
-        return products.isEmpty() ? null : products.getFirst();
-    }
-
-    public Prodotto doRetrieveAvailableById(int id) {
-        List<Prodotto> products = retrieveProducts(
-                "SELECT * FROM Prodotto WHERE ID_Prodotto = ? AND Disponibile = TRUE", List.of(id));
-        return products.isEmpty() ? null : products.getFirst();
-    }
-
-    public List<Prodotto> doRetrieveSuggestProduct(String[] suggested) {
-        if (suggested == null || suggested.length == 0) return List.of();
-        String placeholders = String.join(",", Collections.nCopies(suggested.length, "?"));
-        List<Object> parameters = new ArrayList<>(List.of(suggested));
-        return retrieveProducts("SELECT * FROM Prodotto WHERE Disponibile = TRUE AND Nome IN (" +
-                placeholders + ") ORDER BY Nome", parameters);
-    }
-
-    public List<Prodotto> search(String text, Float min, Float max, String developer,
-                                 List<String> genres, List<String> platforms, List<String> modes,
-                                 boolean includeUnavailable) {
-        StringBuilder sql = new StringBuilder("SELECT DISTINCT p.* FROM Prodotto p WHERE 1=1");
-        List<Object> parameters = new ArrayList<>();
-        if (!includeUnavailable) sql.append(" AND p.Disponibile = TRUE");
-        if (text != null && !text.isBlank()) {
-            sql.append(" AND p.Nome LIKE ?");
-            parameters.add("%" + text.trim() + "%");
-        }
-        if (min != null) { sql.append(" AND p.Prezzo_Scontato >= ?"); parameters.add(min); }
-        if (max != null) { sql.append(" AND p.Prezzo_Scontato <= ?"); parameters.add(max); }
-        if (developer != null && !developer.isBlank()) {
-            sql.append(" AND p.Casa_Sviluppatrice LIKE ?");
-            parameters.add("%" + developer.trim() + "%");
-        }
-        appendExists(sql, parameters, "Genere", "Genere", genres);
-        appendExists(sql, parameters, "Piattaforma", "Piattaforma", platforms);
-        appendModes(sql, parameters, modes);
-        sql.append(" ORDER BY p.Disponibile DESC, p.Nome");
-        return retrieveProducts(sql.toString(), parameters);
-    }
-
-    private void appendExists(StringBuilder sql, List<Object> parameters, String table,
-                              String column, List<String> values) {
-        if (values == null || values.isEmpty()) return;
-        sql.append(" AND EXISTS (SELECT 1 FROM ").append(table)
-                .append(" x WHERE x.ID_Prodotto = p.ID_Prodotto AND x.").append(column).append(" IN (")
-                .append(String.join(",", Collections.nCopies(values.size(), "?"))).append("))");
-        parameters.addAll(values);
-    }
-
-    private void appendModes(StringBuilder sql, List<Object> parameters, List<String> modes) {
-        if (modes == null || modes.isEmpty()) return;
-        sql.append(" AND (");
-        for (int i = 0; i < modes.size(); i++) {
-            if (i > 0) sql.append(" OR ");
-            sql.append("p.Modalita_Gioco LIKE ?");
-            parameters.add("%" + modes.get(i) + "%");
-        }
-        sql.append(")");
-    }
-
-    public List<Media> doRetrieveMediaByProdotto(int productId) {
-        String sql = "SELECT * FROM MediaProdotto WHERE ID_Prodotto = ? ORDER BY Ordine_Visualizzazione, ID_Media";
-        List<Media> media = new ArrayList<>();
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, productId);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Media item = new Media();
-                    item.setIdProdotto(productId);
-                    item.setTipo(result.getString("Tipo"));
-                    item.setUrlMedia(result.getString("URL_Media"));
-                    item.setOrdineVisualizzazione(result.getInt("Ordine_Visualizzazione"));
-                    media.add(item);
-                }
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                p.setNome(rs.getString("Nome"));
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+                p.setSconto(rs.getInt("Sconto"));
+                p.seteMailAmm(rs.getString("Email_Amm"));
+                lista.add(p);
             }
-            return media;
+
+            return lista;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public int create(Prodotto product, List<Media> media) {
-        String sql = "INSERT INTO Prodotto (Nome, Descrizione_Prod, Prezzo_OG, Prezzo_Scontato, " +
-                "Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm, Disponibile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, TRUE)";
-        try (Connection connection = ConPool.getConnection()) {
-            connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                bindProduct(statement, product, false);
-                statement.executeUpdate();
-                try (ResultSet keys = statement.getGeneratedKeys()) {
-                    if (!keys.next()) throw new SQLException("ID prodotto non generato");
-                    product.setID_Prodotto(keys.getInt(1));
-                }
-                replaceClassifications(connection, product);
-                insertMedia(connection, product.getID_Prodotto(), media);
-                connection.commit();
-                return product.getID_Prodotto();
-            } catch (Exception e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // Prende un prodotto in base all'Id dato tramite ricerca
+    public Prodotto doRetrieveById (int id) {
+        try (Connection conn = ConPool.getConnection()) {
+            Prodotto p = new Prodotto();
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE ID_Prodotto = ?");
+            s.setInt(1, id);
+            ResultSet rs = s.executeQuery();
 
-    public boolean update(Prodotto product) {
-        String sql = "UPDATE Prodotto SET Nome=?, Descrizione_Prod=?, Prezzo_OG=?, Prezzo_Scontato=?, " +
-                "Modalita_Gioco=?, Casa_Sviluppatrice=?, Sconto=? WHERE ID_Prodotto=?";
-        try (Connection connection = ConPool.getConnection()) {
-            connection.setAutoCommit(false);
-            try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                bindProduct(statement, product, true);
-                boolean updated = statement.executeUpdate() == 1;
-                if (!updated) throw new SQLException("Prodotto inesistente");
-                replaceClassifications(connection, product);
-                connection.commit();
-                return true;
-            } catch (Exception e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(true);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+            while(rs.next()) {
 
-    public RemovalResult removeOrDisable(int productId) {
-        try (Connection connection = ConPool.getConnection()) {
-            connection.setAutoCommit(false);
-            try {
-                try (PreparedStatement lock = connection.prepareStatement(
-                        "SELECT ID_Prodotto FROM Prodotto WHERE ID_Prodotto=? FOR UPDATE")) {
-                    lock.setInt(1, productId);
-                    try (ResultSet result = lock.executeQuery()) {
-                        if (!result.next()) {
-                            connection.rollback();
-                            return new RemovalResult("not_found", List.of());
-                        }
-                    }
-                }
-                boolean referenced = exists(connection,
-                        "SELECT EXISTS(SELECT 1 FROM Contiene WHERE ID_Prodotto=?) OR " +
-                                "EXISTS(SELECT 1 FROM Recensione WHERE ID_Prodotto=?)", productId);
-                if (referenced) {
-                    try (PreparedStatement update = connection.prepareStatement(
-                            "UPDATE Prodotto SET Disponibile=FALSE WHERE ID_Prodotto=?")) {
-                        update.setInt(1, productId);
-                        update.executeUpdate();
-                    }
-                    connection.commit();
-                    return new RemovalResult("unavailable", List.of());
-                }
-                List<String> urls = mediaUrls(connection, productId);
-                try (PreparedStatement delete = connection.prepareStatement(
-                        "DELETE FROM Prodotto WHERE ID_Prodotto=?")) {
-                    delete.setInt(1, productId);
-                    delete.executeUpdate();
-                }
-                connection.commit();
-                return new RemovalResult("deleted", urls);
-            } catch (Exception e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(true);
+                p.setNome(rs.getString("Nome"));
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+                p.setSconto(rs.getInt("Sconto"));
+                p.seteMailAmm(rs.getString("Email_Amm"));
+                return p;
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+            return null;
 
-    public List<String> retrieveGenres() {
-        return List.of("Action RPG", "Azione", "Adventure", "Horror", "RPG", "RPG-Sci-fi", "Sandbox", "Sport", "Strategia");
-    }
-    public List<String> retrievePlatforms() {
-        return List.of("Windows", "macOS", "Linux", "PlayStation", "Xbox", "Nintendo Switch");
-    }
-    public List<String> retrieveModes() { return List.of("Single Player", "Multiplayer", "Cooperativa"); }
-
-    private List<Prodotto> retrieveProducts(String sql, List<Object> parameters) {
-        List<Prodotto> products = new ArrayList<>();
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            bindParameters(statement, parameters);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) products.add(mapProduct(result));
-            }
-            for (Prodotto product : products) loadClassifications(connection, product);
-            return products;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Prodotto mapProduct(ResultSet result) throws SQLException {
-        Prodotto product = new Prodotto();
-        product.setID_Prodotto(result.getInt("ID_Prodotto"));
-        product.setNome(result.getString("Nome"));
-        product.setDescrizione(result.getString("Descrizione_Prod"));
-        product.setPrezzo_OG(result.getFloat("Prezzo_OG"));
-        product.setPrezzo_scontato(result.getFloat("Prezzo_Scontato"));
-        product.setModalita_Gioco(result.getString("Modalita_Gioco"));
-        product.setCasa_sviluppatrice(result.getString("Casa_Sviluppatrice"));
-        product.setSconto(result.getInt("Sconto"));
-        product.seteMailAmm(result.getString("Email_Amm"));
-        product.setDisponibile(result.getBoolean("Disponibile"));
-        return product;
-    }
+    // Matcha l'ID prodotto del media con quello dell'effettivo prodotto a cui è assegnato
+    public List<Media> doRetrieveMediaByProdotto (int idProdotto) {
+        List<Media> listaMedia = new ArrayList<>();
 
-    private void loadClassifications(Connection connection, Prodotto product) throws SQLException {
-        product.setGeneri(retrieveRelation(connection, "Genere", "Genere", product.getID_Prodotto()));
-        product.setPiattaforme(retrieveRelation(connection, "Piattaforma", "Piattaforma", product.getID_Prodotto()));
-        product.setModalita(parseModes(product.getModalita_Gioco()));
-    }
+        try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM MediaProdotto WHERE ID_Prodotto = ?");
+            s.setInt(1, idProdotto);
+            ResultSet rs = s.executeQuery();
 
-    private List<String> parseModes(String value) {
-        if (value == null || value.isBlank()) return new ArrayList<>();
-        List<String> modes = new ArrayList<>();
-        if (value.contains("Single")) modes.add("Single Player");
-        if (value.contains("Multi")) modes.add("Multiplayer");
-        if (value.contains("Coop")) modes.add("Cooperativa");
-        return modes;
-    }
+            while (rs.next()) {
+                Media media = new Media();
 
-    private List<String> retrieveRelation(Connection connection, String table, String column, int id) throws SQLException {
-        List<String> values = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT " + column + " FROM " + table + " WHERE ID_Prodotto=? ORDER BY " + column)) {
-            statement.setInt(1, id);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) values.add(result.getString(1));
+                media.setTipo(rs.getString("Tipo"));
+                media.setUrlMedia(rs.getString("URL_Media"));
+                listaMedia.add(media);
             }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return values;
+        return listaMedia;
     }
 
-    private void replaceClassifications(Connection connection, Prodotto product) throws SQLException {
-        deleteRelation(connection, "Genere", product.getID_Prodotto());
-        deleteRelation(connection, "Piattaforma", product.getID_Prodotto());
-        insertRelation(connection, "Genere", "Genere", product.getID_Prodotto(), product.getGeneri());
-        insertRelation(connection, "Piattaforma", "Piattaforma", product.getID_Prodotto(), product.getPiattaforme());
-    }
+    public List<Prodotto> doRetrieveSuggestProduct (String[] suggested) {
+        try (Connection conn = ConPool.getConnection()) {
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Nome IN (?, ?, ?, ?, ?, ?)");
 
-    private void deleteRelation(Connection connection, String table, int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM " + table + " WHERE ID_Prodotto=?")) {
-            statement.setInt(1, id);
-            statement.executeUpdate();
-        }
-    }
+            s.setString(1, suggested[0]);
+            s.setString(2, suggested[1]);
+            s.setString(3, suggested[2]);
+            s.setString(4, suggested[3]);
+            s.setString(5, suggested[4]);
+            s.setString(6, suggested[5]);
 
-    private void insertRelation(Connection connection, String table, String column, int id, List<String> values) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO " + table + " (ID_Prodotto, " + column + ") VALUES (?, ?)")) {
-            for (String value : values) {
-                statement.setInt(1, id);
-                statement.setString(2, value);
-                statement.addBatch();
+            ResultSet rs = s.executeQuery();
+
+            List<Prodotto> listaProdotto = new ArrayList<>();   //qui memorizzo tutti i Prodotti consigliati
+
+            while(rs.next()) {  //qui per ogni prodotto creo un istanza della classe Prodotto, poi la memorizzo nella lista
+                Prodotto p = new Prodotto();
+                p.setNome(rs.getString("Nome"));
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+                p.setSconto(rs.getInt("Sconto"));
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaProdotto.add(p);
             }
-            statement.executeBatch();
+            return listaProdotto;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private void insertMedia(Connection connection, int productId, List<Media> media) throws SQLException {
-        String sql = "INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media, Ordine_Visualizzazione) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            for (Media item : media) {
-                statement.setString(1, java.util.UUID.randomUUID().toString());
-                statement.setInt(2, productId);
-                statement.setString(3, item.getTipo());
-                statement.setString(4, item.getUrlMedia());
-                statement.setInt(5, item.getOrdineVisualizzazione());
-                statement.addBatch();
+    public List<Prodotto> doRetrieveProdottoByNome (String nome) {
+
+        List<Prodotto> listaByNome = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p WHERE p.Nome LIKE ?");
+
+            s.setString(1, nome + "%");
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaByNome.add(p);
+
             }
-            statement.executeBatch();
+
+            return listaByNome;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
         }
+
     }
 
-    private void bindProduct(PreparedStatement statement, Prodotto product, boolean includeId) throws SQLException {
-        statement.setString(1, product.getNome());
-        statement.setString(2, product.getDescrizione());
-        statement.setFloat(3, product.getPrezzo_OG());
-        statement.setFloat(4, product.getPrezzo_scontato());
-        statement.setString(5, String.join("/", product.getModalita()));
-        statement.setString(6, product.getCasa_sviluppatrice());
-        statement.setInt(7, product.getSconto());
-        if (includeId) statement.setInt(8, product.getID_Prodotto());
-        else statement.setString(8, product.geteMailAmm());
-    }
 
-    private boolean exists(Connection connection, String sql, int id) throws SQLException {
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
-            statement.setInt(2, id);
-            try (ResultSet result = statement.executeQuery()) { return result.next() && result.getBoolean(1); }
-        }
-    }
 
-    private List<String> mediaUrls(Connection connection, int id) throws SQLException {
-        List<String> urls = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT URL_Media FROM MediaProdotto WHERE ID_Prodotto=?")) {
-            statement.setInt(1, id);
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) urls.add(result.getString(1));
+    public List<Prodotto> doRetrieveProdottoByGenere (String tipo) {
+
+        List<Prodotto> listaProdotti = new ArrayList<>();
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto WHERE g.Genere = ?");
+
+            s.setString(1, tipo);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaProdotti.add(p);
+
             }
+
+            return listaProdotti;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
         }
-        return urls;
+
     }
 
-    private List<String> retrieveNames(String sql) {
-        List<String> names = new ArrayList<>();
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-             ResultSet result = statement.executeQuery()) {
-            while (result.next()) names.add(result.getString(1));
-            return names;
-        } catch (SQLException e) { throw new RuntimeException(e); }
+
+
+    public List<Prodotto> doRetrieveProdottoByCasaSviluppatrice (String casaSviluppatrice) {
+
+        List<Prodotto> lista = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Casa_Sviluppatrice LIKE ?");
+
+            s.setString(1, casaSviluppatrice);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                lista.add(p);
+
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
     }
 
-    private void bindParameters(PreparedStatement statement, List<Object> parameters) throws SQLException {
-        for (int i = 0; i < parameters.size(); i++) statement.setObject(i + 1, parameters.get(i));
+
+
+    public List<Prodotto> doRetrieveProdottoByModalitaGioco (String modalitaGioco) {
+
+        List<Prodotto> lista = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto p WHERE p.Modalita_Gioco LIKE ? ");
+
+            s.setString(1, modalitaGioco);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                lista.add(p);
+
+            }
+
+            return lista;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
     }
+
+    public List<Prodotto> doRetrieveProdottoByPrezzo (float prezzoMin, float prezzoMax) {
+
+        List<Prodotto> listaByPrezzo = new ArrayList<>();
+
+
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Prodotto WHERE Prezzo_Scontato BETWEEN ? AND ?");
+
+            s.setFloat(1, prezzoMin);
+
+            s.setFloat(2, prezzoMax);
+
+            ResultSet rs = s.executeQuery();
+
+
+
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+
+                p.setNome(rs.getString("Nome"));
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+
+                p.setDescrizione(rs.getString("Descrizione_Prod"));
+
+                p.setPrezzo_OG(rs.getFloat("Prezzo_OG"));
+
+                p.setPrezzo_scontato(rs.getFloat("Prezzo_Scontato"));
+
+                p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
+
+                p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
+
+                p.setSconto(rs.getInt("Sconto"));
+
+                p.seteMailAmm(rs.getString("Email_Amm"));
+
+                listaByPrezzo.add(p);
+
+            }
+
+            return listaByPrezzo;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+    public List<Prodotto> filtraProdotti(String genere, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
+
+        ProdottoDAO dao = new ProdottoDAO();
+
+        List<Prodotto> result = dao.doRetrieveAll();
+
+        if (genere != null && !genere.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByGenere(genere));
+        }
+
+        if (casa != null && !casa.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByCasaSviluppatrice(casa));
+        }
+
+        if (mod_gioco != null && !mod_gioco.isEmpty()) {
+            result.retainAll(dao.doRetrieveProdottoByModalitaGioco(mod_gioco));
+        }
+
+        if (min != null && max != null) {
+            result.retainAll(dao.doRetrieveProdottoByPrezzo(min, max));
+        }
+
+        return result;
+    }
+
 }
