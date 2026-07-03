@@ -1,5 +1,6 @@
 package model;
 
+import java.util.*;
 import java.util.Objects;
 
 public class Prodotto {
@@ -12,8 +13,16 @@ public class Prodotto {
     private String casa_sviluppatrice;
     private int Sconto;
     private String eMailAmm;
-    private String urlCopertina;
+    private List<String> piattaforme = new ArrayList<>();
+    private boolean disponibile;
 
+    public boolean isDisponibile() {
+        return disponibile;
+    }
+
+    public void setDisponibile(boolean disponibile) {
+        this.disponibile = disponibile;
+    }
 
     public int getID_Prodotto() {
         return ID_Prodotto;
@@ -85,6 +94,15 @@ public class Prodotto {
 
     public void seteMailAmm(String eMailAmm) {
         this.eMailAmm = eMailAmm;
+    }
+
+    public List<String> getPiattaforme() {
+        return piattaforme;
+    }
+
+    public void setPiattaforme(List<String> piattaforme) {
+        this.piattaforme = piattaforme;
+        System.out.println(this.piattaforme);
     }
 
     @Override

@@ -26,6 +26,9 @@ public class ProdottoDAO {
                 p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
                 p.setSconto(rs.getInt("Sconto"));
                 p.seteMailAmm(rs.getString("Email_Amm"));
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+
                 lista.add(p);
             }
 
@@ -54,6 +57,8 @@ public class ProdottoDAO {
                 p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
                 p.setSconto(rs.getInt("Sconto"));
                 p.seteMailAmm(rs.getString("Email_Amm"));
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+                p.setDisponibile(rs.getBoolean("Disponibile"));
                 return p;
             }
             return null;
@@ -112,6 +117,9 @@ public class ProdottoDAO {
                 p.setCasa_sviluppatrice(rs.getString("Casa_Sviluppatrice"));
                 p.setSconto(rs.getInt("Sconto"));
                 p.seteMailAmm(rs.getString("Email_Amm"));
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+
 
                 listaProdotto.add(p);
             }
@@ -160,6 +168,11 @@ public class ProdottoDAO {
 
                 p.seteMailAmm(rs.getString("Email_Amm"));
 
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+
+
                 listaByNome.add(p);
 
             }
@@ -206,6 +219,8 @@ public class ProdottoDAO {
                 p.setModalita_Gioco(rs.getString("Modalita_Gioco"));
                 p.setSconto(rs.getInt("Sconto"));
                 p.seteMailAmm(rs.getString("Email_Amm"));
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+                p.setDisponibile(rs.getBoolean("Disponibile"));
 
                 listaProdotti.add(p);
             }
@@ -259,6 +274,11 @@ public class ProdottoDAO {
                 p.setSconto(rs.getInt("Sconto"));
 
                 p.seteMailAmm(rs.getString("Email_Amm"));
+
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+
 
                 lista.add(p);
 
@@ -314,6 +334,11 @@ public class ProdottoDAO {
 
                 p.seteMailAmm(rs.getString("Email_Amm"));
 
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+
+
                 lista.add(p);
 
             }
@@ -368,6 +393,11 @@ public class ProdottoDAO {
 
                 p.seteMailAmm(rs.getString("Email_Amm"));
 
+                p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+
+                p.setDisponibile(rs.getBoolean("Disponibile"));
+
+
                 listaByPrezzo.add(p);
 
             }
@@ -406,5 +436,30 @@ public class ProdottoDAO {
 
         return result;
     }
+
+    public List<String> doRetrievePiattaformeByProdotto(int idProdotto) {
+        List<String> piattaforme = new ArrayList<>();
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT Piattaforma FROM Piattaforma WHERE ID_Prodotto = ?");
+
+            ps.setInt(1, idProdotto);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                piattaforme.add(rs.getString("Piattaforma"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return piattaforme;
+    }
+
+
 
 }

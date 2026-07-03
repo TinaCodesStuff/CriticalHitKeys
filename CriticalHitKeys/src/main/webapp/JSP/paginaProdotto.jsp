@@ -78,6 +78,9 @@
     <h1><%= prod.getNome() %></h1>
     <span class="casa-sviluppatrice"><%= prod.getCasa_sviluppatrice() %></span>
     <span class="modalita-gioco">Modalità: <%= prod.getModalita_Gioco() %></span>
+    <span class="piattaforma-gioco">Piattaforma:
+        <%=String.join(" | ", prod.getPiattaforme())%>
+    </span>
 
     <div class="box-sconto">
         <span class="prezzo-scontato"><%= prod.getPrezzo_scontato() %>€</span>

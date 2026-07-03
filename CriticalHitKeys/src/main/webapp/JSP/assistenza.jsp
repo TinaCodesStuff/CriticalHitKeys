@@ -13,7 +13,9 @@
 %>
     <title>Assistenza Clienti</title>
 </head>
-<body>
+<body><c:if test="${prodottoModifica.ID_Prodotto == g.ID_Prodotto}">
+    checked
+</c:if>
 <!-- NAVBAR -->
 <div class="background-sito"></div>
 <ul>

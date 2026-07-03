@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import model.Amministratore;
+import model.AmministratoreDAO;
 import model.CarrelloDAO;
 import model.Utente;
 import model.UtenteDAO;
@@ -21,6 +23,7 @@ import java.io.IOException;
 @WebServlet(name = "AuthServlet", value = "/auth")
 public class AuthServlet extends HttpServlet {
     private final UtenteDAO utenteDAO = new UtenteDAO();
+    private final AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -58,6 +61,21 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
+        Amministratore amministratore = amministratoreDAO.doRetrieveByEmailOrUsername(emailUsername);
+        String hashedInput = hashPassword(password);
+        if (amministratore != null && amministratore.getPassword().equals(hashedInput)) {
+            HttpSession oldSession = request.getSession(false);
+            if (oldSession != null) oldSession.invalidate();
+            HttpSession session = request.getSession(true);
+            session.setAttribute("amministratoreLoggato", amministratore);
+            session.setAttribute("usernameAmministratore", amministratore.getUsername());
+            session.setAttribute("ruolo", "ADMIN");
+            session.setMaxInactiveInterval(30 * 60);
+            response.sendRedirect(request.getContextPath() + "/admin/prodotti");
+            return;
+        }
+
+
         Utente utente = utenteDAO.doRetrieveUser(emailUsername);
 
         if (utente == null) {
@@ -65,8 +83,6 @@ public class AuthServlet extends HttpServlet {
             forwardToAuth(request, response);
             return;
         }
-
-        String hashedInput = hashPassword(password);
 
         if (!utente.getPassword_Ut().equals(hashedInput)) {
             request.setAttribute("authError", "Credenziali non valide.");
@@ -82,6 +98,7 @@ public class AuthServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("utenteLoggato", utente);
         session.setAttribute("usernameUtente", utente.getUsername_Ut());
+        session.setAttribute("ruolo", "UTENTE");
         session.setMaxInactiveInterval(30 * 60);
 
         response.sendRedirect(request.getContextPath() + "/auth");
