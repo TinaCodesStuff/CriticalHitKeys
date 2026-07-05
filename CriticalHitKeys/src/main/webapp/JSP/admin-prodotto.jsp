@@ -43,12 +43,26 @@
     </div>
   </header>
 
+  <c:if test="${not empty sessionScope.adminMessage}">
+    <p>${sessionScope.adminMessage}</p>
+    <c:remove var="adminMessage" scope="session" />
+  </c:if>
+
+  <c:if test="${not empty adminError}">
+    <p>${adminError}</p>
+  </c:if>
+
   <c:set var="editing" value="${not empty prodottoModifica}" />
 
-  <!-- LISTA PRODOTTI -->
-  <section>
-    <h2>Catalogo</h2>
+  <div class="admin-layout">
 
+  <!-- LISTA PRODOTTI -->
+  <section class="product-workspace">
+    <div class="section-title">
+      <h2>Catalogo</h2>
+    </div>
+
+    <div class="table-scroll">
     <table>
       <thead>
       <tr>
@@ -80,19 +94,26 @@
             </c:forEach>
           </td>
 
-          <td>
+          <td class="actions">
             <a href="${pageContext.request.contextPath}/admin/prodotti?edit=${p.ID_Prodotto}#editor">
               Modifica
             </a>
+            <form method="post"
+                  action="${pageContext.request.contextPath}/admin/prodotti/rimuovi"
+                  onsubmit="return confirm('Vuoi rimuovere questo prodotto?');">
+              <input type="hidden" name="id" value="${p.ID_Prodotto}">
+              <button type="submit">Rimuovi</button>
+            </form>
           </td>
         </tr>
       </c:forEach>
       </tbody>
     </table>
+    </div>
   </section>
 
   <!-- FORM EDIT / CREATE -->
-  <aside id="editor">
+  <aside id="editor" class="editor">
 
     <h2>
       <c:choose>
@@ -110,24 +131,24 @@
       </c:if>
 
       <!-- NOME -->
-      <input name="nome" placeholder="Nome"
+      <input name="nome" placeholder="Nome del prodotto"
              value="${prodottoModifica.nome}" required>
 
       <!-- DESCRIZIONE -->
-      <textarea name="descrizione" required>
-        ${prodottoModifica.descrizione}
-      </textarea>
+      <textarea name="descrizione" placeholder="Descrizione del prodotto" required>${prodottoModifica.descrizione}</textarea>
 
       <!-- CASA SVILUPPATRICE -->
-      <input name="sviluppatore"
+      <input name="sviluppatore" placeholder="Casa sviluppatrice"
              value="${prodottoModifica.casa_sviluppatrice}" required>
 
       <!-- PREZZO -->
-      <input type="number" step="0.01" name="prezzoOriginale"
+      <input type="number" step="0.01" min="0" name="prezzoOriginale"
+             placeholder="Prezzo originale in euro"
              value="${prodottoModifica.prezzo_OG}" required>
 
       <!-- SCONTO -->
-      <input type="number" name="sconto"
+      <input type="number" min="0" max="100" name="sconto"
+             placeholder="Sconto percentuale"
              value="${prodottoModifica.sconto}" required>
 
       <!-- MODALITA (SELECT) -->
@@ -145,6 +166,7 @@
       <fieldset>
         <legend>Generi</legend>
 
+        <div class="checks">
         <c:forEach items="${generi}" var="g">
           <label>
             <input type="checkbox" name="generi" value="${g.genere}">
@@ -152,12 +174,14 @@
               ${g.genere}
           </label>
         </c:forEach>
+        </div>
       </fieldset>
 
       <!-- PIATTAFORME -->
       <fieldset>
         <legend>Piattaforme</legend>
 
+        <div class="checks">
         <c:forEach items="${piattaforme}" var="p">
           <label>
             <input type="checkbox"
@@ -167,14 +191,25 @@
               ${p}
           </label>
         </c:forEach>
+        </div>
       </fieldset>
 
-      <button type="submit">
+      <c:if test="${not editing}">
+        <label>Copertina</label>
+        <input type="file" name="copertina" accept="image/jpeg,image/png,image/webp" required>
+
+        <label>Immagini aggiuntive</label>
+        <input type="file" name="galleria" accept="image/jpeg,image/png,image/webp" multiple>
+      </c:if>
+
+      <button type="submit" class="submit-product">
         ${editing ? "Salva modifiche" : "Crea prodotto"}
       </button>
 
     </form>
   </aside>
+
+  </div>
 
 </main>
 
