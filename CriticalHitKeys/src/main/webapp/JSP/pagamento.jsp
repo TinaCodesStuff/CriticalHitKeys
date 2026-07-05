@@ -9,7 +9,7 @@
 <body>
 <div class="background-sito"></div>
 
-<ul>
+<ul id ="navbar">
     <li class="menu-left">
         <a href="init-servlet">
             <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo di Critical Hit Keys">
