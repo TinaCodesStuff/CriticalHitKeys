@@ -1,5 +1,7 @@
 <%@ page import="model.ChiaveDigitale" %>
 <%@ page import="java.util.List" %>
+<%@ page import="model.AccountGioco" %>
+<%@ page import="model.ProdottoDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -37,20 +39,28 @@
     <p>Grazie per il tuo acquisto. Sotto trovi le tue chiavi digitali pronte per l'attivazione:</p>
 
     <ul class="lista-chiavi">
+        <li class="item-chiave">
         <%
             List<ChiaveDigitale> chiavi = (List<ChiaveDigitale>) request.getAttribute("chiaviAcquistate");
+            List<AccountGioco> acc = (List<AccountGioco>) request.getAttribute("accountAcquistati");
+            ProdottoDAO pd = new ProdottoDAO();
             if (chiavi != null && !chiavi.isEmpty()) {
                 for (ChiaveDigitale c : chiavi) {
-                    String nomeGioco = (String) request.getAttribute("nome_" + c.getChiave());
+                    String nomeGioco = pd.doRetrieveById(c.getID_Prodotto()).getNome();
         %>
-        <li class="item-chiave">
             <span class="titolo-gioco"><%= nomeGioco != null ? nomeGioco : "Prodotto #" + c.getID_Prodotto() %></span>
             <div class="codice-chiave"><%= c.getChiave() %></div>
-        </li>
         <%
             }
-        } else {
+        } if (acc != null && !acc.isEmpty()) {
+                for (AccountGioco a : acc) {
+                    String nomeGioco = pd.doRetrieveById(a.getID_Prodotto()).getNome();
         %>
+            <span class="titolo-gioco"><%= nomeGioco != null ? nomeGioco : "Prodotto #" + a.getID_Prodotto() %></span>
+            <div class="codice-chiave"><%= "Nome - Credenziali:" + a.getCredenziali().replace(":", " - ") %></div>
+        <% }
+        }if((acc == null && acc.isEmpty()) && (chiavi == null && chiavi.isEmpty())){ %>
+        </li>
         <li class="nessuna-chiave">
             <p>Nessuna chiave digitale generata per questo ordine.</p>
         </li>

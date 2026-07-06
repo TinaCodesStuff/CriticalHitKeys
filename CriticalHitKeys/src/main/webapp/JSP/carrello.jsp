@@ -102,9 +102,7 @@
 <div class="footer">
   <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
 </div>
-<script>
-  const contextPath = "<%= request.getContextPath() %>";
-</script>
+
 
 <script src="${pageContext.request.contextPath}/carrelloAggiornamentoAJAX.js">
 </script>

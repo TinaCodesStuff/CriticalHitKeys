@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @WebServlet(name="PagamentoServlet", value="/pagamento-servlet")
 public class PagamentoServlet extends HttpServlet {
@@ -32,6 +33,7 @@ public class PagamentoServlet extends HttpServlet {
 
         if (username != null) {
             ChiaveDigitaleDAO chiaveDAO = new ChiaveDigitaleDAO();
+            AccountGiocoDAO accountGiocoDAO = new AccountGiocoDAO();
 
             /*TENTATIVI DI DEBUG*/
             List<Prodotto> listaProdotti = (List<Prodotto>) session.getAttribute("listaProdotti");
@@ -45,6 +47,7 @@ public class PagamentoServlet extends HttpServlet {
             }*/
 
             List<ChiaveDigitale> listaChiavi = new ArrayList<>();
+            List<AccountGioco> listaAccountGioco = new ArrayList<>();
             if (listaProdotti.isEmpty())
             {
                System.out.println("Lista prodotti vuotaa :(((");
@@ -55,37 +58,44 @@ public class PagamentoServlet extends HttpServlet {
             }
             if (listaProdotti != null && !listaProdotti.isEmpty()) {
                 for (Prodotto prod: listaProdotti) {
-                    ChiaveDigitale nuovaChiave = new ChiaveDigitale();
-
                     try {
-                        System.out.println(chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto()).getChiave());
-                        if(chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto()).getChiave() != null){  //verifico se il prodotto ha già una chiave nel DB
+                        ChiaveDigitale chiave = chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto());
+                        AccountGioco acc = accountGiocoDAO.doRetrieveCredenzialiByID_Prodotto(prod.getID_Prodotto());
+                        if(chiave != null && chiave.getID_Prodotto() == prod.getID_Prodotto()){  //verifico se il prodotto ha già una chiave nel DB
                             ChiaveDigitale chiaveActual = new ChiaveDigitale();
-                            chiaveActual = chiaveDAO.doRetrieveChiaveByID_Prodotto(prod.getID_Prodotto());
+                            chiaveActual = chiave;
                             listaChiavi.add(chiaveActual);
                         }
-                        else{   //se la chiave non è già presente nel DB, allora procede a generarla e poi ad aggiungerla al DB
-                            nuovaChiave.setID_Prodotto(prod.getID_Prodotto());
-                            nuovaChiave.setChiave(chiaveDAO.generaCodiceRandomico());
+                        else if(acc != null && acc.getID_Prodotto() == prod.getID_Prodotto()){ //verifico se il prodotto ha già un account associato al DB
+                            AccountGioco accountActual = new AccountGioco();
+                            accountActual = acc;
+                            listaAccountGioco.add(accountActual);
+                        }
+                        else {   //se la chiave non è già presente nel DB, allora procede a generarla e poi ad aggiungerla al DB
+                            Random random = new Random();   //in questo caso decide se creare una nuova chiave per il prodotto, oppure un nuovo account con credenziali. In entrambi casi poi memorizzerà la opzione nel DB.
 
-                            chiaveDAO.doSave(nuovaChiave);
+                            if (random.nextBoolean()) {
+                                ChiaveDigitale nuovaChiave = new ChiaveDigitale();
 
+                                // Crea una chiave, e setto i parametri generando la chiave
+                                nuovaChiave.setID_Prodotto(prod.getID_Prodotto());
+                                nuovaChiave.setChiave(chiaveDAO.generaCodiceRandomico());
 
-                            listaChiavi.add(nuovaChiave);
+                                chiaveDAO.doSave(nuovaChiave);
+                                listaChiavi.add(nuovaChiave);
+
+                            } else {
+                                AccountGioco nuovoAccountGioco = new AccountGioco();// Crea un account di gioco, setto i parametri generando l'account
+                                nuovoAccountGioco.setID_Prodotto(prod.getID_Prodotto());
+                                nuovoAccountGioco.setCredenziali(accountGiocoDAO.generaCredenziali());
+
+                                accountGiocoDAO.doSave(nuovoAccountGioco);
+                                listaAccountGioco.add(nuovoAccountGioco);
+                            }
                         }
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
-
-                    //DEBUG
-                   if (Objects.equals(nuovaChiave.getChiave(), ""))
-                   {
-                       System.out.println("Chiave vuota :///s");
-                   }
-                   else
-                   {
-                       System.out.println(nuovaChiave.toString());
-                   }
                 }
                 ContieneDAO contieneDAO = new ContieneDAO();
                 CarrelloDAO carrelloDAO = new CarrelloDAO();
@@ -95,7 +105,12 @@ public class PagamentoServlet extends HttpServlet {
                     throw new RuntimeException(e);
                 }
             }
+
+            System.out.println("[DEBUG-Pagamento] Size-Chiavi: " + listaChiavi.size());
+            System.out.println("[DEBUG-Pagamento] Size-Account: " + listaAccountGioco.size());
             request.setAttribute("chiaviAcquistate", listaChiavi);
+            request.setAttribute("accountAcquistati", listaAccountGioco);
+
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/pagamento.jsp");
             dispatcher.forward(request, response);
