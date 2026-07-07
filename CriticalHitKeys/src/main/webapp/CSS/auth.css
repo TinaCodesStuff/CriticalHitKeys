@@ -322,3 +322,33 @@ button[type="submit"]:hover,
         transition: none;
     }
 }
+
+.orders-list {
+    list-style: none;
+    padding: 0;
+    width: min(90%, 700px);
+    margin: 120px auto 50px;
+}
+
+.orders-list li {
+    background-color: rgba(26, 12, 40, 0.88);
+    border: 1px solid rgba(255, 240, 196, 0.22);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    line-height: 1.8;
+}
+
+.orders-list li:hover {
+    border-color: #FFF0C4;
+}
+
+.orders-list li h2 {
+    color: #FFF0C4;
+    margin-bottom: 15px;
+}
+
+.orders-list li p {
+    margin: 10px 0;
+}

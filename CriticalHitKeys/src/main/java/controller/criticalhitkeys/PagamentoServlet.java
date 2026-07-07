@@ -12,6 +12,7 @@ import model.*;
 import javax.sound.midi.SysexMessage;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,7 +39,9 @@ public class PagamentoServlet extends HttpServlet {
             /*TENTATIVI DI DEBUG*/
             List<Prodotto> listaProdotti = (List<Prodotto>) session.getAttribute("listaProdotti");
             System.out.println("[DEBUG-Pagamento] Username rilevato: " + username);
-            System.out.println("[DEBUG-Pagamento] Lista recuperata da SESSIONE: " + listaProdotti);
+            System.out.println("[DEBUG-Pagamento] Lista recuperata da SESSIONE: " + listaProdotti.get(0).getNome());
+            System.out.println("[DEBUG-Pagamento] Lista recuperata da SESSIONE: " + listaProdotti.get(1).getNome());
+
             if (listaProdotti != null) {
                 System.out.println("[DEBUG-Pagamento] La lista è vuota? " + listaProdotti.isEmpty());
             }
@@ -97,8 +100,30 @@ public class PagamentoServlet extends HttpServlet {
                         throw new RuntimeException(e);
                     }
                 }
+                OrdineDAO ordineDAO = new OrdineDAO();
                 ContieneDAO contieneDAO = new ContieneDAO();
                 CarrelloDAO carrelloDAO = new CarrelloDAO();
+
+                Ordine ordine = new Ordine();
+                ordine.setID_Carrello(carrelloDAO.doRetrieveID_Carrello(u));
+
+                LocalDateTime dataOra = LocalDateTime.now();    //prendo la data e l'ora odierna per memorizzarla nell'ordine
+
+                ordine.setData_Ordine(dataOra);
+                StringBuilder ordineDesc = new StringBuilder();
+                for(Prodotto prod: listaProdotti){
+                    ordineDesc.append(prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append(" - ").append(contieneDAO.doRetrieveQuantitaByID_Prodotto(prod.getID_Prodotto()).get(prod.getID_Prodotto())).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
+                }
+
+                ordine.setDescrizione_Acquisto(ordineDesc.toString());
+
+                System.out.println("[DEBUG-Pagamento] Prodotti memorizzati: " + ordine.getDescrizione_Acquisto());
+
+                ordine.setImportoTot(Float.parseFloat(request.getParameter("totale"))); //qui memorizziamo il totale già calcolato nel carrello
+
+                ordineDAO.doSave(ordine);   //salviamo effettivamente l'ordine nel DB
+
+
                 try {
                     contieneDAO.removeProdottiByID_Carrello(carrelloDAO.doRetrieveID_Carrello(u));
                 } catch (SQLException e) {

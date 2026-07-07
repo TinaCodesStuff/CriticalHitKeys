@@ -1,3 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="model.Ordine" %>
+<%@ page import="java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="it">
@@ -28,6 +31,25 @@
     <section class="logged-panel" aria-labelledby="logged-title">
         <h1 id="logged-title">Accesso effettuato</h1>
         <p>Benvenuto, ${sessionScope.usernameUtente}. La sessione utente e attiva.</p>
+        <ol class="orders-list">
+            <c:forEach var="o" items="${sessionScope.ordiniUtente}">
+                <li>
+                    <h2>Ordine #${o.ID_Ordine}</h2>
+
+                    <p >
+                            ${o.descrizione_Acquisto}
+                    </p>
+
+                    <p>
+                        Data: ${o.data_Ordine}
+                    </p>
+
+                    <p>
+                        Totale: ${o.importoTot} €
+                    </p>
+                </li>
+            </c:forEach>
+        </ol>
         <form action="auth" method="post">
             <input type="hidden" name="action" value="logout">
             <button type="submit">Logout</button>

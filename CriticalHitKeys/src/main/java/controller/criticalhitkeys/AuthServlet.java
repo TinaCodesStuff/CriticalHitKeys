@@ -12,13 +12,10 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import model.Amministratore;
-import model.AmministratoreDAO;
-import model.CarrelloDAO;
-import model.Utente;
-import model.UtenteDAO;
+import model.*;
 
 import java.io.IOException;
+import java.util.*;
 
 @WebServlet(name = "AuthServlet", value = "/auth")
 public class AuthServlet extends HttpServlet {
@@ -30,6 +27,22 @@ public class AuthServlet extends HttpServlet {
         if ("ok".equals(request.getParameter("registered"))) {
             request.setAttribute("authInfo", "Registrazione completata. Ora puoi effettuare il login.");
         }
+
+        HttpSession session = request.getSession();
+        if(session.getAttribute("utenteLoggato") != null){
+            Utente utente = (Utente) session.getAttribute("utenteLoggato");
+            OrdineDAO ordineDAO = new OrdineDAO();
+            CarrelloDAO carrelloDAO = new CarrelloDAO();
+            List<Ordine> lista = ordineDAO.doRetrieveAllByID_Carrello(carrelloDAO.doRetrieveID_Carrello(utente));
+            for (Ordine o : lista) {
+                o.setDescrizione_Acquisto(
+                        o.getDescrizione_Acquisto().replace(";", "<br>")
+                );
+            }
+            session.setAttribute("ordiniUtente", lista);
+        }
+
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/auth.jsp");
         dispatcher.forward(request, response);
@@ -95,10 +108,22 @@ public class AuthServlet extends HttpServlet {
             oldSession.invalidate();
         }
 
+        OrdineDAO ordineDAO = new OrdineDAO();
+        CarrelloDAO carrelloDAO = new CarrelloDAO();
+
         HttpSession session = request.getSession(true);
         session.setAttribute("utenteLoggato", utente);
         session.setAttribute("usernameUtente", utente.getUsername_Ut());
         session.setAttribute("ruolo", "UTENTE");
+
+        List<Ordine> lista = ordineDAO.doRetrieveAllByID_Carrello(carrelloDAO.doRetrieveID_Carrello(utente));
+        for (Ordine o : lista) {
+            o.setDescrizione_Acquisto(
+                    o.getDescrizione_Acquisto().replace(";", "<br>")
+            );
+        }
+
+        session.setAttribute("ordiniUtente", lista);
         session.setMaxInactiveInterval(30 * 60);
 
         response.sendRedirect(request.getContextPath() + "/auth");

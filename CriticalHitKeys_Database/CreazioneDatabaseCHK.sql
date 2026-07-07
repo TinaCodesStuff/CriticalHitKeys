@@ -79,8 +79,9 @@ CREATE TABLE IF NOT EXISTS Contiene (
 CREATE TABLE IF NOT EXISTS Ordine (
     ID_Ordine INT AUTO_INCREMENT PRIMARY KEY,
     Importo_tot FLOAT,
-    DataUltimaModifica DATETIME,
-    ID_Carrello INT NOT NULL UNIQUE,
+    DataOrdine DATETIME,
+    Descrizione_Acquisto TEXT,
+    ID_Carrello INT NOT NULL,
     FOREIGN KEY (ID_Carrello) REFERENCES Carrello(ID_Carrello)
         ON UPDATE CASCADE ON DELETE CASCADE
 );

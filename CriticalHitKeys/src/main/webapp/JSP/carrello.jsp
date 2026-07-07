@@ -90,6 +90,7 @@
       </div>
 
         <form action="pagamento-servlet" method="POST" >
+          <input type="hidden" name="totale" value="<%=Math.round(totale * 100) / 100.0f%>">
       <button class="btn-acquisto">
         Procedi con l'acquisto
       </button>
@@ -102,6 +103,10 @@
 <div class="footer">
   <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
 </div>
+
+<script>
+  const contextPath = "${pageContext.request.contextPath}";
+</script>
 
 
 <script src="${pageContext.request.contextPath}/carrelloAggiornamentoAJAX.js">

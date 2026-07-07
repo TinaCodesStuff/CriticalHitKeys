@@ -61,6 +61,28 @@ public class ContieneDAO {
         }
     }
 
+    public Map<Integer, Integer> doRetrieveQuantitaByID_Prodotto(int id_prodotto) {
+        try(Connection conn = ConPool.getConnection()){
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Contiene WHERE ID_Prodotto = ?");
+            ps.setInt(1, id_prodotto);
+
+            ResultSet rs = ps.executeQuery();
+
+            Map<Integer, Integer> quantita= new HashMap<Integer, Integer>();
+
+            while (rs.next()) {
+                int idProdotto = rs.getInt("ID_Prodotto");
+                int qta = rs.getInt("Quantita");
+
+                quantita.put(idProdotto, qta);
+            }
+
+            return quantita;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Map<Integer, Integer> doRetrieveQuantitaById_Carrello(int ID_Carrello) {
         try(Connection conn = ConPool.getConnection()){
             PreparedStatement ps = conn.prepareStatement("SELECT ID_Prodotto, Quantita FROM Contiene WHERE ID_Carrello = ?");

@@ -119,13 +119,23 @@ INSERT INTO Contiene (ID_Carrello, ID_Prodotto, Quantita) VALUES
 (5, 3, 1),
 (5, 5, 1); -- Arthur_M ha 3 prodotti nel carrello
 
--- 8. Popolamento Ordine (collegato al carrello)
-INSERT INTO Ordine (ID_Ordine, Importo_tot, DataUltimaModifica, ID_Carrello) VALUES
-(1, 44.99, '2026-06-20 10:15:00', 1),
-(2, 54.98, '2026-06-21 12:30:00', 2),
-(3, 18.89, '2026-06-22 16:45:00', 3),
-(4, 34.99, '2026-06-23 09:10:00', 4),
-(5, 109.97, '2026-06-24 20:05:00', 5);
+-- 8. Popolamento Ordine (collegato al carrello + descrizione storica)
+INSERT INTO Ordine 
+(ID_Ordine, Importo_tot, DataOrdine, ID_Carrello, Descrizione_Acquisto) VALUES
+(1, 44.99, '2026-06-20 10:15:00', 1,
+'1 - Elden Ring - 44.99 - 1'),
+
+(2, 54.98, '2026-06-21 12:30:00', 2,
+'2 - Cyberpunk 2077 - 24.99 - 1; 3 - Minecraft - 29.99 - 1'),
+
+(3, 18.89, '2026-06-22 16:45:00', 3,
+'4 - Stray - 18.89 - 1'),
+
+(4, 34.99, '2026-06-23 09:10:00', 4,
+'5 - FIFA 26 - 34.99 - 1'),
+
+(5, 109.97, '2026-06-24 20:05:00', 5,
+'1 - Elden Ring - 44.99 - 1; 3 - Minecraft - 23.99 - 1; 5 - FIFA 26 - 34.99 - 1');
 
 -- 9. Popolamento Genere (5 record)
 INSERT INTO Genere (Genere, ID_Prodotto) VALUES
