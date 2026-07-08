@@ -74,6 +74,7 @@ li.menu-center a:last-child {
     right: 20px;
     display: flex;
     gap: 10px;
+    top: -10px; /*utilizzato per evitare di visualizzare le icone sotto la navbar*/
 }
 
 .menu-right img {
