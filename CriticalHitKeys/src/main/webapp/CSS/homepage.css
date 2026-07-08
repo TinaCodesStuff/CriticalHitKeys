@@ -62,11 +62,21 @@ h1{
     margin-top: 100px;
 }
 
+.burger {   /*all'inizio il borgar non è possibile visualizzarlo, perché viene visto solo nel caso in cui lo vediamo tramite telefono*/
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+
 #logo-img {
     display: block;
     max-width: 65%;
     height: auto;
-    margin: 160px auto 20px;
+    margin: 160px auto 20px;    /* top: 160px e right/left: auto e poi bottom: 20px */
     position: relative;
     z-index: 10;
     filter: drop-shadow(0px 0px 8px black);
@@ -248,5 +258,102 @@ html.products-animate .prodotto.product-visible {
         opacity: 1;
         transform: none;
         transition: none;
+    }
+}
+
+/* Parte responsive */
+/* Questo si attiva tipo quando la view port è 1024, o quando è meno*/
+@media (max-width: 1024px) {
+    #logo-img {
+        max-width: 50%;
+        margin: 130px auto 20px;    /* top: 130px e right/left: auto e poi bottom: 20px */
+    }
+
+    .container-bottoneCerca form {  /*aumento la larghezza da 65% a 70% per maggiore visualizzazione e diminuito il margin top da 180 a 120 px*/
+        width: 70%;
+        margin-top: -110px;
+    }
+
+    .menu-center {  /*il font-size è cambiato a 14 px per migliore visualizzazione*/
+        font-size: 14px;
+    }
+
+    .menu-right {   /*right passato da 20 a 10 px e gap da 10 a 6 px. Con right è diminuito il lato destro dell'elemento rispetto al lato destro del contenitore
+    (cioè si ancora a destra del contenitore) e i gap tra gli elementi è diminuita.*/
+        right: 10px;
+        gap: 6px;
+    }
+
+    .menu-left {    /*left passato da 20 px a 10 px, quindi in questo caso è diminuito il lato sinistro dell'elemento rispetto al lato sinistro del contenitore
+    (si ancora a sinistra)*/
+        left: 10px;
+    }
+}
+
+/* Questo si attiva tipo quando la view port è 768, o quando è meno*/
+@media (max-width: 768px) {
+    ul {    /*Qui modifichiamo la disposizione della navbar, con flex-direction: column disponiamo i vari <li> in colonna, con align-items settato a strech li allunga e abbiamo aggiunto il padding dal top e rimasto a 0 per gli altri*/
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+    }
+
+    .menu-left,
+    .menu-right {   /* tornano nel flusso normale della pagina con position: static e gli elementi interni sono centrati e il margin è impostato a 5px per il top e il bottom e 0 dalle altre parti.*/
+        position: static;
+        justify-content: center;
+        margin: 5px 0;
+    }
+
+    .burger {   /*mostro il burger sulla navbar, e lo posiziono a destra rispetto al conteiner sul lato destro,posiziono a 10 px da bordo superiore e lo metto sopra gli altri elementi con proprietà alta*/
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        z-index: 1100;
+    }
+
+    #mobile-menu {
+        display: none;
+    }
+
+    .menu-center {  /*i conenuti interni a menu-center sono stati centrati, è stato attivato il flex-wrap con wrap in modo che va in basso quando copre tutta la pagina
+    il gap è stato aggiunto tra gli elementi, inoltre font-size è stato aumentato a 13 px e il testo allineato al centro. Inoltre il flex direction permette di visualizzare i link in colonna.*/
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    ul li > a { /*il padding sarà pari a 10 per top e bottom e 12 px per left e right*/
+        padding: 10px 12px;
+    }
+
+    #logo-img { /*il logo è settato con max-width pari all'80% ed è stato settato il margine di top pari a 300px e poi bottom pari a 20 px e sinistra e destra messo in auto a seconda del ridimensionamento */
+        max-width: 80%;
+        margin: 200px auto 20px;
+    }
+
+    .container-bottoneCerca form {  /* impostiamo la larghezza del form a 90%, aggiunto un padding pari a 20 px*/
+        width: 90%;
+        padding: 20px;
+    }
+
+
+    .container-prodotti {   /*il container dei prodtti è stato aggiunto un gap a 20px e il margin top è aumentato a 30px, per una corretto visualizzazione dei prodotti*/
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .prodotto { /* la lunghezza massima dell'elemento è pari a 90%, rimossa la larghezza minima precedentemente impostata e aggiunto un margine sopa/sotto e impostato a 0 sinitra/destra*/
+        max-width: 90%;
+        min-width: unset;
+        margin: 10px 0;
+    }
+
+    .background-sito {  /*viene applicata un altro poco di sfumatura alla sfondo e inoltre viene ingrandito di poco lo sfondo*/
+        filter: blur(1.5px);
+        transform: scale(1.02);
     }
 }

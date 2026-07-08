@@ -19,17 +19,21 @@
 <div class="background-sito"></div>
     <ul>
         <li class="menu-left"><a href="homepage.jsp"><img src="img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
+        <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false">
+            ☰
+        </button>
+        <div id="mobile-menu">
+            <li class="menu-center">
+                <a href="ticket-servlet">ASSISTENZA</a>
+                <a href="aboutus.html">ABOUT US</a>
+                <a href="mostraProd">CATALOGO</a>
+            </li>
 
-        <li class="menu-center">
-            <a href="ticket-servlet">ASSISTENZA</a>
-            <a href="aboutus.html">ABOUT US</a>
-            <a href="mostraProd">CATALOGO</a>
-        </li>
-
-        <li class="menu-right">
-            <a href="auth"><img src="img/iconaUtente.png" width="40px" height="40px" alt="Accesso per utenti/admin"></a>
-            <a href="carrello-servlet"><img src="img/iconaCarrello.png" width="40px" height="40px" alt="Carrello in cui sono salvati i prodotti"></a>
-        </li>
+            <li class="menu-right">
+                <a href="auth"><img src="img/iconaUtente.png" width="40px" height="40px" alt="Accesso per utenti/admin"></a>
+                <a href="carrello-servlet"><img src="img/iconaCarrello.png" width="40px" height="40px" alt="Carrello in cui sono salvati i prodotti"></a>
+            </li>
+        </div>
     </ul>
 
 
@@ -64,5 +68,6 @@
         <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
     </div>
     <script src="catalogo.js"></script>
+    <script src="Burger-Vis.js"></script>
 </body>
 </html>
