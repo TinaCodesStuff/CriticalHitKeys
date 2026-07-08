@@ -19,7 +19,7 @@
 <div class="background-sito"></div>
     <ul>
         <li class="menu-left"><a href="homepage.jsp"><img src="img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
-        <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false">
+        <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false"> <!-- Questo ci serve per la visualizzazione dei link della navbar quando riduciamo alla grafica a cellulare-->
             ☰
         </button>
         <div id="mobile-menu">

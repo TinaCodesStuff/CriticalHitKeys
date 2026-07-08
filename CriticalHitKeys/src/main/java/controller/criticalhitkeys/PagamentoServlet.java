@@ -39,8 +39,6 @@ public class PagamentoServlet extends HttpServlet {
             /*TENTATIVI DI DEBUG*/
             List<Prodotto> listaProdotti = (List<Prodotto>) session.getAttribute("listaProdotti");
             System.out.println("[DEBUG-Pagamento] Username rilevato: " + username);
-            System.out.println("[DEBUG-Pagamento] Lista recuperata da SESSIONE: " + listaProdotti.get(0).getNome());
-            System.out.println("[DEBUG-Pagamento] Lista recuperata da SESSIONE: " + listaProdotti.get(1).getNome());
 
             if (listaProdotti != null) {
                 System.out.println("[DEBUG-Pagamento] La lista è vuota? " + listaProdotti.isEmpty());
@@ -112,7 +110,7 @@ public class PagamentoServlet extends HttpServlet {
                 ordine.setData_Ordine(dataOra);
                 StringBuilder ordineDesc = new StringBuilder();
                 for(Prodotto prod: listaProdotti){
-                    ordineDesc.append(prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append(" - ").append(contieneDAO.doRetrieveQuantitaByID_Prodotto(prod.getID_Prodotto()).get(prod.getID_Prodotto())).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
+                    ordineDesc.append("ID: " + prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append("€ - ").append("Qta.: " + contieneDAO.doRetrieveQuantitaByID_Prodotto(prod.getID_Prodotto()).get(prod.getID_Prodotto())).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
                 }
 
                 ordine.setDescrizione_Acquisto(ordineDesc.toString());

@@ -15,16 +15,22 @@
 <ul>
     <li class="menu-left"><a href="init-servlet"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
-    <li class="menu-center">
-        <a href="ticket-servlet">ASSISTENZA</a>
-        <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
-        <a href="mostraProd">CATALOGO</a>
-    </li>
+    <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false"> <!-- Questo ci serve per la visualizzazione dei link della navbar quando riduciamo alla grafica a cellulare-->
+        ☰
+    </button>
 
-    <li class="menu-right">
-        <a href="auth" aria-current="page"><img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40" height="40" alt="Accesso per utenti/admin"></a>
-        <a href="carrello-servlet"><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello in cui sono salvati i prodotti"></a>
-    </li>
+    <div id="mobile-menu">
+        <li class="menu-center">
+            <a href="ticket-servlet">ASSISTENZA</a>
+            <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
+            <a href="mostraProd">CATALOGO</a>
+        </li>
+
+        <li class="menu-right">
+            <a href="auth" aria-current="page"><img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40" height="40" alt="Accesso per utenti/admin"></a>
+            <a href="carrello-servlet"><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello in cui sono salvati i prodotti"></a>
+        </li>
+    </div>
 </ul>
 
 <main class="auth-main ${authMode == 'register' ? 'show-register' : ''} ${not empty sessionScope.utenteLoggato ? 'is-logged' : ''}">
@@ -111,5 +117,6 @@
     <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
 </div>
 <script src="${pageContext.request.contextPath}/auth.js"></script>
+<script src="${pageContext.request.contextPath}/Burger-Vis.js"></script>
 </body>
 </html>

@@ -150,6 +150,7 @@ input[type=submit]{
 /* Carrello, spazio utente */
 .menu-right {
     position: absolute;
+    top: -10px;
     right: 20px;
     display: flex;
     gap: 10px;
@@ -337,7 +338,7 @@ html.products-animate .prodotto.product-visible {
 
     .container-bottoneCerca form {  /* impostiamo la larghezza del form a 90%, aggiunto un padding pari a 20 px*/
         width: 90%;
-        padding: 20px;
+        padding: 30px;
     }
 
 
