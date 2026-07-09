@@ -24,6 +24,7 @@ public class PaginaProdottoServlet extends HttpServlet {
 
         ProdottoDAO service = new ProdottoDAO();
         RecensioneDAO recensioneDAO = new RecensioneDAO();
+        GenereDAO genereDAO = new GenereDAO();
         String id = request.getParameter("id");
 
         if (id != null && !id.isEmpty()) {
@@ -36,6 +37,7 @@ public class PaginaProdottoServlet extends HttpServlet {
                 request.setAttribute("prodotto", prodotto);
                 request.setAttribute("listaRecensione", lista);
                 request.setAttribute("listaMedia", listaMedia);
+                request.setAttribute("listaGeneriProd", genereDAO.doRetrieveAllGeneriByID_Prodotto(prodotto.getID_Prodotto()));
                 RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/paginaProdotto.jsp");
                 dispatcher.forward(request, response);
             }

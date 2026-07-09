@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AdminProdottoDAO {
 
-    public int doSave(Prodotto prodotto, List<AdminMedia> listaMedia) {
+    public int doSave(Prodotto prodotto, List<Genere> listaGeneri,  List<AdminMedia> listaMedia) {
         // prepara l'inserimento del prodotto
         String sql = "INSERT INTO Prodotto (Nome, Descrizione_Prod, Prezzo_OG, Prezzo_Scontato, " +
                 "Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm, Disponibile) " +
@@ -33,6 +33,7 @@ public class AdminProdottoDAO {
                 // salva le piattaforme nella stessa transazione
                 insertPiattaforme(connection, prodotto.getID_Prodotto(), prodotto.getPiattaforme());
                 insertMedia(connection, prodotto.getID_Prodotto(), listaMedia);
+                insertGeneri(connection, prodotto.getID_Prodotto(), listaGeneri);
                 connection.commit();
                 return prodotto.getID_Prodotto();
             } catch (Exception e) {
@@ -180,6 +181,24 @@ public class AdminProdottoDAO {
                 statement.addBatch();
             }
             statement.executeBatch();
+        }
+    }
+
+    public void insertGeneri(Connection connection, int idProdotto, List<Genere> listaGeneri){
+        if (listaGeneri == null || listaGeneri.isEmpty()) {
+            return;
+        }
+
+        String sql = "INSERT INTO Genere (Genere, ID_Prodotto) VALUES (?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (Genere genere : listaGeneri) {
+                statement.setString(1, genere.getGenere());
+                statement.setInt(2, idProdotto);
+                statement.addBatch();
+            }
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

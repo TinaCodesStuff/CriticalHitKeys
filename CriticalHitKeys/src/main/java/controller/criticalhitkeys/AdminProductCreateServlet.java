@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import model.AdminMedia;
-import model.AdminProdottoDAO;
-import model.Amministratore;
-import model.Prodotto;
+import model.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,12 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Stream;
 
 @WebServlet("/admin/prodotti/crea")
@@ -41,6 +33,20 @@ public class AdminProductCreateServlet extends HttpServlet {
         try {
             // converte i parametri del form in un prodotto
             Prodotto prodotto = AdminProductForm.parse(request);
+            String[] generiString = request.getParameterValues("generi");
+            System.out.println("DEBUG-GENERI: " + Arrays.toString(generiString));
+            List<Genere> listaGeneri = new ArrayList<>();
+
+            if (generiString != null) {
+                for (String genereName : generiString) {
+                    Genere genere = new Genere();
+                    genere.setID_Prodotto(prodotto.getID_Prodotto());
+                    genere.setGenere(genereName);
+
+                    listaGeneri.add(genere);
+                }
+            }
+
             Amministratore amministratore = (Amministratore) request.getSession()
                     .getAttribute("amministratoreLoggato");
             if (amministratore == null) {
@@ -74,7 +80,7 @@ public class AdminProductCreateServlet extends HttpServlet {
                 }
             }
 
-            dao.doSave(prodotto, listaMedia);
+            dao.doSave(prodotto, listaGeneri, listaMedia);
             request.getSession().setAttribute("adminMessage", "Prodotto creato.");
         } catch (IllegalArgumentException e) {
             deleteDirectory(cartellaUpload);

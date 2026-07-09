@@ -1,8 +1,5 @@
-<%@ page import="model.Prodotto" %>
-<%@ page import="model.Recensione" %>
 <%@ page import="java.util.*" %>
-<%@ page import="model.Media" %>
-<%@ page import="model.Utente" %>
+<%@ page import="model.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -81,6 +78,12 @@
     <span class="piattaforma-gioco">Piattaforma:
         <%=String.join(" | ", prod.getPiattaforme())%>
     </span>
+    <span class="piattaforma-gioco">Generi:
+    <%
+        List<Genere> listaGenere = (List<Genere>) request.getAttribute("listaGeneriProd");
+        for(Genere g : listaGenere){%>
+    <%=g.getGenere()%>
+    <%}%></span>
 
     <div class="box-sconto">
         <span class="prezzo-scontato"><%= prod.getPrezzo_scontato() %>€</span>

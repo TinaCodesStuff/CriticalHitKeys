@@ -14,16 +14,22 @@
 <ul>
     <li class="menu-left"><a href="init-servlet"><img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120px" height="100px" alt="Logo piccolo di Critical Hit Keys"></a></li>
 
-    <li class="menu-center">
-        <a href="ticket-servlet">ASSISTENZA</a>
-        <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
-        <a href="mostraProd">CATALOGO</a>
-    </li>
+    <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false"> <!-- Questo ci serve per la visualizzazione dei link della navbar quando riduciamo alla grafica a cellulare-->
+        ☰
+    </button>
 
-    <li class="menu-right">
-        <a href="auth"><img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40px" height="40px" alt="Accesso per utenti/admin"></a>
-        <a href="carrello-servlet"><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40px" height="40px" alt="Carrello in cui sono salvati i prodotti"></a>
-    </li>
+    <div id="mobile-menu">
+        <li class="menu-center">
+            <a href="ticket-servlet">ASSISTENZA</a>
+            <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
+            <a href="mostraProd">CATALOGO</a>
+        </li>
+
+        <li class="menu-right">
+            <a href="auth"><img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40px" height="40px" alt="Accesso per utenti/admin"></a>
+            <a href="carrello-servlet"><img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40px" height="40px" alt="Carrello in cui sono salvati i prodotti"></a>
+        </li>
+    </div>
 </ul>
 <%
     List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
@@ -88,6 +94,6 @@
 </div>
 <script src="${pageContext.request.contextPath}/catalogo.js"></script>
 <script src="${pageContext.request.contextPath}/ControlloAggiornamentoPrezzo.js"></script>
-
+<script src="${pageContext.request.contextPath}/Burger-Vis.js"></script>
 </body>
 </html>

@@ -28,4 +28,26 @@ public class GenereDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Genere> doRetrieveAllGeneriByID_Prodotto(int idProdotto) {
+        try(Connection conn = ConPool.getConnection()){
+            List<Genere> lista = new ArrayList<>();
+            PreparedStatement s = conn.prepareStatement("SELECT * FROM Genere WHERE ID_Prodotto = ?");
+            s.setInt(1, idProdotto);
+            ResultSet rs = s.executeQuery();
+
+            while(rs.next()){
+                Genere p = new Genere();
+
+                p.setID_Prodotto(rs.getInt("ID_Prodotto"));
+                p.setGenere(rs.getString("Genere"));
+
+                lista.add(p);
+            }
+
+            return lista;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
