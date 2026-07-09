@@ -71,6 +71,8 @@ public class AdminProdottoDAO {
                     }
                     insertPiattaforme(connection, prodotto.getID_Prodotto(), prodotto.getPiattaforme());
                 }
+
+
                 connection.commit();
                 return true;
             } catch (Exception e) {
@@ -184,12 +186,15 @@ public class AdminProdottoDAO {
         }
     }
 
-    public void insertGeneri(Connection connection, int idProdotto, List<Genere> listaGeneri){
+    private void insertGeneri(Connection connection, int idProdotto, List<Genere> listaGeneri)
+            throws SQLException {
+
         if (listaGeneri == null || listaGeneri.isEmpty()) {
             return;
         }
 
         String sql = "INSERT INTO Genere (Genere, ID_Prodotto) VALUES (?, ?)";
+
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Genere genere : listaGeneri) {
                 statement.setString(1, genere.getGenere());
@@ -197,8 +202,6 @@ public class AdminProdottoDAO {
                 statement.addBatch();
             }
             statement.executeBatch();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
