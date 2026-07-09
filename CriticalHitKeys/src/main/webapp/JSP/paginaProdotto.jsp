@@ -1,6 +1,18 @@
 <%@ page import="java.util.*" %>
 <%@ page import="model.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%!
+    private String escapeHtml(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
+    }
+%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -126,13 +138,13 @@
                 List<Recensione> lista = (List<Recensione>) request.getAttribute("listaRecensione");
                 if (lista != null && !lista.isEmpty()) {
                     for(Recensione r : lista) {
-            %>
+                %>
             <div class="recensione-card">
                 <div class="recensione-header">
-                    <span class="username-utente"><%= r.getUsername_Ut() %></span>
+                    <span class="username-utente"><%= escapeHtml(r.getUsername_Ut()) %></span>
                     <span class="voto-recensione">★ <%= r.getVoto() %>/5</span>
                 </div>
-                <p class="descrizione-recensione"><%= r.getDescrizione_Rec() %></p>
+                <p class="descrizione-recensione"><%= escapeHtml(r.getDescrizione_Rec()) %></p>
             </div>
             <%
                 }

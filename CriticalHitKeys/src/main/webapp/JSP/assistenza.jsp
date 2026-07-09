@@ -3,6 +3,18 @@
 <%@ page import="model.Ticket" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%!
+    private String escapeHtml(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
+    }
+%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,8 +75,8 @@
     <div class="lista-ticket">
         <% for(Ticket ticket : listaTicket) { %>
         <div class="ticket-card">
-            <strong class="ticket-ambito">Ambito: <%= ticket.getCampo() %></strong>
-            <p class="ticket-descrizione"><%= ticket.getDescrizioneTicket() %></p>
+            <strong class="ticket-ambito">Ambito: <%= escapeHtml(ticket.getCampo()) %></strong>
+            <p class="ticket-descrizione"><%= escapeHtml(ticket.getDescrizioneTicket()) %></p>
         </div>
         <% } %>
     </div>
