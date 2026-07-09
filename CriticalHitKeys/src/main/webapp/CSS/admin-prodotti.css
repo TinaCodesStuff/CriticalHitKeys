@@ -155,6 +155,10 @@ body {
     font: italic 700 1.25rem Georgia, serif;
 }
 
+.admin-users-title h2 {
+    font: 700 1.25rem Arial, sans-serif;
+}
+
 .section-title span {
     color: var(--muted);
     font-size: .85rem;

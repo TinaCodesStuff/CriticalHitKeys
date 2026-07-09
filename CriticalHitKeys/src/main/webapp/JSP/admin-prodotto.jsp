@@ -24,6 +24,7 @@
   <li class="menu-center">
     <a href="${pageContext.request.contextPath}/mostraProd">CATALOGO</a>
     <a href="${pageContext.request.contextPath}/admin/prodotti">GESTIONE PRODOTTI</a>
+    <a href="${pageContext.request.contextPath}/admin/utenti">GESTIONE UTENTI</a>
   </li>
 
   <li class="menu-right">
