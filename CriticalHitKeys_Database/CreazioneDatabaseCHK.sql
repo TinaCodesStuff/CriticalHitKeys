@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS Prodotto (
     Sconto INT,
     Email_Amm VARCHAR(30),
     Disponibile BOOLEAN,
+    Genere VARCHAR(30),
     FOREIGN KEY (Email_Amm) REFERENCES Amministratore(Email_Amm)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -86,12 +87,12 @@ CREATE TABLE IF NOT EXISTS Ordine (
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Genere (
+/*CREATE TABLE IF NOT EXISTS Genere (
     Genere VARCHAR(15) PRIMARY KEY,
     ID_Prodotto INT NOT NULL UNIQUE,
     FOREIGN KEY (ID_Prodotto) REFERENCES Prodotto (ID_Prodotto)
     ON UPDATE CASCADE ON DELETE CASCADE
-);
+);*/
 
 CREATE TABLE IF NOT EXISTS Piattaforma (
     Piattaforma VARCHAR(30) NOT NULL,

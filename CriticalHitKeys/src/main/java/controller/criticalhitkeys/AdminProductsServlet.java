@@ -3,7 +3,6 @@ package controller.criticalhitkeys;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import model.GenereDAO;
 import model.Prodotto;
 import model.ProdottoDAO;
 
@@ -12,7 +11,6 @@ import java.io.IOException;
 @WebServlet("/admin/prodotti")
 public class AdminProductsServlet extends HttpServlet {
     private final ProdottoDAO dao = new ProdottoDAO();
-    private final GenereDAO genereDAO = new GenereDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +20,7 @@ public class AdminProductsServlet extends HttpServlet {
             request.getSession().removeAttribute("adminError");
         }
         request.setAttribute("prodotti", dao.doRetrieveAll());
-        request.setAttribute("generi", genereDAO.doRetrieveAllGeneri());
+        /*request.setAttribute("generi", genereDAO.doRetrieveAllGeneri());*/
 
         String editId = request.getParameter("edit");
 

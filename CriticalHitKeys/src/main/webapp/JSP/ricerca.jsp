@@ -59,11 +59,12 @@
         <label>Casa Sviluppatrice - Esempio: FromSoftware <br><input type="text" name="casa_svilupp"></label>
 
         <h3>Genere</h3>
-        <label><input type="checkbox" value = "Action RPG" name="genere"> Action RPG</label>
-        <label><input type="checkbox" value = "RPG-Sci-fi" name="genere"> RPG / Sci-Fi</label>
-        <label><input type="checkbox" value = "Sandbox" name="genere">Sandbox</label>
-        <label><input type="checkbox" value="Adventure" name="genere"> Avventura</label>
-        <label><input type="checkbox" value="Sport" name="genere"> Sport</label>
+        <%
+            List<String> generi = (List<String>) request.getAttribute("listaGeneri");
+            for(String g : generi){ %>
+                <label><input type="radio" value = "<%=g%>" name="genere"> <%=g%></label>
+            <%}
+        %>
 
         <input type="submit" value="Applica filtri" class="btn-filtri">
 

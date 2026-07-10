@@ -15,6 +15,7 @@ public class Prodotto {
     private String eMailAmm;
     private List<String> piattaforme = new ArrayList<>();
     private boolean disponibile;
+    private String genere;
 
     public boolean isDisponibile() {
         return disponibile;
@@ -103,6 +104,14 @@ public class Prodotto {
     public void setPiattaforme(List<String> piattaforme) {
         this.piattaforme = piattaforme;
         System.out.println(this.piattaforme);
+    }
+
+    public String getGenere() {
+        return genere;
+    }
+
+    public void setGenere(String genere) {
+        this.genere = genere;
     }
 
     @Override

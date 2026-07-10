@@ -33,19 +33,8 @@ public class AdminProductCreateServlet extends HttpServlet {
         try {
             // converte i parametri del form in un prodotto
             Prodotto prodotto = AdminProductForm.parse(request);
-            String[] generiString = request.getParameterValues("generi");
-            System.out.println("DEBUG-GENERI: " + Arrays.toString(generiString));
-            List<Genere> listaGeneri = new ArrayList<>();
-
-            if (generiString != null) {
-                for (String genereName : generiString) {
-                    Genere genere = new Genere();
-                    genere.setID_Prodotto(prodotto.getID_Prodotto());
-                    genere.setGenere(genereName);
-
-                    listaGeneri.add(genere);
-                }
-            }
+            String genere = request.getParameter("genere");
+            System.out.println("DEBUG-GENERE: " + genere);
 
             Amministratore amministratore = (Amministratore) request.getSession()
                     .getAttribute("amministratoreLoggato");
@@ -80,7 +69,7 @@ public class AdminProductCreateServlet extends HttpServlet {
                 }
             }
 
-            dao.doSave(prodotto, listaGeneri, listaMedia);
+            dao.doSave(prodotto, listaMedia);
             request.getSession().setAttribute("adminMessage", "Prodotto creato.");
         } catch (IllegalArgumentException e) {
             deleteDirectory(cartellaUpload);

@@ -28,6 +28,7 @@ public class ProdottoDAO {
                 p.seteMailAmm(rs.getString("Email_Amm"));
                 p.setDisponibile(rs.getBoolean("Disponibile"));
                 p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
+                p.setGenere(rs.getString("Genere"));
 
                 lista.add(p);
             }
@@ -59,6 +60,8 @@ public class ProdottoDAO {
                 p.seteMailAmm(rs.getString("Email_Amm"));
                 p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
                 p.setDisponibile(rs.getBoolean("Disponibile"));
+                p.setGenere(rs.getString("Genere"));
+
                 return p;
             }
             return null;
@@ -119,6 +122,8 @@ public class ProdottoDAO {
                 p.seteMailAmm(rs.getString("Email_Amm"));
                 p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
                 p.setDisponibile(rs.getBoolean("Disponibile"));
+                p.setGenere(rs.getString("Genere"));
+
 
 
                 listaProdotto.add(p);
@@ -172,6 +177,9 @@ public class ProdottoDAO {
 
                 p.setDisponibile(rs.getBoolean("Disponibile"));
 
+                p.setGenere(rs.getString("Genere"));
+
+
 
                 listaByNome.add(p);
 
@@ -189,23 +197,14 @@ public class ProdottoDAO {
 
 
 
-    public List<Prodotto> doRetrieveProdottoByGenere (List<String> generi) {
+    public List<Prodotto> doRetrieveProdottoByGenere (String genere) {
 
         List<Prodotto> listaProdotti = new ArrayList<>();
-
-        String placeholders = String.join(",", Collections.nCopies(generi.size(), "?"));
-
-        String sql = "SELECT DISTINCT p.* " +   //creiamo una query che ci permetta di filtrare su più generi
-                "FROM Prodotto p " +
-                "JOIN Genere g ON p.ID_Prodotto = g.ID_Prodotto " +
-                "WHERE g.Genere IN (" + placeholders + ")";
-
+        //verifichiamo che vi sia quel suddetto genere per il prodotto
         try(Connection conn = ConPool.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement("SELECT p.* FROM Prodotto p WHERE p.Genere = ?");
+            ps.setString(1, genere);
 
-            for(int i = 0; i < generi.size(); i++) {    //qui inseriamo i generi nella query così vediamo quale prodotto ne fa parte
-                ps.setString(i + 1, generi.get(i));
-            }
 
             ResultSet rs = ps.executeQuery();   //eseguo la query
 
@@ -221,6 +220,8 @@ public class ProdottoDAO {
                 p.seteMailAmm(rs.getString("Email_Amm"));
                 p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
                 p.setDisponibile(rs.getBoolean("Disponibile"));
+                p.setGenere(rs.getString("Genere"));
+
 
                 listaProdotti.add(p);
             }
@@ -278,6 +279,9 @@ public class ProdottoDAO {
                 p.setPiattaforme(doRetrievePiattaformeByProdotto(p.getID_Prodotto()));
 
                 p.setDisponibile(rs.getBoolean("Disponibile"));
+
+                p.setGenere(rs.getString("Genere"));
+
 
 
                 lista.add(p);
@@ -338,6 +342,9 @@ public class ProdottoDAO {
 
                 p.setDisponibile(rs.getBoolean("Disponibile"));
 
+                p.setGenere(rs.getString("Genere"));
+
+
 
                 lista.add(p);
 
@@ -397,6 +404,9 @@ public class ProdottoDAO {
 
                 p.setDisponibile(rs.getBoolean("Disponibile"));
 
+                p.setGenere(rs.getString("Genere"));
+
+
 
                 listaByPrezzo.add(p);
 
@@ -412,14 +422,14 @@ public class ProdottoDAO {
 
     }
 
-    public List<Prodotto> filtraProdotti(List<String> generi, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
+    public List<Prodotto> filtraProdotti(String genere, String casa, Float min, Float max , String mod_gioco) {    //questo metodo riutilizza tutte le funzioni create precedentemente, e funziona per tutti i filtri
 
         ProdottoDAO dao = new ProdottoDAO();
 
         List<Prodotto> result = dao.doRetrieveAll();
 
-        if (generi != null && !generi.isEmpty()) {
-            result.retainAll(dao.doRetrieveProdottoByGenere(generi));
+        if (genere != null) {
+            result.retainAll(dao.doRetrieveProdottoByGenere(genere));
         }
 
         if (casa != null && !casa.isEmpty()) {
@@ -458,6 +468,28 @@ public class ProdottoDAO {
         }
 
         return piattaforme;
+    }
+
+    public List<String> doRetrieveAllGeneri() {
+        List<String> generi = new ArrayList<>();
+
+        try (Connection conn = ConPool.getConnection()) {
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "SELECT DISTINCT p.Genere FROM Prodotto p");
+
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                generi.add(rs.getString("Genere"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return generi;
     }
 
 

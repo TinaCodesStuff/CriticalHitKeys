@@ -30,10 +30,7 @@ public class RicercaProdottoServlet extends HttpServlet {
             prezzoMaximo = Float.parseFloat(prezzoMaximo_txt);
         }
         String mod_gioco = request.getParameter("mod_gioco");
-        List<String> generi = new ArrayList<>();
-        if(request.getParameterValues("genere") != null) {
-            generi = List.of(request.getParameterValues("genere"));
-        }
+        String genere = request.getParameter("genere");
         String casa_svilupp = request.getParameter("casa_svilupp");
 
         List<Prodotto> listaProdottiTrovati = new ArrayList<>();
@@ -51,7 +48,7 @@ public class RicercaProdottoServlet extends HttpServlet {
             }
         }
         else{   //ricerca avanzate, che fa una nuova ricerca sulla base pero' dei filtri
-            listaProdottiTrovati = prodottoDAO.filtraProdotti(generi, casa_svilupp, prezzoMinimo, prezzoMaximo, mod_gioco);
+            listaProdottiTrovati = prodottoDAO.filtraProdotti(genere, casa_svilupp, prezzoMinimo, prezzoMaximo, mod_gioco);
             System.out.println(listaProdottiTrovati.size());
             for (Prodotto prodotto : listaProdottiTrovati) {
                 List<Media> listaMedia = prodottoDAO.doRetrieveMediaByProdotto(prodotto.getID_Prodotto());
@@ -63,6 +60,7 @@ public class RicercaProdottoServlet extends HttpServlet {
 
 
         request.setAttribute("listaProdotti", listaProdottiTrovati);
+        request.setAttribute("listaGeneri", prodottoDAO.doRetrieveAllGeneri());
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/JSP/ricerca.jsp");
         rd.forward(request, response);
     }

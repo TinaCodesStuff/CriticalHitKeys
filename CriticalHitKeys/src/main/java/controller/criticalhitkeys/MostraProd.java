@@ -7,7 +7,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import model.GenereDAO;
 import model.Media;
 import model.Prodotto;
 import model.ProdottoDAO;

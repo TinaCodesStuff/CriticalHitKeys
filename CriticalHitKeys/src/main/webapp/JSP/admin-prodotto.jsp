@@ -168,11 +168,11 @@
         <legend>Generi</legend>
 
         <div class="checks">
-        <c:forEach items="${generi}" var="g">
+        <c:forEach items="${genere}" var="g">
           <label>
-            <input type="checkbox" name="generi" value="${g.genere}">
-              <!---->
-              ${g.genere}
+            <input type="radio" name="genere" value="${g}"
+              <c:if test="${prodottoModifica.genere == g}">checked</c:if>>
+              ${g}
           </label>
         </c:forEach>
         </div>

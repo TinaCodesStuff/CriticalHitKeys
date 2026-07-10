@@ -10,11 +10,11 @@ import java.util.List;
 
 public class AdminProdottoDAO {
 
-    public int doSave(Prodotto prodotto, List<Genere> listaGeneri,  List<AdminMedia> listaMedia) {
+    public int doSave(Prodotto prodotto,List<AdminMedia> listaMedia) {
         // prepara l'inserimento del prodotto
         String sql = "INSERT INTO Prodotto (Nome, Descrizione_Prod, Prezzo_OG, Prezzo_Scontato, " +
-                "Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm, Disponibile) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, TRUE)";
+                "Modalita_Gioco, Casa_Sviluppatrice, Sconto, Email_Amm, Disponibile, Genere) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, TRUE, ?)";
 
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
@@ -33,7 +33,6 @@ public class AdminProdottoDAO {
                 // salva le piattaforme nella stessa transazione
                 insertPiattaforme(connection, prodotto.getID_Prodotto(), prodotto.getPiattaforme());
                 insertMedia(connection, prodotto.getID_Prodotto(), listaMedia);
-                insertGeneri(connection, prodotto.getID_Prodotto(), listaGeneri);
                 connection.commit();
                 return prodotto.getID_Prodotto();
             } catch (Exception e) {
@@ -50,7 +49,7 @@ public class AdminProdottoDAO {
     public boolean doUpdate(Prodotto prodotto) {
         // prepara l'aggiornamento dei dati principali
         String sql = "UPDATE Prodotto SET Nome=?, Descrizione_Prod=?, Prezzo_OG=?, Prezzo_Scontato=?, " +
-                "Modalita_Gioco=?, Casa_Sviluppatrice=?, Sconto=? WHERE ID_Prodotto=?";
+                "Modalita_Gioco=?, Casa_Sviluppatrice=?, Sconto=? Genere = ? WHERE ID_Prodotto=?";
 
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
@@ -149,6 +148,7 @@ public class AdminProdottoDAO {
         statement.setString(5, prodotto.getModalita_Gioco());
         statement.setString(6, prodotto.getCasa_sviluppatrice());
         statement.setInt(7, prodotto.getSconto());
+        statement.setString(10, prodotto.getGenere());
     }
 
     private void insertPiattaforme(Connection connection, int idProdotto, List<String> piattaforme)
@@ -180,25 +180,6 @@ public class AdminProdottoDAO {
                 statement.setInt(2, idProdotto);
                 statement.setString(3, media.getTipo());
                 statement.setString(4, media.getUrlMedia());
-                statement.addBatch();
-            }
-            statement.executeBatch();
-        }
-    }
-
-    private void insertGeneri(Connection connection, int idProdotto, List<Genere> listaGeneri)
-            throws SQLException {
-
-        if (listaGeneri == null || listaGeneri.isEmpty()) {
-            return;
-        }
-
-        String sql = "INSERT INTO Genere (Genere, ID_Prodotto) VALUES (?, ?)";
-
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            for (Genere genere : listaGeneri) {
-                statement.setString(1, genere.getGenere());
-                statement.setInt(2, idProdotto);
                 statement.addBatch();
             }
             statement.executeBatch();

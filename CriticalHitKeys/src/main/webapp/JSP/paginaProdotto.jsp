@@ -90,12 +90,8 @@
     <span class="piattaforma-gioco">Piattaforma:
         <%=String.join(" | ", prod.getPiattaforme())%>
     </span>
-    <span class="piattaforma-gioco">Generi:
-    <%
-        List<Genere> listaGenere = (List<Genere>) request.getAttribute("listaGeneriProd");
-        for(Genere g : listaGenere){%>
-    <%=g.getGenere()%>
-    <%}%></span>
+    <span class="piattaforma-gioco">Genere:
+    <%= prod.getGenere()%></span>
 
     <div class="box-sconto">
         <span class="prezzo-scontato"><%= prod.getPrezzo_scontato() %>€</span>
