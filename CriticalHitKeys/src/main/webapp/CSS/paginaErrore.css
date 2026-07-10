@@ -99,6 +99,27 @@ li.menu-center a:last-child {
     cursor: pointer;
 }
 
+#container-errore{
+    display: block;
+    background: #2b2b2b;
+    color: white;
+    border-radius: 15px;
+    border: #1a1a22 1px solid;
+    padding: 10px;
+}
+
+#container-errore:hover{
+    border: darkred 2px solid;
+    transform: translateY(-2px);
+}
+
+#immagine-errore{
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: auto;
+}
+
 .footer {
     position: fixed;
     bottom: 0;

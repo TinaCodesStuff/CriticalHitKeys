@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isErrorPage="true" %>
 <html>
 <head>
     <title>Pagina di errore</title>
@@ -30,7 +31,13 @@
 <div class="messaggio-box">
 
     <h1 class="messaggio-errore">SI É VERIFICATO UN ERRORE!</h1>
-    <h2>Per ritornare al catalogo, premere sul logo in alto a sinistra.</h2>
+    <img src="${pageContext.request.contextPath}/img/errore.jpg" alt="Immagine di errore 500, dovuto al server" id="immagine-errore">
+    <br>
+    <div id="container-errore">
+        <%=exception.getMessage()%>
+    </div>
+
+    <p>Per ritornare al catalogo, premere sul logo in alto a sinistra.</p>
 
 </div>
 
