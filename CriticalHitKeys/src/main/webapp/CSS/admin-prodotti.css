@@ -310,34 +310,66 @@ footer {
     font-size: .8rem;
 }
 
-/* RESPONSIVE */
-@media (max-width: 1050px) {
+/* PARTE RESPONSIVE */
+@media (max-width: 1024px) {
+    /* Le due colonne diventano una sola, usando grid-template-columns:1fr */
     .admin-layout {
         grid-template-columns: 1fr;
     }
 
+    /* L'editor non rimane più fisso sullo schermo, useremo static e max-height a none */
     .editor {
         position: static;
         max-height: none;
     }
 }
 
-@media (max-width: 720px) {
-    body {
-        padding-top: 130px;
+@media (max-width: 936px) {
+    /* Aumenta lo spazio sopra il contenuto per la nuova navbar */
+    body{
+        padding-top:180px;
     }
 
-    .navbar {
-        flex-wrap: wrap;
-        min-height: 110px;
+    /* La navbar passa da orizzontale a verticale, con min-height ad auto e padding 15px e flex-direction a column e gap a 15px */
+    .navbar{
+        min-height:auto;
+        padding:15px;
+        flex-direction:column;
+        gap:15px;
     }
 
-    .menu-center {
-        margin-top: 40px;
+    /* I menu laterali tornano nel flusso normale della pagina, con position pari a static */
+    .menu-left,
+    .menu-right{
+        position:static;
     }
 
-    .admin-layout {
-        width: 100%;
+    /* Le voci del menu possono andare su più righe e restano centrate, margin: 0 e flex-wrap pari a wrap e justify-content a center */
+    .menu-center{
+        margin:0;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    /* Riduce il padding dei link per occupare meno spazio, quindi faremo padding 10px per sopra e sotto e 12 px per sinistra e destra*/
+    .menu-center a{
+        padding:10px 12px;
+    }
+
+    /* I pulsanti vengono centrati e possono andare a capo, con justify-content center e flex-wrap pari a wrap*/
+    .menu-right{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    /* Il contenitore principale occupa tutta la larghezza disponibile, facendo width pari a 100% */
+    .admin-layout{
+        width:100%;
+    }
+
+    /* Aggiunge spazio sopra il titolo principale per evitare che sia sotto la navbar, usiamo margin top pari a 50 px*/
+    h1{
+        margin-top: 100px;
     }
 }
 
