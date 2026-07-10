@@ -231,4 +231,8 @@ h2 {
         margin-top: 170px;
     }
 
+    .messaggio-errore { /* aggiunto word-break per ogni break-word, quindi se il testo non ce la fa con il testo lo manda direttamente a capo*/
+        word-break: break-word;
+    }
+
 }

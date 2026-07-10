@@ -375,6 +375,10 @@ p{
         font-size: 12px;
     }
 
+    h1{ /* inserito il margine top rispetto alla navbar per renderlo visibile quando si passa alla visualizzazione da pc*/
+        margin-top: 180px;
+    }
+
     ul li > a { /*il padding sarà pari a 10 per top e bottom e 12 px per left e right*/
         padding: 10px 12px;
     }
@@ -382,10 +386,6 @@ p{
     .background-sito {  /*viene applicata un altro poco di sfumatura alla sfondo e inoltre viene ingrandito di poco lo sfondo*/
         filter: blur(1.5px);
         transform: scale(1.02);
-    }
-
-    .auth-main{ /* impostiamo il margine di sopra pari a 170 px e quelllo di sinistra/destra pari a auto e per finire quello sotto a 32 px*/
-        margin: 170px auto 32px;
     }
 
     .sidebar-filtri {

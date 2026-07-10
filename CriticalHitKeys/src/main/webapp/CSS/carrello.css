@@ -80,6 +80,7 @@ h1{
     right: 20px;
     display: flex;
     gap: 10px;
+    top: -10px;
 }
 
 .menu-right img {
@@ -95,6 +96,15 @@ h1{
 }
 .menu-left img {
     display: block;
+}
+
+.burger {   /*all'inizio il borgar non è possibile visualizzarlo, perché viene visto solo nel caso in cui lo vediamo tramite telefono*/
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 .footer {
@@ -263,4 +273,124 @@ h1{
 .btn-acquisto:hover{
     background-color: #6d28d9;
     transform: scale(1.05);
+}
+
+/* Parte responsive */
+/* Questo si attiva tipo quando la view port è 1024, o quando è meno*/
+@media (max-width: 1024px) {
+    .menu-center {  /*il font-size è cambiato a 14 px per migliore visualizzazione*/
+        font-size: 14px;
+    }
+
+    .menu-right {   /*right passato da 20 a 10 px e gap da 10 a 6 px. Con right è diminuito il lato destro dell'elemento rispetto al lato destro del contenitore
+    (cioè si ancora a destra del contenitore) e i gap tra gli elementi è diminuita.*/
+        right: 10px;
+        gap: 6px;
+    }
+
+    .menu-left {    /*left passato da 20 px a 10 px, quindi in questo caso è diminuito il lato sinistro dell'elemento rispetto al lato sinistro del contenitore
+    (si ancora a sinistra)*/
+        left: 10px;
+    }
+
+}
+
+/* Questo si attiva tipo quando la view port è 768, o quando è meno*/
+@media (max-width: 768px) {
+    ul {    /*Qui modifichiamo la disposizione della navbar, con flex-direction: column disponiamo i vari <li> in colonna, con align-items settato a strech li allunga e abbiamo aggiunto il padding dal top e rimasto a 0 per gli altri*/
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+    }
+
+    .menu-left,
+    .menu-right {   /* tornano nel flusso normale della pagina con position: static e gli elementi interni sono centrati e il margin è impostato a 5px per il top e il bottom e 0 dalle altre parti.*/
+        position: static;
+        justify-content: center;
+        margin: 5px 0;
+    }
+
+    .burger {   /*mostro il burger sulla navbar, e lo posiziono a destra rispetto al conteiner sul lato destro,posiziono a 10 px da bordo superiore e lo metto sopra gli altri elementi con proprietà alta*/
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        z-index: 1100;
+    }
+
+    #mobile-menu {  /*non mostra i link della navbar, questo ci servirà dopo per la navbar e èer farli visualizzare quando seleziono il burger*/
+        display: none;
+    }
+
+    .menu-center {  /*i conenuti interni a menu-center sono stati centrati, è stato attivato il flex-wrap con wrap in modo che va in basso quando copre tutta la pagina
+    il gap è stato aggiunto tra gli elementi, inoltre font-size è stato aumentato a 13 px e il testo allineato al centro. Inoltre il flex direction permette di visualizzare i link in colonna.*/
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    ul li > a { /*il padding sarà pari a 10 per top e bottom e 12 px per left e right*/
+        padding: 10px 12px;
+    }
+
+    .background-sito {  /*viene applicata un altro poco di sfumatura alla sfondo e inoltre viene ingrandito di poco lo sfondo*/
+        filter: blur(1.5px);
+        transform: scale(1.02);
+    }
+
+    .carrello-container{
+        /* Il contenitore del carrello viene ridimensionato al 90% della larghezza, centrato nella pagina e adattato ai dispositivi mobili.
+        Per farlo usiamo margin:180px auto 30px (top, right/left, bottom) con padding a 15 px e box-sizing a border box (adatta la larghezza, mediante calcolo automatico a 100%) */
+        width: 90%;
+        margin: 180px auto 30px;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+    .container-prodotti li{
+        /* Ogni prodotto viene disposto in verticale invece che in orizzontale, migliorando la leggibilità sugli schermi piccoli.
+        Usiamo flex-direction: column e align-items al flex-start e poi aggiungiamo un gap a 12 px e padding a 15 px*/
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .prezzi{
+        /* Prezzo originale, scontato e sconto vengono distribuiti in modo flessibile, e possono andare a capo se lo spazio non è sufficiente.
+         Abbiamo usato width 100% per adattarli a tutta la larghezza, justify-content con space-between per far distribuire con spazio tra gli elementi
+         flex-wrap settato a wrap serve per far andare a capo se lo spazio non è sufficiente, inoltre è stato aggiunto un gap di 8 px*/
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .nome-prodotto{
+        /* Riduce leggermente la dimensione del testo e permette ai nomi lunghi, di andare a capo senza uscire dal contenitore.
+         Usiamo font-size a 16 px e word-break settato a break-word (serve per far andare a capo il testo senza uscire dal contenitore)*/
+        font-size: 16px;
+        word-break: break-word;
+    }
+
+    .totale-carrello{
+        /* La sezione del totale passa da orizzontale a verticale, con gli elementi centrati per una migliore visualizzazione.
+        Usato flex-direction a column e gap a 15 px e text-align a center*/
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .btn-acquisto{
+        /* Il pulsante occupa tutta la larghezza del contenitore, risultando più comodo da premere su smartphone.
+        Usato width a 100%.*/
+        width: 100%;
+    }
+
+    .totale-testo{
+        /* Riduce leggermente la dimensione del testo del totale (usato font-size pari a 18 px) per adattarsi meglio agli schermi piccoli. */
+        font-size: 18px;
+    }
 }

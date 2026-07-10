@@ -17,19 +17,25 @@
             <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo di Critical Hit Keys">
         </a>
     </li>
-    <li class="menu-center">
-        <a href="ticket-servlet">ASSISTENZA</a>
-        <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
-        <a href="mostraProd">CATALOGO</a>
-    </li>
-    <li class="menu-right">
-        <a href="auth">
-            <img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40" height="40" alt="Profilo">
-        </a>
-        <a href="carrello-servlet">
-            <img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello">
-        </a>
-    </li>
+    <button id="burger-btn" class="burger" aria-label="Apri il menu" aria-expanded="false"> <!-- Questo ci serve per la visualizzazione dei link della navbar quando riduciamo alla grafica a cellulare-->
+        ☰
+    </button>
+
+    <div id="mobile-menu">
+        <li class="menu-center">
+            <a href="ticket-servlet">ASSISTENZA</a>
+            <a href="${pageContext.request.contextPath}/aboutus.html">ABOUT US</a>
+            <a href="mostraProd">CATALOGO</a>
+        </li>
+        <li class="menu-right">
+            <a href="auth">
+                <img src="${pageContext.request.contextPath}/img/iconaUtente.png" width="40" height="40" alt="Profilo">
+            </a>
+            <a href="carrello-servlet">
+                <img src="${pageContext.request.contextPath}/img/iconaCarrello.png" width="40" height="40" alt="Carrello">
+            </a>
+        </li>
+    </div>
 </ul>
 
 <main class="pagamento-container">
@@ -79,5 +85,6 @@
 <div class="footer">
     <p>© 2026 Critical Hit Keys. Tutti i diritti riservati.</p>
 </div>
+<script src="${pageContext.request.contextPath}/Burger-Vis.js"></script>
 </body>
 </html>

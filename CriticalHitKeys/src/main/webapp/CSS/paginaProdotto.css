@@ -496,17 +496,13 @@ li.menu-center a:last-child {
         transform: scale(1.02);
     }
 
-    .auth-main{ /* impostiamo il margine di sopra pari a 170 px e quelllo di sinistra/destra pari a auto e per finire quello sotto a 32 px*/
-        margin: 170px auto 32px;
-    }
-
     /* Responsive pagina prodotto: su schermi piccoli gli elementi vengono disposti in verticale grazie a flex-direction:column, inoltre abbiamo ridotto la width a 90% e aggiunto padding di 20 px gap a 25 px, margin-top a 140px e right/left auto e per finire 40 px quello bottom */
     .box-prodotto {
         flex-direction: column;
         width: 90%;
         padding: 20px;
         gap: 25px;
-        margin: 140px auto 40px;
+        margin: 180px auto 40px;
     }
 
     /* La colonna sinistra occupa tutta la larghezza disponibile usando width a 100% */
@@ -514,12 +510,12 @@ li.menu-center a:last-child {
         width: 100%;
     }
 
-    /* Riduce l'altezza delle immagini per evitare che occupino tutto lo schermo */
+    /* Riduce l'altezza delle immagini per evitare che occupino tutto lo schermo, usando max-height a 300px */
     .product-left img {
         max-height: 300px;
     }
 
-    /* Il carosello si adatta alla nuova dimensione dello schermo */
+    /* Il carosello si adatta alla nuova dimensione dello schermo, mettendo max-width pari a 100% */
     .carousel-container {
         max-width: 100%;
     }
@@ -529,10 +525,12 @@ li.menu-center a:last-child {
     }
 
     /* La parte centrale del prodotto viene ridimensionata e viene aggiunto pagging di 15 px, margin-top 0 e width pari a 100% */
+    /* Usata box-sizing: border-box per far calcolare in automatico la width in modo che si aggiunga padding e bordo rimanendo 100%*/
     .product-center {
         width: 100%;
         margin-top: 0;
         padding: 15px;
+        box-sizing: border-box;
     }
 
     /* La parte destra passa sotto invece di rimanere affiancata con width 100%, gap a 15px */
@@ -565,6 +563,14 @@ li.menu-center a:last-child {
     /* Recensioni più compatte su schermi piccoli, usando il max-height a 300px */
     .reviews-list {
         max-height: 300px;
+    }
+
+    /* Usiamo box-sizing: border-box per fare in modo che si adatti in autamtico, infatti ciò permette di ricalcolare width + padding e bordo in autamtico
+    per risultare almeno 100% come width finale
+     */
+    .reviews-list, .recensione-card {
+        width: 100%;
+        box-sizing: border-box;
     }
 
 }
