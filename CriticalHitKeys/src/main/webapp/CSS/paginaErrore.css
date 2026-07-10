@@ -1,0 +1,213 @@
+body {
+    margin: 0;
+    padding-bottom: 60px;
+}
+
+.background-sito{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(
+            135deg,
+            rgba(48, 24, 71, 0.90) 25%,
+            rgba(193, 2, 20, 0.80) 75%
+    ), url(../img/controllersSfondo.jpg);
+
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+
+    filter: blur(3px);
+    transform: scale(1.05);
+
+    z-index: -1;
+    pointer-events: none;
+
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: /*rgba(15, 15, 15, 0.85)*/  rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+ul li>a {
+    display: block;
+    color: #F6E8EA;
+    padding: 16px 20px;
+    text-decoration: none;
+}
+
+li.menu-center a:last-child {
+    border-right: none;
+}
+
+.menu-center {
+    display: flex;
+    font-family: "Roboto", sans-serif;
+    text-decoration: underline;
+
+    text-underline-offset: 6px;
+
+    text-decoration-thickness: 2px;
+    text-decoration-color: white;
+
+}
+
+.menu-right {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    top: -10px;
+}
+
+.menu-right img {
+    display: block;
+}
+
+.menu-left {
+    position: absolute;
+    left: 20px;
+    display: flex;
+    margin-top: 10px;
+}
+.menu-left img {
+    display: block;
+}
+
+.burger {   /*all'inizio il burgar non è possibile visualizzarlo, perché viene visto solo nel caso in cui lo vediamo tramite telefono*/
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    font-family: "Raleway", sans-serif;
+    text-align: center;
+    background-color: /*rgba(15, 15, 15, 0.85)*/ rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+    color: white;
+}
+
+.messaggio-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: center;
+    margin:80px;
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+
+    filter: drop-shadow(0px 0px 8px black);
+
+    font-family: "Roboto", sans-serif;
+
+    background-color: rgba(26, 12, 40, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+.messaggio-errore {
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+/* Parte responsive */
+/* Questo si attiva tipo quando la view port è 1150, o quando è meno*/
+/* Questo valore di view port è diverso rispetto agli altri, per far visualizzare correttamente le immagini dell'about us.*/
+@media (max-width: 1150px) {
+    .menu-center {  /*il font-size è cambiato a 14 px per migliore visualizzazione*/
+        font-size: 14px;
+    }
+
+    .menu-right {   /*right passato da 20 a 10 px e gap da 10 a 6 px. Con right è diminuito il lato destro dell'elemento rispetto al lato destro del contenitore
+    (cioè si ancora a destra del contenitore) e i gap tra gli elementi è diminuito.*/
+        right: 10px;
+        gap: 6px;
+    }
+
+    .menu-left {    /*left passato da 20 px a 10 px, quindi in questo caso è diminuito il lato sinistro dell'elemento rispetto al lato sinistro del contenitore
+    (si ancora a sinistra)*/
+        left: 10px;
+    }
+}
+
+/* Questo si attiva tipo quando la view port è 768, o quando è meno*/
+@media (max-width: 768px) {
+    ul {    /*Qui modifichiamo la disposizione della navbar, con flex-direction: column disponiamo i vari <li> in colonna, con align-items settato a strech li allunga e abbiamo aggiunto il padding dal top e rimasto a 0 per gli altri*/
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+    }
+
+    .menu-left,
+    .menu-right {   /* tornano nel flusso normale della pagina con position: static e gli elementi interni sono centrati e il margin è impostato a 5px per il top e il bottom e 0 dalle altre parti.*/
+        position: static;
+        justify-content: center;
+        margin: 5px 0;
+    }
+
+    .burger {   /*mostro il burger sulla navbar, e lo posiziono a destra rispetto al conteiner sul lato destro,posiziono a 10 px da bordo superiore e lo metto sopra gli altri elementi con proprietà alta*/
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        z-index: 1100;
+    }
+
+    #mobile-menu {  /*questo id permette di non visualizzare i link della navbar, infatti questi ultimi saranno visualizabili SOLO se premo il burger*/
+        display: none;
+    }
+
+    .menu-center {  /*i conenuti interni a menu-center sono stati centrati, è stato attivato il flex-wrap con wrap in modo che va in basso quando copre tutta la pagina
+    il gap è stato aggiunto tra gli elementi, inoltre font-size è stato aumentato a 13 px e il testo allineato al centro. Inoltre il flex direction permette di visualizzare i link in colonna.*/
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    ul li > a { /*il padding sarà pari a 10 per top e bottom e 12 px per left e right*/
+        padding: 10px 12px;
+    }
+
+    .background-sito {  /*viene applicata un altro poco di sfumatura alla sfondo e inoltre viene ingrandito di poco lo sfondo*/
+        filter: blur(1.5px);
+        transform: scale(1.02);
+    }
+
+    .messaggio-box{   /*incrementato il margin-top pari a 170px per far avvenire la corretta visualizzazione del titolo del box, altrimenti rimaneva coperto dalla navbar*/
+        margin-top: 170px;
+    }
+
+}

@@ -6,6 +6,10 @@
     <welcome-file-list>
         <welcome-file>init-servlet</welcome-file>
     </welcome-file-list>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pagina-errore</location>
+    </error-page>
     <session-config>
         <cookie-config>
             <http-only>true</http-only>

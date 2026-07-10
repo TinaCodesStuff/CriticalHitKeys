@@ -319,6 +319,24 @@ p{
     (si ancora a sinistra)*/
         left: 10px;
     }
+
+    .sidebar-filtri {
+        /* Adatta la sidebar dei filtri alla visualizzazione mobile: viene riportata nel flusso normale della pagina,
+   occupa quasi tutta la larghezza disponibile e permette al catalogo prodotti di usare tutto lo spazio. */
+        position: static;
+        width: 90%;
+        max-height: none;
+        margin: 100px auto 20px;
+        left: auto;
+        top: auto;
+        overflow: visible;
+    }
+
+    .container-prodotti {
+        /* Rimuove il margine laterale del catalogo prodotti per adattarlo al nuovo layout verticale. */
+        margin-left: 0;
+        margin-top: 20px;
+    }
 }
 
 /* Questo si attiva tipo quando la view port è 768, o quando è meno*/
@@ -344,7 +362,7 @@ p{
         z-index: 1100;
     }
 
-    #mobile-menu {
+    #mobile-menu {  /*non mostra i link della navbar, questo ci servirà dopo per la navbar e èer farli visualizzare quando seleziono il burger*/
         display: none;
     }
 
@@ -371,6 +389,8 @@ p{
     }
 
     .sidebar-filtri {
+        /* Adatta la sidebar dei filtri alla visualizzazione mobile: viene riportata nel flusso normale della pagina,
+occupa quasi tutta la larghezza disponibile e permette al catalogo prodotti di usare tutto lo spazio. */
         position: static;
         width: 90%;
         max-height: none;
@@ -381,7 +401,13 @@ p{
     }
 
     .container-prodotti {
+        /* Rimuove il margine laterale del catalogo prodotti per adattarlo al nuovo layout verticale. */
+
         margin-left: 0;
         margin-top: 20px;
+    }
+
+    h1 {
+        top: 100px;
     }
 }

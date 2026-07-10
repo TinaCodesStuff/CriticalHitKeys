@@ -16,3 +16,6 @@ SELECT *
 FROM ChiaveDigitale;
 
 DELETE FROM ChiaveDigitale;
+
+SELECT *
+FROM Prodotto;

@@ -15,6 +15,7 @@ final class AdminProductForm {
         String descrizione = clean(request.getParameter("descrizione"));
         String sviluppatore = clean(request.getParameter("sviluppatore"));
         String modalita = clean(request.getParameter("modalita"));
+        String genere = clean(request.getParameter("genere"));
 
         float prezzoOriginale;
         int sconto;
@@ -44,6 +45,10 @@ final class AdminProductForm {
         if (sconto < 0 || sconto > 100) {
             throw new IllegalArgumentException("Sconto non valido.");
         }
+        if(genere.isEmpty() || genere.length() >30){
+            throw new IllegalArgumentException("Genere non valido.");
+
+        }
 
         // costruisce il prodotto usando i dati validati
         Prodotto prodotto = new Prodotto();
@@ -53,6 +58,7 @@ final class AdminProductForm {
         prodotto.setModalita_Gioco(modalita);
         prodotto.setPrezzo_OG(prezzoOriginale);
         prodotto.setSconto(sconto);
+        prodotto.setGenere(genere);
         float valoreSconto = prezzoOriginale * sconto / 100;
         float prezzoScontato = prezzoOriginale - valoreSconto;
         prodotto.setPrezzo_scontato(Math.round(prezzoScontato * 100) / 100f);

@@ -49,13 +49,20 @@ public class AdminProdottoDAO {
     public boolean doUpdate(Prodotto prodotto) {
         // prepara l'aggiornamento dei dati principali
         String sql = "UPDATE Prodotto SET Nome=?, Descrizione_Prod=?, Prezzo_OG=?, Prezzo_Scontato=?, " +
-                "Modalita_Gioco=?, Casa_Sviluppatrice=?, Sconto=? Genere = ? WHERE ID_Prodotto=?";
+                "Modalita_Gioco=?, Casa_Sviluppatrice=?, Sconto=?, Genere = ? WHERE ID_Prodotto=?";
 
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                setCommonParameters(statement, prodotto);
-                statement.setInt(8, prodotto.getID_Prodotto());
+                statement.setString(1, prodotto.getNome());
+                statement.setString(2, prodotto.getDescrizione());
+                statement.setFloat(3, prodotto.getPrezzo_OG());
+                statement.setFloat(4, prodotto.getPrezzo_scontato());
+                statement.setString(5, prodotto.getModalita_Gioco());
+                statement.setString(6, prodotto.getCasa_sviluppatrice());
+                statement.setInt(7, prodotto.getSconto());
+                statement.setString(8, prodotto.getGenere());
+                statement.setInt(9, prodotto.getID_Prodotto());
                 if (statement.executeUpdate() != 1) {
                     connection.rollback();
                     return false;
@@ -140,6 +147,21 @@ public class AdminProdottoDAO {
         }
     }
 
+    public List<String> doRetrieveGenere(){
+        List<String> generi = new ArrayList<>();
+        String sql = "SELECT DISTINCT Genere FROM Prodotto ORDER BY Genere";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet result = statement.executeQuery()) {
+            while (result.next()) {
+                generi.add(result.getString("Genere"));
+            }
+            return generi;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void setCommonParameters(PreparedStatement statement, Prodotto prodotto) throws SQLException {
         statement.setString(1, prodotto.getNome());
         statement.setString(2, prodotto.getDescrizione());
@@ -148,7 +170,7 @@ public class AdminProdottoDAO {
         statement.setString(5, prodotto.getModalita_Gioco());
         statement.setString(6, prodotto.getCasa_sviluppatrice());
         statement.setInt(7, prodotto.getSconto());
-        statement.setString(10, prodotto.getGenere());
+        statement.setString(9, prodotto.getGenere());
     }
 
     private void insertPiattaforme(Connection connection, int idProdotto, List<String> piattaforme)

@@ -35,6 +35,7 @@ public class AdminProductsFilter implements Filter {
         if ("GET".equals(httpRequest.getMethod()) &&
                 httpRequest.getRequestURI().endsWith("/admin/prodotti")) {
             request.setAttribute("piattaforme", dao.doRetrievePiattaforme());
+            request.setAttribute("generi", dao.doRetrieveGenere());
             request.setAttribute("modalita", List.of("Single Player", "Multiplayer", "Single/Multi"));
         }
 

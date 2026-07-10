@@ -33,18 +33,20 @@ public class AdminProductCreateServlet extends HttpServlet {
         try {
             // converte i parametri del form in un prodotto
             Prodotto prodotto = AdminProductForm.parse(request);
-            String genere = request.getParameter("genere");
-            System.out.println("DEBUG-GENERE: " + genere);
 
             Amministratore amministratore = (Amministratore) request.getSession()
                     .getAttribute("amministratoreLoggato");
+
             if (amministratore == null) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
 
+
             // associa il prodotto all'amministratore autenticato
             prodotto.seteMailAmm(amministratore.getEmail());
+
+            System.out.println("3");
 
             // crea una cartella separata per le immagini del prodotto
             String percorsoUpload = getServletContext().getRealPath("/uploads/products");
@@ -54,6 +56,8 @@ public class AdminProductCreateServlet extends HttpServlet {
             String nomeCartella = UUID.randomUUID().toString();
             cartellaUpload = Paths.get(percorsoUpload, nomeCartella);
             Files.createDirectories(cartellaUpload);
+            System.out.println("CHE VOGLIAMO FARE");
+
 
             // salva prima la copertina e poi le immagini aggiuntive
             List<AdminMedia> listaMedia = new ArrayList<>();
@@ -62,12 +66,15 @@ public class AdminProductCreateServlet extends HttpServlet {
                 throw new IllegalArgumentException("La copertina è obbligatoria.");
             }
             listaMedia.add(saveImage(copertina, cartellaUpload, nomeCartella));
+            System.out.println("FORZAAA");
 
             for (Part parte : request.getParts()) {
                 if (parte.getName().equals("galleria") && parte.getSize() > 0) {
                     listaMedia.add(saveImage(parte, cartellaUpload, nomeCartella));
                 }
             }
+
+            System.out.println("YA COMPA");
 
             dao.doSave(prodotto, listaMedia);
             request.getSession().setAttribute("adminMessage", "Prodotto creato.");
@@ -78,6 +85,7 @@ public class AdminProductCreateServlet extends HttpServlet {
             deleteDirectory(cartellaUpload);
             request.getSession().setAttribute("adminError", e.getMessage());
         } catch (RuntimeException e) {
+            e.printStackTrace(System.out); // <-- aggiungi questo
             deleteDirectory(cartellaUpload);
             request.getSession().setAttribute("adminError", "Impossibile creare il prodotto.");
         }

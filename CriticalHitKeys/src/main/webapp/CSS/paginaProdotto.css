@@ -73,6 +73,7 @@ li.menu-center a:last-child {
     right: 20px;
     display: flex;
     gap: 10px;
+    top:-10px;
 }
 
 .menu-right img {
@@ -87,6 +88,15 @@ li.menu-center a:last-child {
 }
 .menu-left img {
     display: block;
+}
+
+.burger {   /*all'inizio il borgar non è possibile visualizzarlo, perché viene visto solo nel caso in cui lo vediamo tramite telefono*/
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 .footer {
@@ -409,3 +419,152 @@ li.menu-center a:last-child {
 .prev-btn { left: 15px; }
 .next-btn { right: 15px; }
 .carousel-btn:hover { background: rgba(255, 255, 255, 0.8); color: black; } /* Effetto quando si passa il puntatore sul simbolo */
+
+/* Parte responsive */
+/* Questo si attiva tipo quando la view port è 1024, o quando è meno*/
+@media (max-width: 1024px) {
+    .menu-center {  /*il font-size è cambiato a 14 px per migliore visualizzazione*/
+        font-size: 14px;
+    }
+
+    .menu-right {   /*right passato da 20 a 10 px e gap da 10 a 6 px. Con right è diminuito il lato destro dell'elemento rispetto al lato destro del contenitore
+    (cioè si ancora a destra del contenitore) e i gap tra gli elementi è diminuita.*/
+        right: 10px;
+        gap: 6px;
+    }
+
+    .menu-left {    /*left passato da 20 px a 10 px, quindi in questo caso è diminuito il lato sinistro dell'elemento rispetto al lato sinistro del contenitore
+    (si ancora a sinistra)*/
+        left: 10px;
+    }
+
+    .product-left { /* spartisce i flex in 1 per product-left facendo in modo che spartisce la sinistra e la destra in modo che occupano il box dividendosi, grazie a flex: 1 */
+        flex: 1;
+    }
+
+    .product-right { /* spartisce i flex in 1 per product-right facendo in modo che spartisce la sinistra e la destra in modo che occupano il box dividendosi */
+        flex: 1;
+    }
+
+    .product-right h1 { /* riduco la dimensione dell'h1 del product-right, abbassando di 2rem */
+        font-size: 2rem;
+    }
+
+}
+
+/* Questo si attiva tipo quando la view port è 768, o quando è meno*/
+@media (max-width: 768px) {
+    ul {    /*Qui modifichiamo la disposizione della navbar, con flex-direction: column disponiamo i vari <li> in colonna, con align-items settato a strech li allunga e abbiamo aggiunto il padding dal top e rimasto a 0 per gli altri*/
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 0;
+    }
+
+    .menu-left,
+    .menu-right {   /* tornano nel flusso normale della pagina con position: static e gli elementi interni sono centrati e il margin è impostato a 5px per il top e il bottom e 0 dalle altre parti.*/
+        position: static;
+        justify-content: center;
+        margin: 5px 0;
+    }
+    .burger {   /*mostro il burger sulla navbar, e lo posiziono a destra rispetto al conteiner sul lato destro,posiziono a 10 px da bordo superiore e lo metto sopra gli altri elementi con proprietà alta*/
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        z-index: 1100;
+    }
+
+    #mobile-menu {  /*non mostra i link della navbar, questo ci servirà dopo per la navbar e èer farli visualizzare quando seleziono il burger*/
+        display: none;
+    }
+
+    .menu-center {  /*i conenuti interni a menu-center sono stati centrati, è stato attivato il flex-wrap con wrap in modo che va in basso quando copre tutta la pagina
+    il gap è stato aggiunto tra gli elementi, inoltre font-size è stato aumentato a 13 px e il testo allineato al centro. Inoltre il flex direction permette di visualizzare i link in colonna.*/
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+    }
+
+    ul li > a { /*il padding sarà pari a 10 per top e bottom e 12 px per left e right*/
+        padding: 10px 12px;
+    }
+
+    .background-sito {  /*viene applicata un altro poco di sfumatura alla sfondo e inoltre viene ingrandito di poco lo sfondo*/
+        filter: blur(1.5px);
+        transform: scale(1.02);
+    }
+
+    .auth-main{ /* impostiamo il margine di sopra pari a 170 px e quelllo di sinistra/destra pari a auto e per finire quello sotto a 32 px*/
+        margin: 170px auto 32px;
+    }
+
+    /* Responsive pagina prodotto: su schermi piccoli gli elementi vengono disposti in verticale grazie a flex-direction:column, inoltre abbiamo ridotto la width a 90% e aggiunto padding di 20 px gap a 25 px, margin-top a 140px e right/left auto e per finire 40 px quello bottom */
+    .box-prodotto {
+        flex-direction: column;
+        width: 90%;
+        padding: 20px;
+        gap: 25px;
+        margin: 140px auto 40px;
+    }
+
+    /* La colonna sinistra occupa tutta la larghezza disponibile usando width a 100% */
+    .product-left {
+        width: 100%;
+    }
+
+    /* Riduce l'altezza delle immagini per evitare che occupino tutto lo schermo */
+    .product-left img {
+        max-height: 300px;
+    }
+
+    /* Il carosello si adatta alla nuova dimensione dello schermo */
+    .carousel-container {
+        max-width: 100%;
+    }
+
+    .carosello-media {
+        height: 300px;
+    }
+
+    /* La parte centrale del prodotto viene ridimensionata e viene aggiunto pagging di 15 px, margin-top 0 e width pari a 100% */
+    .product-center {
+        width: 100%;
+        margin-top: 0;
+        padding: 15px;
+    }
+
+    /* La parte destra passa sotto invece di rimanere affiancata con width 100%, gap a 15px */
+    .product-right {
+        width: 100%;
+        gap: 15px;
+    }
+
+    /* Titolo prodotto più piccolo su mobile */
+    .product-right h1 {
+        font-size: 1.8rem;
+    }
+
+    /* Prezzo ridimensionato */
+    .prezzo-scontato {
+        font-size: 1.8rem;
+    }
+
+    /* Prezzo originale e sconto vengono adattati, usando flex-wrap: wrap. Questo perché ci interessa che se supera il container lo metta sotto. */
+    .prezzi-dettaglio-box {
+        flex-wrap: wrap;
+    }
+
+    /* Il pulsante per aggiungere al carrello rimane grande e facile da premere  grazie all'uso di width: 100% e font-size: 1rem*/
+    .btn-carrello {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    /* Recensioni più compatte su schermi piccoli, usando il max-height a 300px */
+    .reviews-list {
+        max-height: 300px;
+    }
+
+}

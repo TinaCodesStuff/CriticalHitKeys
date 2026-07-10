@@ -134,9 +134,12 @@ public class PagamentoServlet extends HttpServlet {
             request.setAttribute("chiaviAcquistate", listaChiavi);
             request.setAttribute("accountAcquistati", listaAccountGioco);
 
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/pagamento.jsp");
-            dispatcher.forward(request, response);
+            if (listaProdotti.size() > 0) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/pagamento.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                throw new IllegalArgumentException("Nessun prodotto presente nel carrello!");
+            }
         }
         else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/auth.jsp");
