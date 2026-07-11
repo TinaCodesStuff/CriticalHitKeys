@@ -40,17 +40,25 @@ public class TicketServlet extends HttpServlet {
     }
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String username = request.getParameter("username-ut");
-        String email = request.getParameter("email-ut");
-        String campo = request.getParameter("campo");
-        String descrizione = request.getParameter("descrizione-ticket");
+        HttpSession session = request.getSession();
+        Utente utente = (Utente) session.getAttribute("utenteLoggato");
+        String campo = clean(request.getParameter("campo"));
+        String descrizione = clean(request.getParameter("descrizione-ticket"));
 
-        if (username != null && email != null) {
+        if (utente != null) {
             TicketDAO ticketDAO = new TicketDAO();
 
+            if (campo.isEmpty() || campo.length() > 20 || descrizione.isEmpty() || descrizione.length() > 500) {
+                request.setAttribute("ticketError", "Dati del ticket non validi.");
+                request.setAttribute("listaTicket", ticketDAO.doRetrieveByUsernameUtente(utente.getUsername_Ut()));
+                RequestDispatcher dispatcher = request.getRequestDispatcher("JSP/assistenza.jsp");
+                dispatcher.forward(request, response);
+                return;
+            }
+
             Ticket ticket = new Ticket();
-            ticket.setUsernameUtente(username);
-            ticket.setEmailUtente(email);
+            ticket.setUsernameUtente(utente.getUsername_Ut());
+            ticket.setEmailUtente(utente.getEmail_Ut());
             ticket.setCampo(campo);
             ticket.setDescrizioneTicket(descrizione);
 
@@ -73,5 +81,12 @@ public class TicketServlet extends HttpServlet {
 
     public void destroy () {
 
+    }
+
+    private String clean(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim();
     }
 }

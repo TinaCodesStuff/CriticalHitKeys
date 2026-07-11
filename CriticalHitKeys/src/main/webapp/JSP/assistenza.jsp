@@ -55,6 +55,9 @@
 %>
 <div class="box-ticket">
     <h1>QUALCOSA É ANDATO STORTO? </h1>
+    <% if (request.getAttribute("ticketError") != null) { %>
+    <p style="color: #ffaaaa;"><%= escapeHtml((String) request.getAttribute("ticketError")) %></p>
+    <% } %>
     <form method="post" action="ticket-servlet">
         <% if(u != null) { %>
         <input name="email-ut" type="hidden" value="<%=u.getEmail_Ut()%>">
@@ -62,10 +65,10 @@
         <% } %>
 
         <label>Qual è il campo in cui hai avuto una problematica?: </label>
-        <input name="campo" type="text" required>
+        <input name="campo" type="text" maxlength="20" required>
 
         <label>Descrivi la problematica:</label>
-        <input type="text" name="descrizione-ticket" class="descrizione-ticket" required>
+        <input type="text" name="descrizione-ticket" class="descrizione-ticket" maxlength="500" required>
 
         <input type="submit" value="Crea ticket" class="submit-recensione">
     </form>

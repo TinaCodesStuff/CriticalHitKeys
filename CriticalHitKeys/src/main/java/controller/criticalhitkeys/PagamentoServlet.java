@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -38,6 +39,9 @@ public class PagamentoServlet extends HttpServlet {
 
             /*TENTATIVI DI DEBUG*/
             List<Prodotto> listaProdotti = (List<Prodotto>) session.getAttribute("listaProdotti");
+            if (listaProdotti == null) {
+                listaProdotti = new ArrayList<>();
+            }
             System.out.println("[DEBUG-Pagamento] Username rilevato: " + username);
 
             if (listaProdotti != null) {
@@ -101,29 +105,37 @@ public class PagamentoServlet extends HttpServlet {
                 OrdineDAO ordineDAO = new OrdineDAO();
                 ContieneDAO contieneDAO = new ContieneDAO();
                 CarrelloDAO carrelloDAO = new CarrelloDAO();
+                int idCarrello = carrelloDAO.doRetrieveID_Carrello(u);
+                Map<Integer, Integer> quantita = contieneDAO.doRetrieveQuantitaById_Carrello(idCarrello);
 
                 Ordine ordine = new Ordine();
-                ordine.setID_Carrello(carrelloDAO.doRetrieveID_Carrello(u));
+                ordine.setID_Carrello(idCarrello);
 
                 LocalDateTime dataOra = LocalDateTime.now();    //prendo la data e l'ora odierna per memorizzarla nell'ordine
 
                 ordine.setData_Ordine(dataOra);
                 StringBuilder ordineDesc = new StringBuilder();
+                float totale = 0;
                 for(Prodotto prod: listaProdotti){
-                    ordineDesc.append("ID: " + prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append("€ - ").append("Qta.: " + contieneDAO.doRetrieveQuantitaByID_Prodotto(prod.getID_Prodotto()).get(prod.getID_Prodotto())).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
+                    int qta = 1;
+                    if (quantita.get(prod.getID_Prodotto()) != null) {
+                        qta = quantita.get(prod.getID_Prodotto());
+                    }
+                    totale += prod.getPrezzo_scontato() * qta;
+                    ordineDesc.append("ID: " + prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append("€ - ").append("Qta.: " + qta).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
                 }
 
                 ordine.setDescrizione_Acquisto(ordineDesc.toString());
 
                 System.out.println("[DEBUG-Pagamento] Prodotti memorizzati: " + ordine.getDescrizione_Acquisto());
 
-                ordine.setImportoTot(Float.parseFloat(request.getParameter("totale"))); //qui memorizziamo il totale già calcolato nel carrello
+                ordine.setImportoTot(Math.round(totale * 100) / 100f); //qui memorizziamo il totale ricalcolato lato server
 
                 ordineDAO.doSave(ordine);   //salviamo effettivamente l'ordine nel DB
 
 
                 try {
-                    contieneDAO.removeProdottiByID_Carrello(carrelloDAO.doRetrieveID_Carrello(u));
+                    contieneDAO.removeProdottiByID_Carrello(idCarrello);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

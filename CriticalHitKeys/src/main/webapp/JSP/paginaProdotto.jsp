@@ -115,11 +115,14 @@
 
     <div class="product-center">
         <button type="button" class="bottone-recensione" onclick="mostraTextArea()">Inserisci una recensione! </button><br>
+        <% if (request.getAttribute("recensioneError") != null) { %>
+        <p style="color: #ffaaaa;"><%= escapeHtml((String) request.getAttribute("recensioneError")) %></p>
+        <% } %>
         <form method="post" action="recensione-servlet">
             <div id = "boxTextarea" style="display: none">
-            <textarea name="testoRecensione">Questo gioco è stato molto toccante per me...</textarea>
+            <textarea name="testoRecensione" maxlength="500" required>Questo gioco è stato molto toccante per me...</textarea>
                 <label>Voto complessivo:</label>
-                <input name="voto" type="number" min="1" max="5" step="1" value="1" >
+                <input name="voto" type="number" min="1" max="5" step="1" value="1" required>
                 <% if(u != null) { %>
                 <input  name ="id_ut" type="hidden" value = <%=u.getEmail_Ut()%>>
                 <input  name ="username_ut" type="hidden" value = <%=u.getUsername_Ut()%>>

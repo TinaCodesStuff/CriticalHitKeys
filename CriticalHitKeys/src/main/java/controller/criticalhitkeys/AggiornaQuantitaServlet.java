@@ -22,9 +22,20 @@ public class AggiornaQuantitaServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String idStr = request.getParameter("id_prod");
         String qStr = request.getParameter("quantita");
-        int id_prod = Integer.parseInt(idStr);
-        int quantita = Integer.parseInt(qStr);
+        int id_prod;
+        int quantita;
+        try {
+            id_prod = Integer.parseInt(idStr);
+            quantita = Integer.parseInt(qStr);
+        } catch (RuntimeException e) {
+            sendError(response);
+            return;
+        }
 
+        if (id_prod <= 0 || quantita < 1 || quantita > 10) {
+            sendError(response);
+            return;
+        }
 
         double totale = 0;
 
@@ -81,5 +92,12 @@ public class AggiornaQuantitaServlet extends HttpServlet {
     }
 
     public void destroy() {
+    }
+
+    private void sendError(HttpServletResponse response) throws IOException {
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"ok\":false}");
     }
 }
