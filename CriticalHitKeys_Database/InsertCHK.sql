@@ -13,7 +13,15 @@ INSERT INTO Utente (Username_Ut, Email_Ut, Password_Ut) VALUES
 ('DragonBorn', 'dovah@skyrim.com', '96be154ca64a3080b17768a41ecc005ecbe49885'), -- password: shout01
 ('Ciri_05', 'ciri@kaermorhen.org', 'e8a9ca85f21c2c8cb82298d975dc70adaa521058'), -- password: sw0rd99
 ('VaultDweller', 'fallout@vault.com', '007e41a7c21873bff6ae8de2710922262c86ec1d'), -- password: nuka111
-('Arthur_M', 'morgan@reddead.it', '0b125fe2d4b39f076975d00a80bbf491a99a01e2'); -- password: outlaw22
+('Arthur_M', 'morgan@reddead.it', '0b125fe2d4b39f076975d00a80bbf491a99a01e2'), -- password: outlaw22
+('Kratos_Gamer', 'kratos@olympus.it', SHA1('blades123')),
+('LinkHero', 'link@hyrule.it', SHA1('master001')),
+('Ellie_W', 'ellie@jackson.it', SHA1('survive22')),
+('DoomSlayer', 'slayer@hell.it', SHA1('riptear99')),
+('ShepardN7', 'shepard@normandy.it', SHA1('massrelay7')),
+('AloyHunter', 'aloy@machine.it', SHA1('focus2026')),
+('CloudStrife', 'cloud@midgar.it', SHA1('buster999')),
+('ArthurMorgan2', 'arthur2@rdr.it', SHA1('cowboy77'));
 
 -- 3. Popolamento Prodotto (5 record)
 -- Collegati agli Amministratori
@@ -107,7 +115,15 @@ INSERT INTO Carrello (ID_Carrello, Username_Ut, Email_Ut) VALUES
 (2, 'DragonBorn', 'dovah@skyrim.com'),
 (3, 'Ciri_05', 'ciri@kaermorhen.org'),
 (4, 'VaultDweller', 'fallout@vault.com'),
-(5, 'Arthur_M', 'morgan@reddead.it');
+(5, 'Arthur_M', 'morgan@reddead.it'),
+(6, 'Kratos_Gamer', 'kratos@olympus.it'),
+(7, 'LinkHero', 'link@hyrule.it'),
+(8, 'Ellie_W', 'ellie@jackson.it'),
+(9, 'DoomSlayer', 'slayer@hell.it'),
+(10, 'ShepardN7', 'shepard@normandy.it'),
+(11, 'AloyHunter', 'aloy@machine.it'),
+(12, 'CloudStrife', 'cloud@midgar.it'),
+(13, 'ArthurMorgan2', 'arthur2@rdr.it');
 
 -- 7. Popolamento Contiene (relazione Carrello-Prodotto con Quantita)
 INSERT INTO Contiene (ID_Carrello, ID_Prodotto, Quantita) VALUES
@@ -118,46 +134,99 @@ INSERT INTO Contiene (ID_Carrello, ID_Prodotto, Quantita) VALUES
 (4, 5, 1), -- VaultDweller ha FIFA 26
 (5, 1, 1),
 (5, 3, 1),
-(5, 5, 1); -- Arthur_M ha 3 prodotti nel carrello
+(5, 5, 1), -- Arthur_M ha 3 prodotti nel carrello
+-- Kratos
+(6, 14, 1),
+(6, 15, 1),
+-- Link
+(7, 30, 1),
+(7, 12, 1),
+-- Ellie
+(8, 23, 1),
+(8, 28, 1),
+-- Doom Slayer
+(9, 27, 1),
+(9, 18, 1),
+-- Shepard
+(10, 31, 1),
+(10, 22, 1),
+-- Aloy
+(11, 26, 1),
+(11, 19, 1),
+-- Cloud
+(12, 17, 1),
+(12, 20, 1),
+-- Arthur
+(13, 11, 1),
+(13, 10, 1);
 
 -- 8. Popolamento Ordine (collegato al carrello + descrizione storica)
 INSERT INTO Ordine 
 (ID_Ordine, Importo_tot, DataOrdine, ID_Carrello, Descrizione_Acquisto) VALUES
 (1, 44.99, '2026-06-20 10:15:00', 1,
-'1 - Elden Ring - 44.99 - 1'),
+'ID: 1 - Elden Ring - 44.99€ - Qta.: 1;'),
 
 (2, 54.98, '2026-06-21 12:30:00', 2,
-'2 - Cyberpunk 2077 - 24.99 - 1; 3 - Minecraft - 29.99 - 1'),
+'ID: 2 - Cyberpunk 2077 - 24.99€ - Qta.: 1; ID: 3 - Minecraft - 23.99€ - Qta.: 1;'),
 
 (3, 18.89, '2026-06-22 16:45:00', 3,
-'4 - Stray - 18.89 - 1'),
+'ID: 4 - Stray - 18.89€ - Qta.: 1;'),
 
 (4, 34.99, '2026-06-23 09:10:00', 4,
-'5 - FIFA 26 - 34.99 - 1'),
+'ID: 5 - FIFA 26 - 34.99€ - Qta.: 1;'),
 
 (5, 109.97, '2026-06-24 20:05:00', 5,
-'1 - Elden Ring - 44.99 - 1; 3 - Minecraft - 23.99 - 1; 5 - FIFA 26 - 34.99 - 1');
+'ID: 1 - Elden Ring - 44.99€ - Qta.: 1; ID: 3 - Minecraft - 23.99€ - Qta.: 1; ID: 5 - FIFA 26 - 34.99€ - Qta.: 1;'),
 
--- 9. Popolamento Genere (5 record)
-/*INSERT INTO Genere (Genere, ID_Prodotto) VALUES
-('Action RPG', 1), -- Action RPG
-('RPG-Sci-fi', 2), -- RPG / Sci-fi
-('Sandbox', 3), -- Sandbox
-('Adventure', 4), -- Adventure
-('Sport', 5); -- Sport*/
+(6, 54.98, '2026-06-25 11:20:00', 6,
+'ID: 14 - God of War - 24.99€ - Qta.: 1; ID: 15 - Resident Evil 4 - 29.99€ - Qta.: 1;'),
 
--- 10. Popolamento ChiaveDigitale (Esempi di chiavi finte)
+(7, 31.48, '2026-06-26 14:10:00', 7,
+'ID: 30 - Persona 5 Royal - 23.99€ - Qta.: 1; ID: 12 - Hollow Knight - 7.49€ - Qta.: 1;'),
+
+(8, 69.98, '2026-06-27 18:00:00', 8,
+'ID: 23 - The Last of Us Part II - 39.99€ - Qta.: 1; ID: 28 - Alan Wake 2 - 34.99€ - Qta.: 1;'),
+
+(9, 39.98, '2026-06-28 09:30:00', 9,
+'ID: 27 - Doom Eternal - 9.99€ - Qta.: 1; ID: 18 - Sekiro: Shadows Die Twice - 29.99€ - Qta.: 1;'),
+
+(10, 21.98, '2026-06-29 20:15:00', 10,
+'ID: 31 - Mass Effect Legendary Edition - 11.99€ - Qta.: 1; ID: 22 - Europa Universalis IV - 9.99€ - Qta.: 1;'),
+
+(11, 28.78, '2026-06-30 12:00:00', 11,
+'ID: 26 - Monster Hunter: World - 14.99€ - Qta.: 1; ID: 19 - Outer Wilds - 13.79€ - Qta.: 1;'),
+
+(12, 19.98, '2026-07-01 16:40:00', 12,
+'ID: 17 - NieR:Automata - 15.99€ - Qta.: 1; ID: 20 - Disco Elysium - The Final Cut - 9.99€ - Qta.: 1;'),
+
+(13, 26.99, '2026-07-02 21:10:00', 13,
+'ID: 11 - Red Dead Redemption 2 - 19.79€ - Qta.: 1; ID: 10 - The Witcher 3: Wild Hunt - 7.49€ - Qta.: 1;');
+
+-- 9. Popolamento ChiaveDigitale (Esempi di chiavi finte)
 INSERT INTO ChiaveDigitale (ID_Prodotto, Chiave) VALUES
-(1, 'ELDN-RING-44-X1'),
-(2, 'CYBR-PNK-20-77'),
-(4, 'STRY-CAT-99-PUR');
+(1, 'ELDEN-RING-KEY'),
+(2, 'CYBER-2077-KEY'),
+(7, 'BG3-KEY-77XY'),
+(11, 'RDR2-ARTHUR-KEY'),
+(14, 'GOW-KEY-2026'),
+(18, 'SEKIRO-SHADOW'),
+(23, 'TLOU2-ELLIE'),
+(27, 'DOOM-ETERNAL'),
+(31, 'ME-LEGEND-N7'),
+(30, 'P5-JOKER-KEY');
 
--- 11. Popolamento Account (Esempi di credenziali finte)
+-- 10. Popolamento Account (Esempi di credenziali finte)
 INSERT INTO Account (ID_Prodotto, Credenziali) VALUES
-(3, 'mc_user:block_pass_2024'),
-(5, 'ea_sports_fan:goal_2023_psn');
+(3, 'minecraft:DragonBlock2026'),
+(5, 'ea:UltimateTeam2026'),
+(7, 'bg3:TavHero2026'),
+(13, 'hades:OlympusRun2026'),
+(17, 'nier:Android2B2026'),
+(20, 'disco:DetectiveRevachol'),
+(22, 'paradox:EuropaMaster'),
+(26, 'mhworld:HunterRank99');
 
--- 12. Popolamento dei media per i prodotti
+-- 11. Popolamento dei media per i prodotti
 INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media) VALUES
 ('M1', 1, 'image', 'img/giochi/eldenring/eldenringCopertina.png'),
 ('M2', 1, 'image', 'img/giochi/eldenring/eldenringScreenshot1.jpg'),
@@ -257,6 +326,7 @@ INSERT INTO MediaProdotto (ID_Media, ID_Prodotto, Tipo, URL_Media) VALUES
 ('M65', 32, 'image', 'img/giochi/deathstranding/deathstrandingCopertina.jpg'),
 ('M66', 32, 'image', 'img/giochi/deathstranding/deathstrandingScreenshot1.jpg');
 
+-- 12. Popolamento delle piattaforme disponibili dei prodotti (Piattaforma, ID_Prodotto)
 INSERT INTO Piattaforma (Piattaforma, ID_Prodotto) VALUES
 -- Elden Ring
 ('PC',1),('PS4',1),('PS5',1),('Xbox One',1),('Xbox Series X/S',1),
