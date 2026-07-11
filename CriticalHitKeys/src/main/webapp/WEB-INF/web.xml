@@ -10,6 +10,18 @@
         <error-code>500</error-code>
         <location>/pagina-errore</location>
     </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/pagina-errore</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pagina-errore</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/pagina-errore</location>
+    </error-page>
     <session-config>
         <cookie-config>
             <http-only>true</http-only>
