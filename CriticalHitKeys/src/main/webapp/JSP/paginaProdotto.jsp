@@ -63,7 +63,7 @@
                 %>
                 <div class="carousel-item">
                     <% if ("video".equals(m.getTipo())) { %>
-                    <video src="<%= m.getUrlMedia() %>" controls preload="metadata" class="carosello-media"></video>
+                    <video src="<%= m.getUrlMedia() %>" controls preload="metadata" class="carosello-media" aria-label="Video del prodotto"></video>
                     <% } else { %>
                     <img src="<%= m.getUrlMedia() %>" alt="Screenshot Gioco" class="carosello-media">
                     <% } %>
@@ -77,8 +77,8 @@
                 </div>
                 <% } %>
                 <!-- I bottoni per scorrere il carosello -->
-            </div> <button class="carousel-btn prev-btn">&#10094;</button>
-            <button class="carousel-btn next-btn">&#10095;</button>
+            </div> <button class="carousel-btn prev-btn" aria-label="Media precedente">&#10094;</button>
+            <button class="carousel-btn next-btn" aria-label="Media successivo">&#10095;</button>
 
         </div> <div class="descrizione-gioco-box">
         <h2>Riguardo al prodotto:</h2>
@@ -120,9 +120,10 @@
         <% } %>
         <form method="post" action="recensione-servlet">
             <div id = "boxTextarea" style="display: none">
-            <textarea name="testoRecensione" maxlength="500" required>Questo gioco è stato molto toccante per me...</textarea>
-                <label>Voto complessivo:</label>
-                <input name="voto" type="number" min="1" max="5" step="1" value="1" required>
+            <label for="testoRecensione">Testo recensione</label>
+            <textarea id="testoRecensione" name="testoRecensione" maxlength="500" required>Questo gioco è stato molto toccante per me...</textarea>
+                <label for="votoRecensione">Voto complessivo:</label>
+                <input id="votoRecensione" name="voto" type="number" min="1" max="5" step="1" value="1" required>
                 <% if(u != null) { %>
                 <input  name ="id_ut" type="hidden" value = <%=u.getEmail_Ut()%>>
                 <input  name ="username_ut" type="hidden" value = <%=u.getUsername_Ut()%>>

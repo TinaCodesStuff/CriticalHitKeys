@@ -23,6 +23,7 @@ public class RecensioneServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // prendo autore e prodotto dal server, non dai dati modificabili del form
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utenteLoggato");
         String commento = clean(request.getParameter("testoRecensione"));
@@ -39,6 +40,7 @@ public class RecensioneServlet extends HttpServlet {
             Recensione recensione = new Recensione();
             Prodotto prodotto = (Prodotto) session.getAttribute("prodotto-afterRecensione");
 
+            // controllo testo e voto anche se il browser viene manomesso
             if (prodotto == null || commento.isEmpty() || commento.length() > 500 || voto < 1 || voto > 5) {
                 request.setAttribute("recensioneError", "Recensione non valida.");
                 request.setAttribute("prodotto", prodotto);
@@ -82,6 +84,7 @@ public class RecensioneServlet extends HttpServlet {
     public void destroy() {
     }
 
+    // evita null e spazi inutili nei campi testuali
     private String clean(String value) {
         if (value == null) {
             return "";

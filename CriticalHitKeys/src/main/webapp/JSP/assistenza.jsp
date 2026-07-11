@@ -64,11 +64,11 @@
         <input name="username-ut" type="hidden" value="<%=u.getUsername_Ut()%>">
         <% } %>
 
-        <label>Qual è il campo in cui hai avuto una problematica?: </label>
-        <input name="campo" type="text" maxlength="20" required>
+        <label for="campo-ticket">Qual è il campo in cui hai avuto una problematica?: </label>
+        <input id="campo-ticket" name="campo" type="text" maxlength="20" required>
 
-        <label>Descrivi la problematica:</label>
-        <input type="text" name="descrizione-ticket" class="descrizione-ticket" maxlength="500" required>
+        <label for="descrizione-ticket">Descrivi la problematica:</label>
+        <input id="descrizione-ticket" type="text" name="descrizione-ticket" class="descrizione-ticket" maxlength="500" required>
 
         <input type="submit" value="Crea ticket" class="submit-recensione">
     </form>

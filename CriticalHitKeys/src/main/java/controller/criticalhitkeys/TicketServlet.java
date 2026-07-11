@@ -40,6 +40,7 @@ public class TicketServlet extends HttpServlet {
     }
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // prendo l'utente dalla sessione invece di fidarmi dei campi nascosti
         HttpSession session = request.getSession();
         Utente utente = (Utente) session.getAttribute("utenteLoggato");
         String campo = clean(request.getParameter("campo"));
@@ -48,6 +49,7 @@ public class TicketServlet extends HttpServlet {
         if (utente != null) {
             TicketDAO ticketDAO = new TicketDAO();
 
+            // blocco ticket vuoti o troppo lunghi prima di salvarli nel database
             if (campo.isEmpty() || campo.length() > 20 || descrizione.isEmpty() || descrizione.length() > 500) {
                 request.setAttribute("ticketError", "Dati del ticket non validi.");
                 request.setAttribute("listaTicket", ticketDAO.doRetrieveByUsernameUtente(utente.getUsername_Ut()));
@@ -83,6 +85,7 @@ public class TicketServlet extends HttpServlet {
 
     }
 
+    // normalizza i parametri del form prima dei controlli
     private String clean(String value) {
         if (value == null) {
             return "";

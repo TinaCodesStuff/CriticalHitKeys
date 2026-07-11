@@ -17,7 +17,7 @@
 <ul class="navbar">
   <li class="menu-left">
     <a href="${pageContext.request.contextPath}/init-servlet">
-      <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100">
+      <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo di Critical Hit Keys">
     </a>
   </li>
 
@@ -132,29 +132,34 @@
       </c:if>
 
       <!-- NOME -->
-      <input name="nome" placeholder="Nome del prodotto"
+      <label for="nome-prodotto">Nome prodotto</label>
+      <input id="nome-prodotto" name="nome" placeholder="Nome del prodotto"
              value="${prodottoModifica.nome}" required>
 
       <!-- DESCRIZIONE -->
-      <textarea name="descrizione" placeholder="Descrizione del prodotto" required>${prodottoModifica.descrizione}</textarea>
+      <label for="descrizione-prodotto">Descrizione prodotto</label>
+      <textarea id="descrizione-prodotto" name="descrizione" placeholder="Descrizione del prodotto" required>${prodottoModifica.descrizione}</textarea>
 
       <!-- CASA SVILUPPATRICE -->
-      <input name="sviluppatore" placeholder="Casa sviluppatrice"
+      <label for="sviluppatore-prodotto">Casa sviluppatrice</label>
+      <input id="sviluppatore-prodotto" name="sviluppatore" placeholder="Casa sviluppatrice"
              value="${prodottoModifica.casa_sviluppatrice}" required>
 
       <!-- PREZZO -->
-      <input type="number" step="0.01" min="0" name="prezzoOriginale"
+      <label for="prezzo-originale">Prezzo originale</label>
+      <input id="prezzo-originale" type="number" step="0.01" min="0" name="prezzoOriginale"
              placeholder="Prezzo originale in euro"
              value="${prodottoModifica.prezzo_OG}" required>
 
       <!-- SCONTO -->
-      <input type="number" min="0" max="100" name="sconto"
+      <label for="sconto-prodotto">Sconto percentuale</label>
+      <input id="sconto-prodotto" type="number" min="0" max="100" name="sconto"
              placeholder="Sconto percentuale"
              value="${prodottoModifica.sconto}" required>
 
       <!-- MODALITA (SELECT) -->
-      <label>Modalità gioco</label>
-      <select name="modalita">
+      <label for="modalita-prodotto">Modalità gioco</label>
+      <select id="modalita-prodotto" name="modalita">
         <c:forEach items="${modalita}" var="m">
           <option value="${m}"
                   <c:if test="${prodottoModifica.modalita_Gioco == m}">selected</c:if>>
@@ -196,11 +201,11 @@
       </fieldset>
 
       <c:if test="${not editing}">
-        <label>Copertina</label>
-        <input type="file" name="copertina" accept="image/jpeg,image/png,image/webp" required>
+        <label for="copertina-prodotto">Copertina</label>
+        <input id="copertina-prodotto" type="file" name="copertina" accept="image/jpeg,image/png,image/webp" required>
 
-        <label>Immagini aggiuntive</label>
-        <input type="file" name="galleria" accept="image/jpeg,image/png,image/webp" multiple>
+        <label for="galleria-prodotto">Immagini aggiuntive</label>
+        <input id="galleria-prodotto" type="file" name="galleria" accept="image/jpeg,image/png,image/webp" multiple>
       </c:if>
 
       <button type="submit" class="submit-product">

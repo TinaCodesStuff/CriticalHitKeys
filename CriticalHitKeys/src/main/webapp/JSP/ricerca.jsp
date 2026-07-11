@@ -42,10 +42,10 @@
 
     <form method="get" action="ricerca-servlet">
         <p>Min: <span id="minValue">0</span>€</p>
-        <input type="range" id="prezzoMin" min="0" max="100" value="0" name="min">
+        <input type="range" id="prezzoMin" min="0" max="100" value="0" name="min" aria-label="Prezzo minimo">
 
         <p>Max: <span id="maxValue">100</span>€</p>
-        <input type="range" id="prezzoMax" min="0" max="100" value="100" name = "max">
+        <input type="range" id="prezzoMax" min="0" max="100" value="100" name = "max" aria-label="Prezzo massimo">
 
         <p>Prezzo selezionato:</p>
         <p><strong><span id="actualMin">0</span>€ - <span id="actualMax">100</span>€</strong></p>
@@ -56,7 +56,8 @@
         <label><input type="radio" name="mod_gioco" value="Single/Multi"> Single / Multi Player</label>
 
         <h3>Casa Sviluppatrice</h3>
-        <label>Casa Sviluppatrice - Esempio: FromSoftware <br><input type="text" name="casa_svilupp"></label>
+        <label for="casa-sviluppatrice">Casa Sviluppatrice - Esempio: FromSoftware</label>
+        <input type="text" id="casa-sviluppatrice" name="casa_svilupp">
 
         <h3>Genere</h3>
         <%
@@ -72,7 +73,7 @@
 </aside>
 <div class="container-bottoneCerca">
     <form>
-        <input type="search" name="searchText" placeholder="Cerca un prodotto!">
+        <input type="search" name="searchText" placeholder="Cerca un prodotto!" aria-label="Cerca un prodotto">
         <input type="submit" value="Cerca" id="bottoneInvioRicerca">
     </form>
 </div>
@@ -81,7 +82,7 @@
     <%  if(lista != null && lista.size()>0){
         for(Prodotto p : lista){%>
     <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
-        <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%>><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
+        <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%> alt="Immagine del prodotto <%=p.getNome()%>"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
     </a>
     <%}} else{%>
     <h2 style="margin-top:150px; color:white; text-align:center; font-size:40px;">

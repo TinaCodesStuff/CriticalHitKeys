@@ -18,7 +18,7 @@
 <ul class="navbar">
   <li class="menu-left">
     <a href="${pageContext.request.contextPath}/init-servlet">
-      <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100">
+      <img src="${pageContext.request.contextPath}/img/logoExtended5.png" width="120" height="100" alt="Logo di Critical Hit Keys">
     </a>
   </li>
 

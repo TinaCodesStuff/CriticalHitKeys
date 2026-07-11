@@ -39,7 +39,7 @@ List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
 <div class="container-bottoneCerca">
     <form method="get" action="ricerca-servlet">
         <input type="button" name="buttonFiltri" value="Filtri" onclick="window.location.href='ricerca-servlet'">   <!--Riporta alla ricerca con i filtri, quindi salta la ricerca-->
-        <input type="search" name="searchText" placeholder="Cerca un prodotto!">
+        <input type="search" name="searchText" placeholder="Cerca un prodotto!" aria-label="Cerca un prodotto">
         <input type="submit" value="Cerca">
     </form>
 </div>
@@ -48,7 +48,7 @@ List<Prodotto> lista = (List<Prodotto>) request.getAttribute("listaProdotti");
         <%
             for(Prodotto p : lista){%>
     <a href="paginaProd?id=<%=p.getID_Prodotto()%>" style="text-decoration: none;"> <!-- FACCIO COSI PERCHE' WRAPPO OGNI ELEMENTO IN UN LINK CHE SI RIFA ALLA SERVLET -->
-    <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%>><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
+    <div class="prodotto"><img <% if(request.getAttribute("mediaP-" + p.getID_Prodotto()) == null) {%> src="${pageContext.request.contextPath}/img/placeholder.jpg" <% } else { %> src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%> <%}%> alt="Immagine del prodotto <%=p.getNome()%>"><div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
     </a>
             <%}%>
 </div>

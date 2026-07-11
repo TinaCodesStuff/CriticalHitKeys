@@ -43,7 +43,7 @@
 
         <form method="GET" id ="searchForm">
             <input type="button" name="buttonFiltri" value="Filtri" onclick="window.location.href='ricerca-servlet'">   <!--Riporta alla ricerca con i filtri, quindi salta la ricerca-->
-            <input type="search" name="searchText" placeholder="Cerca un prodotto!">
+            <input type="search" name="searchText" placeholder="Cerca un prodotto!" aria-label="Cerca un prodotto">
             <input type="submit" value="Cerca" formaction="ricerca-servlet">
         </form>
     </div>
@@ -58,7 +58,8 @@
                     src="${pageContext.request.contextPath}/img/placeholder.jpg"
                     <% } else { %>
                     src = <%=request.getAttribute("mediaP-"+p.getID_Prodotto())%>
-                    <%}%>>
+                    <%}%>
+                    alt="Immagine del prodotto <%=p.getNome()%>">
 
                 <div class="nome-prezzi-Box"> <b><%=p.getNome() %></b> <div class="prezzi-Box"><%=p.getPrezzo_scontato()%>€  <div class="sconto-Box"><%= p.getSconto()%>%</div></div></div></div>
 

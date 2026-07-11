@@ -24,6 +24,7 @@ public class AggiornaQuantitaServlet extends HttpServlet {
         String qStr = request.getParameter("quantita");
         int id_prod;
         int quantita;
+        // converto i parametri ajax e scarto valori non numerici
         try {
             id_prod = Integer.parseInt(idStr);
             quantita = Integer.parseInt(qStr);
@@ -32,6 +33,7 @@ public class AggiornaQuantitaServlet extends HttpServlet {
             return;
         }
 
+        // la select del carrello permette solo quantità da 1 a 10
         if (id_prod <= 0 || quantita < 1 || quantita > 10) {
             sendError(response);
             return;
@@ -94,6 +96,7 @@ public class AggiornaQuantitaServlet extends HttpServlet {
     public void destroy() {
     }
 
+    // risposta usata quando la richiesta ajax non supera i controlli
     private void sendError(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         response.setContentType("application/json");

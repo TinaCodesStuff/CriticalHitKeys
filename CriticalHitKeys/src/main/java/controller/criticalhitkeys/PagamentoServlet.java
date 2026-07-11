@@ -39,6 +39,7 @@ public class PagamentoServlet extends HttpServlet {
 
             /*TENTATIVI DI DEBUG*/
             List<Prodotto> listaProdotti = (List<Prodotto>) session.getAttribute("listaProdotti");
+            // se la sessione non ha prodotti evito errori null durante il controllo
             if (listaProdotti == null) {
                 listaProdotti = new ArrayList<>();
             }
@@ -106,6 +107,7 @@ public class PagamentoServlet extends HttpServlet {
                 ContieneDAO contieneDAO = new ContieneDAO();
                 CarrelloDAO carrelloDAO = new CarrelloDAO();
                 int idCarrello = carrelloDAO.doRetrieveID_Carrello(u);
+                // recupero le quantità dal database per non fidarmi del form
                 Map<Integer, Integer> quantita = contieneDAO.doRetrieveQuantitaById_Carrello(idCarrello);
 
                 Ordine ordine = new Ordine();
@@ -121,6 +123,7 @@ public class PagamentoServlet extends HttpServlet {
                     if (quantita.get(prod.getID_Prodotto()) != null) {
                         qta = quantita.get(prod.getID_Prodotto());
                     }
+                    // il totale viene ricalcolato lato server prima di salvare l'ordine
                     totale += prod.getPrezzo_scontato() * qta;
                     ordineDesc.append("ID: " + prod.getID_Prodotto()).append(" - ").append(prod.getNome()).append(" - ").append(prod.getPrezzo_scontato()).append("€ - ").append("Qta.: " + qta).append(";");    //qui ci memorizziamo i prodotti acquistati, in un certo senso eseguiamo una storicizzazione dei prodotti acquistati
                 }
