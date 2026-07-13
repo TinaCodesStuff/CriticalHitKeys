@@ -32,13 +32,14 @@ public class AdminProductsFilter implements Filter {
         }
 
         // prepara i valori usati dalle select e dalle checkbox della pagina
+        //prende l'URI di tutta la pagina, e verifica se finisce con /admin/prodotti e se è una richiesta get
         if ("GET".equals(httpRequest.getMethod()) &&
                 httpRequest.getRequestURI().endsWith("/admin/prodotti")) {
             request.setAttribute("piattaforme", dao.doRetrievePiattaforme());
             request.setAttribute("generi", dao.doRetrieveGenere());
             request.setAttribute("modalita", List.of("Single Player", "Multiplayer", "Single/Multi"));
         }
-
+// lascia continuare la richiesta verso la servlet admin corretta
         chain.doFilter(request, response);
     }
 }

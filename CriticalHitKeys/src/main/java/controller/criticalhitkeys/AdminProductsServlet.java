@@ -20,7 +20,6 @@ public class AdminProductsServlet extends HttpServlet {
             request.getSession().removeAttribute("adminError");
         }
         request.setAttribute("prodotti", dao.doRetrieveAll());
-        /*request.setAttribute("generi", genereDAO.doRetrieveAllGeneri());*/
 
         String editId = request.getParameter("edit");
 

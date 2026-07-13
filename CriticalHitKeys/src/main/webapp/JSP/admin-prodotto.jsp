@@ -44,11 +44,12 @@
     </div>
   </header>
 
+<!-- Serve per stampare un messaggio dopo una delete/create/update, e poi eliminarlo dalla sessione, c è il tag normale dell'expression language-->
   <c:if test="${not empty sessionScope.adminMessage}">
     <p>${sessionScope.adminMessage}</p>
     <c:remove var="adminMessage" scope="session" />
   </c:if>
-
+<!-- Controllo per gli errori, se avvengono vengono stampati qui -->
   <c:if test="${not empty adminError}">
     <p>${adminError}</p>
   </c:if>
@@ -57,13 +58,14 @@
 
   <div class="admin-layout">
 
-  <!-- LISTA PRODOTTI -->
+  <!-- LISTA PRODOTTI - Visualizzazione -->
   <section class="product-workspace">
     <div class="section-title">
       <h2>Catalogo</h2>
     </div>
 
     <div class="table-scroll">
+<!-- Viene creata una tabella per tutti i prodotti, thead è l'header della tabella, mentre tr è ciascuna riga della tabella -->
     <table>
       <thead>
       <tr>
@@ -76,6 +78,7 @@
       </thead>
 
       <tbody>
+      <!-- Si prendono i prodotti tramite l'attributo della richiesta dalla servlet admin -->
       <c:forEach items="${prodotti}" var="p">
         <tr>
           <td>
@@ -88,13 +91,13 @@
           <!-- MODALITA (stringa) -->
           <td>${p.modalita_Gioco}</td>
 
-          <!-- PIATTAFORME (List<String>) -->
+          <!-- PIATTAFORME (List<String>), sono prese dalla request di prodotti con i nomi dei campi piattaforme -->
           <td>
             <c:forEach items="${p.piattaforme}" var="pl" varStatus="st">
               ${pl}<c:if test="${!st.last}"> / </c:if>
             </c:forEach>
           </td>
-
+<!-- Rimanda l'id prodotto in modalità editor, con il fragment, alla AdminProductServlet -->
           <td class="actions">
             <a href="${pageContext.request.contextPath}/admin/prodotti?edit=${p.ID_Prodotto}#editor">
               Modifica
@@ -115,14 +118,14 @@
 
   <!-- FORM EDIT / CREATE -->
   <aside id="editor" class="editor">
-
+<!-- Check per verificare se si è in modifica o in creazione, tramite la variabile booleana editing -->
     <h2>
       <c:choose>
         <c:when test="${editing}">Modifica prodotto</c:when>
         <c:otherwise>Nuovo prodotto</c:otherwise>
       </c:choose>
     </h2>
-
+<!-- Qui c'è l'effettiva verifica del valore di editing, e l'action dipende da quello -->
     <form method="post"
           action="${pageContext.request.contextPath}${editing ? '/admin/prodotti/modifica' : '/admin/prodotti/crea'}"
           enctype="multipart/form-data">
@@ -173,6 +176,10 @@
         <legend>Generi</legend>
 
         <div class="checks">
+            <!--
+            facciamo un foreach per i generi perchè ne possiamo avere banalmente più di uno
+
+            -->
         <c:forEach items="${generi}" var="g">
           <label>
             <input type="radio" name="genere" value="${g}"
@@ -200,6 +207,8 @@
         </div>
       </fieldset>
 
+        <!-- Non puoi modificare la copertina del prodotto/galleria, possiamo SOLO modificarla in aggiungi
+        Come scritto in galleria-prodotto possiamo anche aggiungere più foto.-->
       <c:if test="${not editing}">
         <label for="copertina-prodotto">Copertina</label>
         <input id="copertina-prodotto" type="file" name="copertina" accept="image/jpeg,image/png,image/webp" required>
@@ -208,6 +217,8 @@
         <input id="galleria-prodotto" type="file" name="galleria" accept="image/jpeg,image/png,image/webp" multiple>
       </c:if>
 
+        <!-- Questo bottone cambia il suo valore con "Salva modifiche" oppure con "Crea prodotto"
+        in caso di editing true/false-->
       <button type="submit" class="submit-product">
         ${editing ? "Salva modifiche" : "Crea prodotto"}
       </button>

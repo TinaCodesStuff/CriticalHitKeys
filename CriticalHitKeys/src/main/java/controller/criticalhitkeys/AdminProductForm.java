@@ -8,7 +8,8 @@ import java.util.List;
 
 final class AdminProductForm {
     private AdminProductForm() { }
-
+//Questa servlet serve principalmente a verificare che i campi del form siano stati inseriti correttamente
+    //E ad aggiumgere le varie informazioni nel prodotto
     static Prodotto parse(HttpServletRequest request) {
         // legge i campi testuali inviati dal form
         String nome = clean(request.getParameter("nome"));
@@ -66,6 +67,8 @@ final class AdminProductForm {
         return prodotto;
     }
 
+    //Controlla se i valori sono nulli, se non sono vuoti ritorna la lista di tutti i prodotti
+    //Le piattaforme di ciascun prodotto vengono prese dai checkbox segnati sul form
     private static List<String> valuesOrNull(HttpServletRequest request, String name) {
         String[] values = request.getParameterValues(name);
         if (values == null) {
@@ -79,6 +82,9 @@ final class AdminProductForm {
                 .toList();
     }
 
+
+    /*La funzione clean serve per verificare se il valore preso in input sia null, in caso ritorna "". Altrimenti
+    fa il trim per eliminare gli spazi*/
     private static String clean(String value) {
         if (value == null) {
             return "";
